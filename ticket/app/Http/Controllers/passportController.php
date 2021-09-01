@@ -32,7 +32,7 @@ class passportController extends Controller
     
             //return response()->json(['token' => $token], 200);
 
-            $user_data = ['user'=>$user,'token'=>'Bearer'.$token];
+            $user_data = ['user'=>$user,'token'=>'Bearer '.$token];
             $data = ['responseCode'=>100,
             'responseMessage'=>'Registered successfully',
             'data'=>$user_data];
@@ -71,7 +71,7 @@ class passportController extends Controller
             
             $token = auth()->user()->createToken('userToken')->accessToken;
            
-            $user_data = ['user'=>auth()->user(),'token'=>'Bearer'.$token];
+            $user_data = ['user'=>auth()->user(),'token'=>'Bearer '.$token];
 
             $data = ['responseCode'=>100,
                      'responseMessage'=>'Logged in successfully',

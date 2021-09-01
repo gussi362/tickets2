@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-    
+    public $incrementing = false;
     protected $fillable = 
     [
         'id',
@@ -18,7 +18,8 @@ class Order extends Model
         'phone',
         'count',//number of requesprotected $casts = ['id' => 'string'];ted tickets for this order
         'amount',//the total of the order (ticket_price * order_count)
-        'type_id',
+        'status',
+        'payment',
         'code'
     ];
 

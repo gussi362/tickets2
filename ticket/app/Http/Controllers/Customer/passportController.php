@@ -72,7 +72,7 @@ class passportController extends Controller
             
             $token = auth()->user()->createToken('userToken')->accessToken;
            
-            $user_data = ['user'=>auth()->user(),'token'=>'Bearer'.$token];
+            $user_data = ['user'=>auth()->user(),'token'=>'Bearer '.$token];
 
             $data = ['responseCode'=>100,
                      'responseMessage'=>'Logged in successfully',

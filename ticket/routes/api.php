@@ -20,29 +20,29 @@ Route::post('register', 'passportController@register');
 
 
 
-Route::group(['prefix' => 'admin','middleware'=>['checkStatus','auth:api']], function () {
+Route::group(['prefix' => 'admin','middleware'=>['checkStatus','auth:api'], 'namespace'=>'Admin'], function () {
 
-    Route::apiResource('company','Admin\CompanyController');
-    Route::get('/dashboard','Admin\CompanyController@getCompaniesWithEvents');
-    Route::get('/dashboard/{company_id}','Admin\CompanyController@getCompanyWithEvents');
+    Route::apiResource('company','CompanyController');
+    Route::get('/dashboard','CompanyController@getCompaniesWithEvents');
+    Route::get('/dashboard/{company_id}','CompanyController@getCompanyWithEvents');
 
-    Route::apiResource('event','Admin\EventController');
+    Route::apiResource('event','EventController');
     
-    Route::apiResource('order','Admin\OrderController');
+    Route::apiResource('order','OrderController');
 
-    Route::apiResource('orderDetails','Admin\OrderDetailsController');
-    Route::apiResource('orderStatus','Admin\OrderStatusController');
+    Route::apiResource('orderDetails','OrderDetailsController');
+    Route::apiResource('orderStatus','OrderStatusController');
     
-    Route::apiResource('ticket','Admin\TicketController');
+    Route::apiResource('ticket','TicketController');
     
-    Route::apiResource('date','Admin\DateController');
+    Route::apiResource('date','DateController');
 
-    Route::apiResource('sponser','Admin\SponserController');
+    Route::apiResource('sponser','SponserController');
 
     //Route::get('/dashboard/allevent','Admin\EventController@getEventsCurrent');
-    Route::get('/dashboard/event/current','Admin\EventController@getEventsCurrent');
-    Route::get('/dashboard/event/{event_id}','Admin\EventController@getCompanyEvent');
-    Route::get('/dashboard/event/company/{company_id}','Admin\EventController@getCompanyEvents');
+    Route::get('/dashboard/event/current','EventController@getEventsCurrent');
+    Route::get('/dashboard/event/{event_id}','EventController@getCompanyEvent');
+    Route::get('/dashboard/event/company/{company_id}','EventController@getCompanyEvents');
     //Route::get('/dashboard/events/details','Admin\EventController@getCompanyCurrentEventsDetails');
     //Route::get('/dashboard/tickets','Admin\TicketController@getCompanyTicketsDetails');
 

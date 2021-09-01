@@ -7,7 +7,6 @@ use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 use Str;
 use App\Models\OrderDetails;
-use App\Models\OrderStatus;
 use App\Http\Controllers\Controller;
 use Validator;
 class OrderController extends Controller
@@ -88,7 +87,7 @@ class OrderController extends Controller
                     'order_id'=>$data['id']
                  ];//don't need to add type_id cause the default is (1=pending) only when changing status
                 
-                 OrderStatus::create($status_data);
+                 //OrderStatus::create($status_data);
 
                 DB::commit();
                 $return_data = [

@@ -7,7 +7,6 @@ use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 use Str;
 use App\Models\OrderDetails;
-use App\Models\OrderStatus;
 use App\Http\Controllers\Controller;
 use App\Models\ttype;
 use Validator;
@@ -55,7 +54,7 @@ class OrderController extends Controller
   //check if paid
   public function getOrder($id)
   {
-    $order = Order::with('orderStatus')->find($id);
+    $order = Order::find($id);
     return $order;
   }
 

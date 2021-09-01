@@ -25,8 +25,10 @@ class CreateOrdersTable extends Migration
             $table->integer('count')->unsigned();
             $table->integer('code',10)->unsigned();
             $table->integer('amount')->unsigned();
-            $table->bigInteger('type_id')->unsigned()->nullable();
-            $table->foreign('type_id')->references('id')->on('ttypes');//wethere payment is successful or not 
+            $table->bigInteger('payment')->unsigned()->nullable();
+            $table->foreign('payment')->references('id')->on('ttypes');//wethere payment is successful or not 
+            $table->bigInteger('status')->unsigned()->default(1);
+            $table->foreign('status')->references('id')->on('ttypes');//wethere payment is successful or not 
             $table->timestamps();
         });
     }

@@ -43,6 +43,7 @@ class TicketController extends Controller
         $validator = Validator::make($request->all(), [
             'event_id' => 'required',
             'amount' => 'required',
+            'name' => 'required',
             'status' => 'required',
             'details_ar' => 'required|string',
             'details_en' => 'required|string'

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderDetails;
-use App\Models\OrderStatus;
 use App\Http\Controllers\Controller;
 use App\Models\ttype;
 
@@ -15,7 +14,7 @@ class PaymentController extends Controller
     //return order with status
     public function getOrder($order_id)
     {
-        $order = Order::with('orderStatus')->find($order_id);
+        $order = Order::find($order_id);
         return $order;
     }
 
@@ -28,12 +27,9 @@ class PaymentController extends Controller
             $success_status = ttype::where('name_en','=','success')->first()->id;
             $completed_status = ttype::where('name_en','=','completed')->first()->id;
             $serial = Order::find($order_id)->first()->code;
-
-            if(Order::find($order_id)->update(['type_id'=>$success_status]))
+            
+            if(Order::find($order_id)->update(['payment'=>$success_status,'status'=>$completed_status]))
             {
-                
-                if(OrderStatus::where('order_id',$order_id)->update(['type_id'=>$completed_status]))
-                {
                     $order = $this->getOrder($order_id);
                     $order_details = OrderDetails::where('serial','like',$serial.'%')->get();
                     $data = ['responseCode'=>102,
@@ -41,13 +37,7 @@ class PaymentController extends Controller
                              'data' => ['order'=>$order,'orderDetails'=>$order_details]
                     ];
                     return $data;
-                }else
-                {
-                    $data = ['responseCode'=>102,
-                    'responseMessage'=>'failed to update status'
-                    ];
-                    return $data;
-                }
+                
               
             }else
             {
