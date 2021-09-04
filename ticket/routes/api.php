@@ -23,15 +23,38 @@ Route::post('register', 'passportController@register');
 Route::group(['prefix' => 'admin','middleware'=>['checkStatus','auth:api'], 'namespace'=>'Admin'], function () {
 
     Route::apiResource('company','CompanyController');
-    Route::get('/dashboard','CompanyController@getCompaniesWithEvents');
-    Route::get('/dashboard/{company_id}','CompanyController@getCompanyWithEvents');
+    
+    Route::apiResource('event','EventController');
+    
+    Route::apiResource('order','OrderController');
 
+    Route::apiResource('orderDetails','OrderDetailsController');    
+    Route::apiResource('ticket','TicketController');
+    
+    Route::apiResource('date','DateController');
+
+    Route::apiResource('sponser','SponserController');
+
+Route::group(['prefix' => 'dashboard'], function(){
+
+    Route::get('/','CompanyController@getCompaniesWithEvents');
+    Route::get('/{company_id}','CompanyController@getCompanyWithEvents');
+
+    Route::get('event/current','EventController@getEventsCurrent');
+    Route::get('event/{event_id}','EventController@getCompanyEvent');
+    Route::get('event/company/{company_id}','EventController@getCompanyEvents');
+    
+});
+    
+});
+
+//user routes
+Route::group(['prefix' => 'user','middleware'=>['checkStatusUser','auth:api'],'namespace' => 'Customer'], function () {
     Route::apiResource('event','EventController');
     
     Route::apiResource('order','OrderController');
 
     Route::apiResource('orderDetails','OrderDetailsController');
-    Route::apiResource('orderStatus','OrderStatusController');
     
     Route::apiResource('ticket','TicketController');
     
@@ -39,62 +62,41 @@ Route::group(['prefix' => 'admin','middleware'=>['checkStatus','auth:api'], 'nam
 
     Route::apiResource('sponser','SponserController');
 
-    //Route::get('/dashboard/allevent','Admin\EventController@getEventsCurrent');
-    Route::get('/dashboard/event/current','EventController@getEventsCurrent');
-    Route::get('/dashboard/event/{event_id}','EventController@getCompanyEvent');
-    Route::get('/dashboard/event/company/{company_id}','EventController@getCompanyEvents');
-    //Route::get('/dashboard/events/details','Admin\EventController@getCompanyCurrentEventsDetails');
-    //Route::get('/dashboard/tickets','Admin\TicketController@getCompanyTicketsDetails');
+    Route::group(['prefix' => 'dashboard'], function(){
 
+        Route::get('event/current','EventController@getEventsCurrent');
+        Route::get('event/{event_id}','EventController@getCompanyEvent');
+        Route::get('event/company/{company_id}','EventController@getCompanyEvents');
     
-});
-
-//user routes
-Route::group(['prefix' => 'user','middleware'=>['checkStatusUser','auth:api']], function () {
-    Route::apiResource('event','Customer\EventController');
+        //dashboard 
     
-    Route::apiResource('order','Customer\OrderController');
-
-    Route::apiResource('orderDetails','Customer\OrderDetailsController');
+        Route::get('events','EventController@getEventsDetails');
+        Route::get('events/details','EventController@getCompanyCurrentEventsDetails');
+        Route::get('tickets','TicketController@getCompanyTicketsDetails');
     
-    Route::apiResource('ticket','Customer\TicketController');
-    
-    Route::apiResource('date','Customer\DateController');
-
-    Route::apiResource('sponser','Customer\SponserController');
-
-
-    Route::get('/dashboard/event/current','Customer\EventController@getEventsCurrent');
-    Route::get('/dashboard/event/{event_id}','Customer\EventController@getCompanyEvent');
-    Route::get('/dashboard/event/company/{company_id}','Customer\EventController@getCompanyEvents');
-
-    //dashboard 
-
-    Route::get('/dashboard/events','Customer\EventController@getEventsDetails');
-    Route::get('/dashboard/events/details','Customer\EventController@getCompanyCurrentEventsDetails');
-    Route::get('/dashboard/tickets','Customer\TicketController@getCompanyTicketsDetails');
+    });
 
     
 });
 
 
 //user who scan ids //add middleware later
-Route::group(['prefix' => 'scan','middleware'=>['checkStatusUser','auth:api']], function () {
+Route::group(['prefix' => 'scan','middleware'=>['checkStatusUser','auth:api'] ,'namespace' => 'Qr'], function () {
 
     //Route::get('events','EventController@getCompanyCurrentEventsDetails');
-    Route::get('orderStatus/{order_id}/{serial}','Qr\OrderController@checkIn');
-    Route::apiResource('order','Qr\OrderController');
+    Route::get('orderStatus/{order_id}/{serial}','OrderController@checkIn');
+    Route::apiResource('order','OrderController');
     });
 
 
 //payments
-Route::group(['prefix' => 'appname'], function () {
+Route::group(['prefix' => 'appname' ,'namespace' => 'Api'], function () {
 
-    Route::get('events','Api\EventController@getEventsCurrent');
+    Route::get('events','EventController@getEventsCurrent');
 
-    Route::get('/{order_id}','Api\PaymentController@getOrder');
+    Route::get('/{order_id}','PaymentController@getOrder');
 
-    Route::post('pay/{order_id}','Api\PaymentController@pay');
+    Route::post('pay/{order_id}','PaymentController@pay');
     //events
     
 });
