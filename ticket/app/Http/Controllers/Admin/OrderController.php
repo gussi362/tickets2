@@ -19,12 +19,10 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $order = Order::orderBy('name','asc')->with('date')->get();
-        $data = [
-            'responseCode'=>100,
-            'responseMessage'=>'retrieved order successful',
-            'data'=>['order'=>$order]];
-        return response()->json($data);
+        //TODO::return with order details
+        $order = Order::orderBy('created_at','desc')->with('date')->get();
+        
+        return $this->getSuccessResponse('retrieved order successfully' ,$order);
     }
 
     /**
@@ -46,19 +44,19 @@ class OrderController extends Controller
 
         ]);
 
-        if ($validator->fails()) {
-            $data = ['responseCode'=>102,
-                     'responseMessage'=>'not all fields were entered'];
-            return response()->json($data);
+        if ($validator->fails()) 
+        {
+            return $this->getErrorResponse('not all fields were entered');
         }
        
         //when ordering 
         //an order details is added with number of tickets under order
         //an order status is added with pending flag
 
-        if($request->input('count') > $this->getTicketsLeft($this->getEventId($request->input('ticket_id')),$request->input('ticket_id')))
+        if($request->count > $this->getTicketsLeft($this->getEventId($request->ticket_id),$request->ticket_id))
         {
-            return [['status'=>'error ,not enough tickets available tickets = '.$this->getTicketsLeft($this->getEventId($request->input('ticket_id')),$request->input('ticket_id'))],422];
+            //return [['status'=>'error ,not enough tickets available tickets = '.$this->getTicketsLeft($this->getEventId($request->input('ticket_id')),$request->input('ticket_id'))],422];
+            return $this->getErrorResponse('error ,not enough tickets available tickets = '.$this->getTicketsLeft($this->getEventId($request->input('ticket_id')),$request->input('ticket_id')));
 
         }else
         {
@@ -68,51 +66,56 @@ class OrderController extends Controller
                 $data = $request->all();
                 $data['code'] = $this->generateRandom();;
                 $data['id'] =  Str::uuid();
-                $data['amount'] = $this->getTotal($this->getTicketPrice($request->input('ticket_id')) ,$request->input('count'));
+                $data['amount'] = $this->getTotal($this->getTicketPrice($request->ticket_id) ,$request->count);
+              
                 $order=Order::create($data);
 
-                for ($i=1 ;$i<=$request->input('count'); $i+=1)
-                {
-                    $serial = ($order->code."$i");
-                    $order_data = ['serial'=>$serial ,
-                                    'ticket_id'=>$request->input('ticket_id'),
-                                    'price'=>$this->getTicketPrice($request->input('ticket_id')),
-                                    'status'=>'false'];
-                    
-                    OrderDetails::create($order_data);
-                    
-                }
-                 //add order status here 
-                 $status_data = [
-                    'order_id'=>$data['id']
-                 ];//don't need to add type_id cause the default is (1=pending) only when changing status
+                $this->createOrderDetails($request->count ,$order->code ,$request->ticket_id);
                 
-                 //OrderStatus::create($status_data);
-
                 DB::commit();
-                $return_data = [
-                    'order'=>$order,
-                ];
-                return [
-                        'responseCode'=>100,
-                        'responseMessage'=>'Order created Successfully',
-                        'data'=>$return_data
-                ];
+
+                return $this->getSuccessResponse('created order successfully' ,$order);
                 
                 
             } catch (\Exception $e) 
             {
                 DB::rollback();
-                return [
-                    'responseCode'=>102,
-                    'responseMessage'=>'Failed to create order',
-                    'data'=>$e
-            ];
+                return $this->getErrorResponse('failed to create order' ,$e->getMessage());
+
             }
         }
         
     }
 
+    /**
+     * creating order details for order
+     * @param count number of seats for this ticket on order with code
+     * @param code unique random number of order
+     * @param ticket_id 
+     */
+    public function createOrderDetails($count ,$code ,$ticket_id)
+    {
+        for ($i=1 ;$i<=$count; $i+=1)
+        {
+            $this->createOrderDetail($code."$i" ,$ticket_id);
+        }
+    }
+
+
+    /**
+     * create order detail
+     * @param serial of reservation
+     * @param ticket_id
+     */
+    public function createOrderDetail($serial ,$ticket_id)
+    {
+        $order_data = [ 'serial'=>$serial ,
+                        'ticket_id'=>$ticket_id,
+                        'price'=>$this->getTicketPrice($ticket_id),
+                        'status'=>'false'];
+
+        OrderDetails::create($order_data);
+    }
     //get order total 
     //@amount price of 1ticket
     //@tickets_total number of tickets for this order 
@@ -145,17 +148,6 @@ class OrderController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -164,23 +156,22 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $order= Order::find($id);
-        
-        if($order->update($request->all()))
+        $order= Order::findorfail($id);
+
+        foreach ($request->all() as $key => $value) 
         {
-            $data = ['responseCode'=>100,
-                     'responseMessage'=>'updated order successfully',
-                     'data'=>['order'=>$order]];
-                     
-            return response()->json($data);
+            //if ($value->$key) {
+            if ($value) {
+                $order->$key = $value;
+            }
+        }
+
+        if($order->update())
+        {
+            return $this->getSuccessResponse('updated order successfully' ,$order);
         }else
         {
-
-            $data = ['responseCode'=>102,
-                     'responseMessage'=>'failed to update order with id '.$id,
-                     'data'=>['event'=>$event]];
-                     
-            return response()->json($data);
+            return response()->json($order);
         }
     }
 
@@ -192,16 +183,25 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        $task = Order::findorFail($id);
-        if($task->delete())
+        $order = Order::findorFail($id);
+        if($this->destroyOrderDetails($order->code) && $order->delete())
         {
-            return [['status'=>'success'],200];
+            return $this->getSuccessResponse('deleted order successfully' ,$order);
         }else
         {
-            return [['status'=>'fail'],422];
+            return $this->getErrorResponse('failed to deleted order with '.$id);
         }
     }
 
+        /**
+     * Remove details of order
+     *
+     * @param  int  $code
+     */
+    public function destroyOrderDetails($code)
+    {
+        OrderDetails::where('serial','like',$serial.'%')->delete();
+    }
 
     /**
      * return the total amount of tickets left for ordering
@@ -257,7 +257,8 @@ class OrderController extends Controller
     /**
      * return a random number of length 8 for order field 
      */
-    private function generateRandom(){
+    private function generateRandom()
+    {
         $len = 8 ;
         $x = '';
             for ($i = 0 ; $i < $len ; $i ++)
@@ -265,5 +266,5 @@ class OrderController extends Controller
                 $x .= intval(rand(0,9));
             }
         return $x;
-        }
+    }
 }

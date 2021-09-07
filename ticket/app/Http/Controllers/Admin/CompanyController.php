@@ -16,21 +16,16 @@ class CompanyController extends Controller
     public function index()
     {
         $company = Company::orderBy('name_en','asc')->get();
-        $data = [
-            'responseCode'=>100,
-            'responseMessage'=>'retrieved company successful',
-            'data'=>['company'=>$company]];
-        return response()->json($data);
+        
+        //don't create vars if not necessaray ,they take memory and 
+        // $data = ['responseCode'=>100,
+        //     'responseMessage'=>'',
+        //     'data'=>['company'=>$company]];
+        return $this->getSuccessResponse('retrieved company successful',$company);
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-    }
+     
 
     /**
      * Store a newly created resource in storage.
@@ -51,29 +46,23 @@ class CompanyController extends Controller
             'created_by' => 'required'
         ]);
 
-        if ($validator->fails()) {
-            $data = ['responseCode'=>102,
-                     'responseMessage'=>'not all fields were entered'];
-            return response()->json($data);
+        if ($validator->fails()) 
+        {
+            return $this->getErrorResponse('not all fields were entered');
         }
-        $data = $request->all();
-        $company = Company::create($data);
-        if($company->exists())
-        {
-            $data = [
-                'responseCode'=>100,
-                'responseMessage'=>'created company successfully',
-                'data'=>['company'=>$company]];
+        try{
 
-            return response()->json($data);
-        }else
+            $company = Company::create($request->all());
+            if($company->exists())
+            {
+                return $this->getSuccessResponse('created company successfully',$company);
+            }else
+            {           
+                return $this->getErrorResponse('failed to create company');
+            }
+        }catch(\Exception $e)
         {
-            $data = [
-                'responseCode'=>102,
-                'responseMessage'=>'failed to create company',
-                    ];
-                    
-            return response()->json($data);
+            return $this->getErrorResponse('exception error',$e->getMessage());
         }
     }
 
@@ -86,23 +75,10 @@ class CompanyController extends Controller
     public function show($id)
     {
         $company = Company::findorfail($id);
-        $data = ['responseCode'=>100,
-        'responseMessage'=>'company found',
-        'data'=>['company'=>$company]];
-        
-        return response()->json($data);
+        return $this->getSuccessResponse('company found',$company);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    
 
     /**
      * Update the specified resource in storage.
@@ -113,23 +89,24 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $company= Company::find($id);
+        $company= Company::findorfail($id);
         
-        if($company->update($request->all()))
+
+        foreach ($request->all() as $key => $value) {
+            //if ($value->$key) {
+            if ($value) {
+                $company->$key = $value;
+            }
+
+        }
+
+        if($company->update())
         {
-            $data = ['responseCode'=>100,
-                     'responseMessage'=>'updated company successfully',
-                     'data'=>['company'=>$company]];
-                     
-            return response()->json($data);
+            return $this->getSuccessResponse('updated company successfully',$company);
         }else
         {
-
-            $data = ['responseCode'=>102,
-                     'responseMessage'=>'failed to update company with id '.$id,
-                     'data'=>['company'=>$company]];
+            return $this->getErrorResponse('failed to update company with id '.$id);
         }                
-            return response()->json($data);
     }
 
     /**
@@ -143,16 +120,10 @@ class CompanyController extends Controller
         $company = Company::findorFail($id);
         if($company->delete())
         {
-            $data = ['responseCode'=>100,
-                     'responseMessage'=>'deleted Company',
-                      'data'=>['company'=>$company]];
-            return response()->json($data);
+            return $this->getSuccessResponse('deleted company',$company);
         }else
         {
-            
-            $data = ['responseCode'=>102,
-                     'responseMessage'=>'failed to delete Company with id '.$id,
-                      'data'=>['company'=>$company]];
+            return $this->getErrorResponse('failed to delete Company with id '.$id);
         }
     }
 
@@ -168,10 +139,8 @@ class CompanyController extends Controller
         {
             $query->where('status','true');
         }])->get();
-        $data = ['responseCode'=>100,
-                 'responseMessage'=>'companies with events',
-                 'data'=>['companies'=>$companies]];
-        return response()->json($data);
+
+        return $this->getSuccessResponse('companies with events',$companies);
     }
 
     /**
@@ -189,16 +158,10 @@ class CompanyController extends Controller
 
         if($company)
         {
-            $data = ['responseCode'=>100,
-            'responseMessage'=>'companies with events',
-            'data'=>['companies'=>$company]];
-            return response()->json($data);
+            return $this->getSuccessResponse('companies with events',$company);
         }else
         {
-            $data = ['responseCode'=>102,
-            'responseMessage'=>'comapny with id '.$id
-            ];
-            return response()->json($data);
+            return $this->getErrorResponse('failed to find company with id '.$id);
         }
     }
 }

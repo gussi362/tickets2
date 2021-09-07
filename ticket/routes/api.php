@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Event;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -99,6 +100,18 @@ Route::group(['prefix' => 'appname' ,'namespace' => 'Api'], function () {
     Route::post('pay/{order_id}','PaymentController@pay');
     //events
     
+});
+
+//realtime events
+
+Route::get('test', function () {
+    event(new App\Events\EventAdded());
+    return "Event has been sent!";
+});
+
+Route::get('test', function () {
+    event(new App\Events\EventDeleted());
+    return "Event has been sent!";
 });
 
     //Route::get('events','EventController@getCurrentEvents');

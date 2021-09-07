@@ -18,27 +18,21 @@ class SponserController extends Controller
      */
     public function index()
     {
-        return Sponser::orderBy('id','asc')->get();
-    }
+        $sponsers = Sponser::orderBy('id','asc')->get();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return $this->getSuccessResponse('retrieved sponsers successfully' ,$sponsers);
+
     }
 
 
     //TODO: Override validator return message 
     public function messages()
-{
-    return [
-                'msg'=>'enter all fields'
-    ];
-}
+    {
+        return [
+                    'msg'=>'enter all fields'
+        ];
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -53,16 +47,19 @@ class SponserController extends Controller
             'image' => 'required',
             'event_id' => 'required'
         ]);
+        try
+        {
+            $sponser = Sponser::create($request->all());
+
+            $this->changeEventSponserStatus($request->input('event_id'));//update events column
         
-        $data = $request->all();
-        Sponser::create($data);
-        $this->changeEventSponserStatus($request->input('event_id'));//update events column
-       
-        $return_data = [
-            'responseCode'=>100,
-            'responseMessage'=>'Sponser added successfully',
-        ];
-        return $return_data; 
+            return $this->getSuccessResponse('sponser created successfully' ,$sponser);
+
+            
+        }catch(\Exception $e)
+        {
+            return $this->getErrorResponse('exception error' ,$e->getMesseage());
+        }
         
     }
 
@@ -82,18 +79,8 @@ class SponserController extends Controller
      */
     public function show($id)
     {
-        return Sponser::findorfail($id);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Sponser  $sponser
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Sponser $sponser)
-    {
-        //
+        $sponser = Sponser::findorfail($id);
+        return $this->getSuccessResponse('found sponser' ,$sponser);
     }
 
     /**
@@ -105,12 +92,24 @@ class SponserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $company= Sponser::find($id);
-        $company->update($request->all());
-        return [
-            'responseCode'=>100,
-            'responseMessage'=>'Updated sponser',
-        ];
+        $company= Sponser::findorfail($id);
+
+        foreach ($request->all() as $key => $value) {
+            //if ($value->$key) {
+            if ($value) {
+                $sponser->$key = $value;
+            }
+
+        }
+
+        if($sponser->update())
+        {
+            return $this->getSucessResponse('updated sponser successfully',$sponser);
+        }else
+        {
+            return $this->getErrorResponse('failed to update sponser with id '.$id);
+        }
+
     }
 
     /**
@@ -121,19 +120,13 @@ class SponserController extends Controller
      */
     public function destroy($id)
     {
-        $task = Sponser::findorFail($id);
-        if($task->delete())
+        $sponser = Sponser::findorFail($id);
+        if($sponser->delete())
         {
-            return  [
-                'responseCode'=>100,
-                'responseMessage'=>'Sponser deleted',
-            ];
+            return $this->getSuccessResponse('deleted sponser successfully' ,$sponser);
         }else
         {
-            return  [
-                'responseCode'=>102,
-                'responseMessage'=>'Failed to delete sponser',
-            ];
+            return $this->getErrorResponse('failed to delete sponser with id '.$id);
         }
     }
 }

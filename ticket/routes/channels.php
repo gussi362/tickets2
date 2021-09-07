@@ -12,6 +12,14 @@ use Illuminate\Support\Facades\Broadcast;
 | used to check if an authenticated user can listen to the channel.
 |
 */
+Broadcast::channel('testchannel', function ($user) {
+    return true;
+}); 
+
+//DASHBOARD ADMIN
+Broadcast::channel('eventChannel', function ($test) {
+    return true;
+}); 
 
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
