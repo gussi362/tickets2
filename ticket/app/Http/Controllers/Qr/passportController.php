@@ -30,15 +30,8 @@ class passportController extends Controller
                 ]);
      
             $token = $user->createToken('userToken')->accessToken;
-    
-            //return response()->json(['token' => $token], 200);
 
-            $user_data = ['user'=>$user,'token'=>'Bearer '.$token];
-            $data = ['responseCode'=>100,
-            'responseMessage'=>'Registered successfully',
-            'data'=>$user_data];
-
-            return response()->json($data);
+            return $this->getSuccessResponse('Registered successfully' ,[$user,'token'=>'Bearer '.$token]);
     
     }
     
@@ -56,10 +49,9 @@ class passportController extends Controller
             'password' => 'required|string'
         ]);
 
-        if ($validator->fails()) {
-            $data = ['responseCode'=>102,
-                     'responseMessage'=>'not all fields were entered'];
-            return response()->json($data);
+        if ($validator->fails()) 
+        {
+            return $this->getErrorResponse('not all fields were entered');
         }
 
         $data = [
@@ -69,23 +61,12 @@ class passportController extends Controller
         //$user = User::where('email','=',$request->email)->first();
         if(auth()->attempt($data))
         {
-            
             $token = auth()->user()->createToken('userToken')->accessToken;
-           
-            $user_data = ['user'=>auth()->user(),'token'=>'Bearer '.$token];
 
-            $data = ['responseCode'=>100,
-                     'responseMessage'=>'Logged in successfully',
-                     'data'=>$user_data];
-
-            return response()->json($data);
+            return $this->getSuccessResponse('Logged in successfully' ,[auth()->user(),'token'=>'Bearer '.$token]);
         }else
         {
-            
-            
-            $data = ['responseCode'=>102,
-                     'responseMessage'=>'Unauthorized'
-                    ];
+            return $this->getErrorResponse('invalid username or password.');
         }
     }
 }

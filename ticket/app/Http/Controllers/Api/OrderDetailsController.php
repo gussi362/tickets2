@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use Illuminate\Http\Request;
 use App\Models\OrderDetails;
 use App\Http\Controllers\Controller;
@@ -14,32 +15,7 @@ class OrderDetailsController extends Controller
     public function index()
     {
         $order = OrderDetails::orderBy('id','asc')->get();
-        $data = [
-            'responseCode'=>100,
-            'responseMessage'=>'retrieved order successful',
-            'data'=>['orderDetails'=>$order]];
-        return response()->json($data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return $this->getSuccessResponse('retrieved order details successfully' ,$order);
     }
 
     /**
@@ -51,22 +27,7 @@ class OrderDetailsController extends Controller
     public function show($id)
     {
         $order = OrderDetails::findorfail($id);
-        $data = ['responseCode'=>100,
-        'responseMessage'=>'order found',
-        'data'=>['orderDetails'=>$order]];
-        
-        return response()->json($data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->getSuccessResponse('retrieved order details successfully' ,$order);
     }
 
     /**
@@ -78,34 +39,22 @@ class OrderDetailsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $order= OrderDetails::find($id);
+        $order= OrderDetails::findorfail($id);
         
-        if($order->update($request->all()))
+        foreach ($request->all() as $key => $value) 
         {
-            $data = ['responseCode'=>100,
-                     'responseMessage'=>'updated order details successfully',
-                     'data'=>['orderDetails'=>$order]];
-                     
-            return response()->json($data);
+            //if ($value->$key) {
+            if ($value) {
+                $order->$key = $value;
+            }
+        }
+        if($order->update())
+        {
+            return $this->getSuccessResponse('updated order details successfully' ,$order);
         }else
         {
-
-            $data = ['responseCode'=>102,
-                     'responseMessage'=>'failed to update order details with id '.$id,
-                     'data'=>['orderDetails'=>$event]];
-                     
-            return response()->json($data);
+                     return $this->getErrorResponse('failed to update order details with id '.$id);
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

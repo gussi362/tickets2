@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\Ticket;
@@ -18,17 +18,9 @@ class TicketController extends Controller
      */
     public function index()
     {
-        return Ticket::orderBy('id','asc')->with('event')->get();
-    }
+        $ticket = Ticket::orderBy('id','asc')->with('event')->get();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        
+        return $this->getSuccessResponse('retrieved tickets successfully' ,$ticket);
     }
 
     /**
@@ -43,35 +35,30 @@ class TicketController extends Controller
         $validator = Validator::make($request->all(), [
             'event_id' => 'required',
             'amount' => 'required',
+            'name' => 'required',
             'status' => 'required',
             'details_ar' => 'required|string',
             'details_en' => 'required|string'
         ]);
 
-        if ($validator->fails()) {
-            $data = ['responseCode'=>102,
-                     'responseMessage'=>'not all fields were entered'];
-            return response()->json($data);
+        if ($validator->fails()) 
+        {
+            return $this->getErrorResponse('not all fields were entered');
         }
 
-        $data = $request->all();
-        $ticket = Ticket::create($data);
-        if($ticket->exists())
+        try
         {
-            $data = [
-                'responseCode'=>100,
-                'responseMessage'=>'created ticket successfully',
-                'data'=>['ticket'=>$ticket]];
-
-            return response()->json($data);
-        }else
+            $ticket = Ticket::create($request->all());
+            if($ticket->exists())
+            {
+                return $this->getSuccessResponse('created ticket successfully' ,$ticket);
+            }else
+            {
+                return $this->getErrorResponse('failed to create ticket');
+            }
+        }catch(\Exception $e)
         {
-            $data = [
-                'responseCode'=>102,
-                'responseMessage'=>'failed to create ticket',
-                    ];
-                    
-            return response()->json($data);
+            return $this->getErrorResponse('exception error' ,$e->getMessage());
         }
 
     }
@@ -85,22 +72,8 @@ class TicketController extends Controller
     public function show($id)
     {
         $ticket = Ticket::findorfail($id);
-        $data = ['responseCode'=>100,
-        'responseMessage'=>'ticket found',
-        'data'=>['ticket'=>$ticket]];
-        
-        return response()->json($data);
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->getSuccessResponse('ticket found' ,$ticket);
     }
 
     /**
@@ -112,23 +85,21 @@ class TicketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ticket= Ticket::find($id);
+        $ticket= Ticket::findorfail($id);
         
-        if($ticket->update($request->all()))
+        foreach ($request->all() as $key => $value) 
         {
-            $data = ['responseCode'=>100,
-                     'responseMessage'=>'updated ticket successfully',
-                     'data'=>['ticket'=>$ticket]];
-                     
-            return response()->json($data);
+            //if ($value->$key) {
+            if ($value) {
+                $ticket->$key = $value;
+            }
+        }
+        if($ticket->update())
+        {
+            return $this->getSuccessResponse('updated ticket successfully' ,$ticket);
         }else
-        {
-
-            $data = ['responseCode'=>102,
-                     'responseMessage'=>'failed to update ticket with id '.$id,
-                     'data'=>['ticket'=>$ticket]];
-                     
-            return response()->json($data);
+        {            
+            return $this->getErrorResponse('failed to update ticket with id '.$id);
         }
     }
 
@@ -143,16 +114,10 @@ class TicketController extends Controller
         $ticket = Ticket::findorFail($id);
         if($ticket->delete())
         {
-            $data = ['responseCode'=>100,
-                     'responseMessage'=>'deleted ticket',
-                      'data'=>['ticket'=>$ticket]];
-            return response()->json($data);
+            return $this->getSuccessResponse('deleted ticket successfully' ,$ticket);
         }else
         {
-            
-            $data = ['responseCode'=>102,
-                     'responseMessage'=>'failed to delete ticket with id '.$id,
-                      'data'=>['ticket'=>$ticket]];
+            return $this->getErrorResponse('failed to delete ticket with id '.$id);
         }
     }
 

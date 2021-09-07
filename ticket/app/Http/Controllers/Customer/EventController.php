@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\Controller;
 use Validator;
+//events 
+use App\Events\EventAdded;
+use App\Events\EventDeleted;
+
 class EventController extends Controller
 {
     /**
@@ -74,7 +78,7 @@ class EventController extends Controller
                 'responseCode'=>100,
                 'responseMessage'=>'created event successfully',
                 'data'=>['event'=>$event]];
-
+                broadcast(new EventAdded($event));
             return response()->json($data);
         }else
         {
@@ -157,6 +161,7 @@ class EventController extends Controller
             $data = ['responseCode'=>100,
                      'responseMessage'=>'deleted Event',
                       'data'=>['event'=>$task]];
+                      broadcast(new EventDeleted());
             return response()->json($data);
         }else
         {

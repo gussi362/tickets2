@@ -16,22 +16,9 @@ class DateController extends Controller
      */
     public function index()
     {
-        $date = Date::orderBy('date','asc')->with('event')->get();
-        $data = [
-            'responseCode'=>100,
-            'responseMessage'=>'retrieved event successful',
-            'data'=>['event'=>$date]];
-        return response()->json($data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-      
+        $date = Date::orderBy('date','desc')->with('event')->get();
+        
+        return $this->getSuccessResponse('retrieved date successfully',$date);
     }
 
     /**
@@ -48,29 +35,18 @@ class DateController extends Controller
             'created_by' => 'required|string'
         ]);
 
-        if ($validator->fails()) {
-            $data = ['responseCode'=>102,
-                     'responseMessage'=>'not all fields were entered'];
-            return response()->json($data);
+        if ($validator->fails()) 
+        {
+            return $this->getErrorResponse('not all fields were entered');
         }
-        $data = $request->all();
-        $date = Date::create($data);
+
+        $date = Date::create($request->all());
         if($date->exists())
         {
-            $data = [
-                'responseCode'=>100,
-                'responseMessage'=>'created date successfully',
-                'data'=>['date'=>$date]];
-
-            return response()->json($data);
+            return $this->getSuccessResponse('created date successfully',$date);
         }else
         {
-            $data = [
-                'responseCode'=>102,
-                'responseMessage'=>'failed to create date',
-                    ];
-                    
-            return response()->json($data);
+            return $this->getErrorResposne('failed to create date');
         }
     }
 
@@ -83,22 +59,8 @@ class DateController extends Controller
     public function show($id)
     {
         $date = Date::findorfail($id);
-        $data = ['responseCode'=>100,
-        'responseMessage'=>'date found',
-        'data'=>['date'=>$date]];
         
-        return response()->json($data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->getSuccessResponse('date found',$date);
     }
 
     /**
@@ -110,23 +72,24 @@ class DateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $date= Date::find($id);
+        $date= Date::findorfail($id);
         
-        if($date->update($request->all()))
+        foreach ($request->all() as $key => $value) {
+            //if ($value->$key) {
+            if ($value) {
+                $date->$key = $value;
+            }
+
+        }
+
+        if($date->update())
         {
-            $data = ['responseCode'=>100,
-                     'responseMessage'=>'updated date successfully',
-                     'data'=>['date'=>$date]];
-                     
-            return response()->json($data);
+            return $this->getSuccessResponse('updated date successfully',$date);
         }else
         {
-
-            $data = ['responseCode'=>102,
-                     'responseMessage'=>'failed to update date with id '.$id,
-                     'data'=>['date'=>$date]];
+            return $this->getErrorResponse('failed to update date with id '.$id);
         }                
-            return response()->json($data);
+         
     }
 
     /**
@@ -140,16 +103,10 @@ class DateController extends Controller
         $date = Date::findorFail($id);
         if($date->delete())
         {
-            $data = ['responseCode'=>100,
-                     'responseMessage'=>'deleted Date',
-                      'data'=>['date'=>$date]];
-            return response()->json($data);
+            return $this->getErrorResposne('failed to delete date with id '.$id);
         }else
         {
-            
-            $data = ['responseCode'=>102,
-                     'responseMessage'=>'failed to delete Date with id '.$id,
-                      'data'=>['date'=>$date]];
+            return $this->getErrorResposne('failed to delete date with id '.$id);
         }
     }
 }

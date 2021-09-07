@@ -7,6 +7,7 @@ use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 use Str;
 use App\Models\OrderDetails;
+use App\Models\Ticket;
 use App\Http\Controllers\Controller;
 use Validator;
 class OrderController extends Controller
@@ -36,12 +37,10 @@ class OrderController extends Controller
         
         $validator = Validator::make($request->all() ,[
         
-            'ticket_id' => 'required',
+            'ticket' => 'required',
             'date_id' => 'required',
             'name' => 'required',
             'phone' => 'required',
-            'count' => 'required',
-
         ]);
 
         if ($validator->fails()) 
@@ -52,41 +51,96 @@ class OrderController extends Controller
         //when ordering 
         //an order details is added with number of tickets under order
         //an order status is added with pending flag
-
-        if($request->count > $this->getTicketsLeft($this->getEventId($request->ticket_id),$request->ticket_id))
-        {
-            //return [['status'=>'error ,not enough tickets available tickets = '.$this->getTicketsLeft($this->getEventId($request->input('ticket_id')),$request->input('ticket_id'))],422];
-            return $this->getErrorResponse('error ,not enough tickets available tickets = '.$this->getTicketsLeft($this->getEventId($request->input('ticket_id')),$request->input('ticket_id')));
-
-        }else
-        {
-            DB::beginTransaction();
-            try
+        $tickets = json_decode($request->ticket);
+       // if($request->count > $this->getTicketsLeft($this->getEventId($request->ticket_id),$request->ticket_id))
+        $j=0;
+       for($i=1 ;$i<=count($tickets); $i+=1)
+       {
+            if(!$this->isThereEnoughTickets($tickets[$i]->ticket_id,$tickets[$i]->count))
             {
-                $data = $request->all();
-                $data['code'] = $this->generateRandom();;
-                $data['id'] =  Str::uuid();
-                $data['amount'] = $this->getTotal($this->getTicketPrice($request->ticket_id) ,$request->count);
-              
-                $order=Order::create($data);
+                //return [['status'=>'error ,not enough tickets available tickets = '.$this->getTicketsLeft($this->getEventId($request->input('ticket_id')),$request->input('ticket_id'))],422];
+                return $this->getErrorResponse('error ,not enough ticket '.$tickets[$i]->ticket_id.' available tickets = '.$this->getLeftTicketsAmount($tickets[$i]->ticket_id));
 
-                $this->createOrderDetails($request->count ,$order->code ,$request->ticket_id);
-                
-                DB::commit();
-
-                return $this->getSuccessResponse('created order successfully' ,$order);
-                
-                
-            } catch (\Exception $e) 
+            }else
             {
-                DB::rollback();
-                return $this->getErrorResponse('failed to create order' ,$e->getMessage());
+                DB::beginTransaction();
+                try
+                {
+                    
+                    $data = $request->all();
+                    $data['code'] = $this->generateRandom();;
+                    $data['id'] =  Str::uuid();
+                    $data['amount'] = $this->getTotal($this->getTicketPrice($tickets[$i]->ticket_id) ,$tickets[$i]->count);
+                    
+                    $order=Order::create($data);
 
+                    $this->setOrderedTicketsAmount($tickets[$i]->ticket_id ,($tickets[$i]->count + $this->getOrderedTicketsAmount($tickets[$i]->count)));
+                    $this->createOrderDetails($tickets[$i]->count ,$order->code ,$tickets[$i]->ticket_id);
+                    
+                    DB::commit();
+
+                    return $this->getSuccessResponse('created order successfully' ,$order);
+                    
+                    
+                } catch (\Exception $e) 
+                {
+                    DB::rollback();
+                    return $this->getErrorResponse('failed to create order' ,$e->getMessage());
+
+                }
             }
-        }
+       }
+       
+
         
     }
 
+
+    /**
+     * get tickets ordered
+     * @param ticket_id 
+     */    
+    public function getOrderedTicketsAmount($ticket_id)
+    {
+        return Ticket::where('id',$ticket_id)->first()->ordered;
+    }
+
+    /**
+     * set tickets ordered when creating an order
+     * @param amount number of new tickets
+     * @param ticket_id 
+     */
+    public function setOrderedTicketsAmount($ticket_id ,$amount)
+    {
+        $ticket= Ticket::where('id',$ticket_id)->first();
+        $ticket->update(['ordered' => $amount]);
+        
+        return $ticket->ordered;
+    }
+
+    /**
+     * return true when tickets are enough to satisfy the order
+     * @param count number of seats for this ticket on order with code
+     * 
+     * @param ticket_id 
+     */
+    public function isThereEnoughTickets($ticket_id,$count)
+    {
+        $ticket = $this->getTotalQuanitiyOfTickets($this->getEventId($ticket_id));
+        return ($count <=($ticket - $this->getOrderedTicketsAmount($ticket_id))) ? true :false ;
+    }
+
+     /**
+     * event.ticket_count - tickets_ordered
+     * @param count number of seats for this ticket on order with code
+     * @param code unique random number of order
+     * @param ticket_id 
+     */
+    public function getLeftTicketsAmount($ticket_id)
+    {
+        $ticket = Ticket::where('id',$ticket_id)->first();
+        return $ticket->amount - $ticket->ordered;
+    }
     /**
      * creating order details for order
      * @param count number of seats for this ticket on order with code
