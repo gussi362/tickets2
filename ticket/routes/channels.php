@@ -21,6 +21,11 @@ Broadcast::channel('eventChannel', function ($test) {
     return true;
 }); 
 
+Broadcast::channel('orderChannel', function ($test) {
+    return true;
+}); 
+
+
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });

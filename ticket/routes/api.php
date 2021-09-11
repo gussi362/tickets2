@@ -35,17 +35,13 @@ Route::group(['prefix' => 'admin','middleware'=>['checkStatus','auth:api'], 'nam
     Route::apiResource('date','DateController');
 
     Route::apiResource('sponser','SponserController');
-
-Route::group(['prefix' => 'dashboard'], function(){
-
-    Route::get('/','CompanyController@getCompaniesWithEvents');
-    Route::get('/{company_id}','CompanyController@getCompanyWithEvents');
-
-    Route::get('event/current','EventController@getEventsCurrent');
-    Route::get('event/{event_id}','EventController@getCompanyEvent');
-    Route::get('event/company/{company_id}','EventController@getCompanyEvents');
     
-});
+
+    Route::group(['prefix' => 'dashboard'], function(){
+
+        Route::get('/','DashboardController@getOverview');
+        
+    });
     
 });
 
@@ -65,18 +61,9 @@ Route::group(['prefix' => 'user','middleware'=>['checkStatusUser','auth:api'],'n
 
     Route::group(['prefix' => 'dashboard'], function(){
 
-        Route::get('event/current','EventController@getEventsCurrent');
-        Route::get('event/{event_id}','EventController@getCompanyEvent');
-        Route::get('event/company/{company_id}','EventController@getCompanyEvents');
-    
-        //dashboard 
-    
-        Route::get('events','EventController@getEventsDetails');
-        Route::get('events/details','EventController@getCompanyCurrentEventsDetails');
-        Route::get('tickets','TicketController@getCompanyTicketsDetails');
-    
+        Route::get('/','DashboardController@getOverview');
+        
     });
-
     
 });
 

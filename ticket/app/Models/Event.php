@@ -51,12 +51,22 @@ class Event extends Model
         return $this->hasMany('App\Models\Ticket');
     }
 
+    public function reservedTickets()
+    {
+        return $this->hasMany('App\Models\Ticket','event_id','id')->select('ordered','event_id');
+    }
+
+    public function eventTotal()
+    {
+        return $this->hasMany('App\Models\Ticket','event_id','id')->withSum('order','amount');
+    }
+
     //get orderedTicketsCounts and total
     public function ticketCount()
     {
         //how to add foreign key
         //return $this->hasManyThrough('App\Models\Ticket','App\Models\Order');
-        return $this->hasMany('App\Models\Ticket')->withCount('order')->withSum('order','amount');;
+        return $this->hasMany('App\Models\Ticket')->withCount('order')->withSum('order','amount');
 
     }
 
@@ -82,7 +92,6 @@ class Event extends Model
     {
         return $this->hasMany('App\Models\Order');
     }
-
 
     // public function availableEvents() {
     //     return $this->where('status','=', 'true')->where('date','>=','current_date');

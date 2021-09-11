@@ -78,7 +78,7 @@ class OrderController extends Controller
                     $this->createOrderDetails($tickets[$i]->count ,$order->code ,$tickets[$i]->ticket_id);
                     
                     DB::commit();
-
+                    broadcast(new OrderAdded($order));
                     return $this->getSuccessResponse('created order successfully' ,$order);
                     
                     
