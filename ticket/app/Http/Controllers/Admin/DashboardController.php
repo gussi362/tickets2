@@ -62,4 +62,19 @@ class DashboardController extends Controller
                     ->select('name_en','name_ar','ticket_count','company_id','id')
                     ->get();
     }
+
+//for event 
+public static function getOverviewEvent()
+{
+
+    return $this->getSuccessResponse('overview',[
+                                    'companiesCount'=>$this->getCompaniesCount(),
+                                    'eventsCount'=>$this->getEventsCount(),
+                                    'totalTickets'=>$this->getEventsTotalTickets(),
+                                    'totalReservedTickets'=>$this->getEventsTotalReservedTickets(),
+                                    'eventsTotal'=>$this->getEventsTotal(),
+                                    'lastFiveEvents'=>$this->getLastFiveEvents()
+                                    ]);
+
+} 
 }

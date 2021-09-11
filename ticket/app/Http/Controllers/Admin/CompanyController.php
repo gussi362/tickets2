@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Company;
 use Validator;
 use App\Http\Controllers\Controller;
+
+use App\Events\Dashboard\Admin\overviewChanged;
 class CompanyController extends Controller
 {
     /**
@@ -55,6 +57,7 @@ class CompanyController extends Controller
             $company = Company::create($request->all());
             if($company->exists())
             {
+                broadcast(new overviewChanged($company));
                 return $this->getSuccessResponse('created company successfully',$company);
             }else
             {           

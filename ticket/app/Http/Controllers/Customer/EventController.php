@@ -13,6 +13,7 @@ use Validator;
 //events 
 use App\Events\EventAdded;
 use App\Events\EventDeleted;
+use App\Events\Dashboard\Customer\overviewChanged;
 
 class EventController extends Controller
 {
@@ -79,6 +80,8 @@ class EventController extends Controller
                 'responseMessage'=>'created event successfully',
                 'data'=>['event'=>$event]];
                 broadcast(new EventAdded($event));
+                broadcast(new overviewChanged($event));
+
             return response()->json($data);
         }else
         {

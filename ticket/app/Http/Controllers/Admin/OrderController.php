@@ -10,6 +10,8 @@ use App\Models\OrderDetails;
 use App\Models\Ticket;
 use App\Http\Controllers\Controller;
 use Validator;
+use App\Events\OrderAdded;
+use App\Events\Dashboard\Admin\overviewChanged;
 class OrderController extends Controller
 {
 
@@ -79,6 +81,7 @@ class OrderController extends Controller
                     
                     DB::commit();
                     broadcast(new OrderAdded($order));
+                    broadcast(new overviewChanged($order));
                     return $this->getSuccessResponse('created order successfully' ,$order);
                     
                     
