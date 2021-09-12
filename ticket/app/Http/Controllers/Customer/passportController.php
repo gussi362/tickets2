@@ -59,6 +59,7 @@ class passportController extends Controller
             'password' => $request -> password
         ];
         //$user = User::where('email','=',$request->email)->first();
+        //customer guard
         if(auth()->attempt($data))
         {
             $token = auth()->user()->createToken('userToken')->accessToken;

@@ -16,8 +16,8 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             
             $table->uuid('id');
-            $table->bigInteger('ticket_id')->unsigned();
-            $table->foreign('ticket_id')->references('id')->on('tickets');
+            $table->bigInteger('event_id')->unsigned();
+            $table->foreign('event_id')->references('id')->on('events');
             $table->bigInteger('date_id')->unsigned();
             $table->foreign('date_id')->references('id')->on('dates');
             $table->string('name');

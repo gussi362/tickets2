@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 
 use App\Models\Order;
 
-class EventDeleted implements ShouldBroadcast
+class OrderAdded implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

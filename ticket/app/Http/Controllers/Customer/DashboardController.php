@@ -9,8 +9,10 @@ use App\Models\Event;
 use App\Models\Ticket;
 use App\Models\Order;
 
+
 class DashboardController extends Controller
 {
+    //TODO: add charts  events:total ,events:tickets
     public function getOverview()
     {
         
@@ -34,7 +36,10 @@ class DashboardController extends Controller
 
     private function getEventsTotal()
     {
-        return Order::get()->Sum('amount');
+
+        $companyId = auth()->user()->company_id;
+        $eventsId = Event::where('company_id',$companyId )->pluck('id');
+        return Order::whereIn('event_id', $eventsId)->get()->Sum('amount');
     }
 
     private function getEventsTotalTickets()
@@ -42,17 +47,27 @@ class DashboardController extends Controller
         return Event::where('company_id',auth()->user()->company_id)->get()->Sum('ticket_count');
     }
 
+
     private function getEventsTotalReservedTickets()
+    {
+        $companyId = auth()->user()->company_id;
+        $eventsId = Event::where('company_id',$companyId )->pluck('id');
+        return Ticket::whereIn('event_id',$eventsId)->get()->Sum('ordered');
+    }
+
+
+    private function getEventsTotalReservedTickets2()
     {//TODO:fix this ,it returns the total of all tickets,tried to do that based on company.event 
         //still it returned event then the tickets total of the event it should be the hole tickets for company.events
         return Event::where('company_id',auth()->user()->company_id)
                             ->with('reservedTickets')
+                            ->select('id')
                             ->get();
     }
 
     private function getLastFiveOrders()
     {
-        return Order::take(5)
+        return Order::orderBy('created_at','desc')->take(5)
                     ->with('ticket',function($query){//we need event_id for order
                         $query->select('event_id','id')
                               ->with('event',function($q){//then we need to get the event name for readable display

@@ -12,7 +12,7 @@ class Order extends Model
     protected $fillable = 
     [
         'id',
-        'ticket_id',
+        'event_id',
         'date_id',
         'name',
         'phone',

@@ -55,7 +55,8 @@ class DashboardController extends Controller
     private function getLastFiveEvents()
     {//TODO:How to turn all of these into relationship .eg ordersTotal for event from event model 
         //latest not working with realtionship
-        return Event::take(5)
+        return Event::orderBy('created_at','desc')
+                    ->take(5)
                     ->with('reservedTickets')
                     ->with('companyName')
                     ->with('eventTotal')

@@ -58,7 +58,7 @@ class Event extends Model
 
     public function eventTotal()
     {
-        return $this->hasMany('App\Models\Ticket','event_id','id')->withSum('order','amount');
+        return $this->hasMany('App\Models\Order')->Sum('amount');
     }
 
     //get orderedTicketsCounts and total

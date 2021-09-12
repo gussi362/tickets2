@@ -27,6 +27,13 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::routes();
+
+        //define passport roles
+        Passport::tokensCan([
+            'user' => 'Access Admin Backend',
+            'customer' => 'Access Customer App',
+        ]);
+
         //
     }
 }

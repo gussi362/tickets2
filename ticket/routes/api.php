@@ -15,14 +15,19 @@ use App\Models\Event;
 */
 //Route::get('eventsz','Admin\EventController@getCurrentEvents');
 // passport routes 
-Route::post('login', 'passportController@login');
 
 Route::post('register', 'passportController@register');
 
+//login since we using multiple guards
+Route::post('user/login', 'Customer\passportController@login')->middleware('auth:api');
+
+//login since we using multiple guards
+Route::post('login', 'passportController@login');
 
 
 Route::group(['prefix' => 'admin','middleware'=>['checkStatus','auth:api'], 'namespace'=>'Admin'], function () {
 
+    
     Route::apiResource('company','CompanyController');
     
     Route::apiResource('event','EventController');

@@ -41,6 +41,7 @@ class OrderController extends Controller
         
             'ticket' => 'required',
             'date_id' => 'required',
+            'event_id' => 'required',
             'name' => 'required',
             'phone' => 'required',
         ]);
@@ -56,7 +57,8 @@ class OrderController extends Controller
         $tickets = json_decode($request->ticket);
        // if($request->count > $this->getTicketsLeft($this->getEventId($request->ticket_id),$request->ticket_id))
         $j=0;
-       for($i=1 ;$i<=count($tickets); $i+=1)
+        
+       for($i=0 ;$i<count($tickets); $i+=1)
        {
             if(!$this->isThereEnoughTickets($tickets[$i]->ticket_id,$tickets[$i]->count))
             {
@@ -75,13 +77,15 @@ class OrderController extends Controller
                     $data['amount'] = $this->getTotal($this->getTicketPrice($tickets[$i]->ticket_id) ,$tickets[$i]->count);
                     
                     $order=Order::create($data);
-
-                    $this->setOrderedTicketsAmount($tickets[$i]->ticket_id ,($tickets[$i]->count + $this->getOrderedTicketsAmount($tickets[$i]->count)));
+                    
+                    $this->setOrderedTicketsAmount($tickets[$i]->ticket_id ,($tickets[$i]->count + $this->getOrderedTicketsAmount($tickets[$i]->ticket_id)));
                     $this->createOrderDetails($tickets[$i]->count ,$order->code ,$tickets[$i]->ticket_id);
                     
                     DB::commit();
                     broadcast(new OrderAdded($order));
+                    
                     broadcast(new overviewChanged($order));
+                    
                     return $this->getSuccessResponse('created order successfully' ,$order);
                     
                     
@@ -294,9 +298,7 @@ class OrderController extends Controller
      */
     private function getTotalAmountOfOrders($ticket_id)
     {
-        $tickets_sum = DB::table('orders')->where('ticket_id','=',$ticket_id)->sum('count');
-
-        return $tickets_sum;
+        return Ticket::where('id',$ticket_id)->ordered;
     }
 
     /**

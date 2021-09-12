@@ -41,6 +41,12 @@ return [
             'provider' => 'users',
         ],
 
+        'customer' => [
+            'driver' => 'passport',
+            'provider' => 'customers',
+            'hash' => false,
+        ],
+
         'api' => [
             'driver' => 'passport',
             'provider' => 'users',
@@ -71,6 +77,11 @@ return [
             'model' => App\Models\User::class,
         ],
 
+        'customers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Customer::class,
+        ],
+
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -95,6 +106,14 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        //Admin(users) can share the same password_rests table
+        'customers' => [
+            'provider' => 'customers',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
