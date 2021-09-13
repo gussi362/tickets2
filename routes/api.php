@@ -19,7 +19,12 @@ use App\Models\Event;
 Route::post('register', 'passportController@register');
 
 //login since we using multiple guards
-Route::post('user/login', 'Customer\passportController@login')->middleware('auth:api');
+Route::group(['guard' => 'customer'], function () {
+    // ...
+    Route::post('user/login', 'Customer\passportController@login')->withoutmiddleware('auth:customer');
+    Route::post('user/loginInfo', 'Customer\passportController@info')->middleware(['customer']);
+
+});
 
 //login since we using multiple guards
 Route::post('login', 'passportController@login');

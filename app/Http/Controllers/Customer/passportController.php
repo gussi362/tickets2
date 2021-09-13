@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use Illuminate\Http\Request;
 
+use Auth;
 use App\Models\User;
 
 use Validator;
@@ -60,14 +61,21 @@ class passportController extends Controller
         ];
         //$user = User::where('email','=',$request->email)->first();
         //customer guard
-        if(auth()->attempt($data))
+        if(auth()->guard('customer')->attempt($data))
         {
-            $token = auth()->user()->createToken('userToken')->accessToken;
+            $user = auth()->guard('customer')->user();//
+            
+            $token = $user->createToken('userToken')->accessToken;
 
             return $this->getSuccessResponse('Logged in successfully' ,[auth()->user(),'token'=>'Bearer '.$token]);
         }else
         {
             return $this->getErrorResponse('invalid username or password.');
         }
+    }
+
+    public function info()
+    {
+        return auth()->guard('customer')->user();
     }
 }
