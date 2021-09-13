@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->bigInteger('company_id')->unsigned();
+            $table->bigInteger('company_id')->nullable()->unsigned();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->bigInteger('type')->unsigned();
             $table->foreign('type')->references('id')->on('types')->onDelete('cascade');
