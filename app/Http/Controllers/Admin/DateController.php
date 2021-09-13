@@ -32,7 +32,6 @@ class DateController extends Controller
        $validator = Validator::make($request->all(),[
             'event_id' => 'required',
             'date' => 'required|date',
-            'created_by' => 'required|string'
         ]);
 
         if ($validator->fails()) 
@@ -40,7 +39,9 @@ class DateController extends Controller
             return $this->getErrorResponse('not all fields were entered');
         }
 
-        $date = Date::create($request->all());
+        $data = $request->all();
+        $data['created_by'] = auth()->user()->id;
+        $date = Date::create($data);
         if($date->exists())
         {
             return $this->getSuccessResponse('created date successfully',$date);

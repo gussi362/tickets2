@@ -14,22 +14,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $id)
+    public function index()
     {
-        $user = User::find($id)->first();
-        //return $user->company_id;
-       return DB::table('events')->where('company_id','=','1');
-    }
+         $users = User::orderBy('id')->get();
+         return $this->getSuccessResponse('retrieved users successfully' ,$users);
 
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**

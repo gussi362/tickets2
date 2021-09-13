@@ -20,6 +20,8 @@ class CreateSponsersTable extends Migration
             $table->string('image');
             $table->bigInteger('event_id')->unsigned();
             $table->foreign('event_id')->references('id')->on('events');
+            $table->bigInteger('created_by')->unsigned();
+            $table->foreign('created_by')->references('id')->on('users');
             $table->timestamps();
         });
     }

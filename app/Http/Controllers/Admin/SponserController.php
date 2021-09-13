@@ -49,7 +49,9 @@ class SponserController extends Controller
         ]);
         try
         {
-            $sponser = Sponser::create($request->all());
+            $data = $request->all();
+            $data['created_by'] = auth()->user()->id;
+            $sponser = Sponser::create($data);
 
             $this->changeEventSponserStatus($request->input('event_id'));//update events column
         
@@ -58,7 +60,7 @@ class SponserController extends Controller
             
         }catch(\Exception $e)
         {
-            return $this->getErrorResponse('exception error' ,$e->getMesseage());
+            return $this->getErrorResponse('exception error' ,$e->getMessage());
         }
         
     }

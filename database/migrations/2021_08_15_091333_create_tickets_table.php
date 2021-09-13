@@ -24,6 +24,8 @@ class CreateTicketsTable extends Migration
             $table->longText('details_ar');
             $table->longText('details_en');
             $table->timestamps();
+            $table->bigInteger('created_by')->unsigned();
+            $table->foreign('created_by')->references('id')->on('users');
         });
     }
 

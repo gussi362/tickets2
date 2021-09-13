@@ -45,7 +45,6 @@ class CompanyController extends Controller
             'phone' => 'required',
             'address' => 'required|string',
             'status' => 'required',
-            'created_by' => 'required'
         ]);
 
         if ($validator->fails()) 
@@ -53,8 +52,9 @@ class CompanyController extends Controller
             return $this->getErrorResponse('not all fields were entered');
         }
         try{
-
-            $company = Company::create($request->all());
+            $data = $request->all();
+            $data['created_by'] = auth()->user()->id;
+            $company = Company::create($data);
             if($company->exists())
             {
                 broadcast(new overviewChanged($company));

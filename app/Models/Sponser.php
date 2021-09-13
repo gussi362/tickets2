@@ -13,7 +13,8 @@ class Sponser extends Model
         'name_ar',
         'name_en',
         'image',
-        'event_id'
+        'event_id',
+        'created_by'
     ];
 
 
