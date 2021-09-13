@@ -72,6 +72,7 @@ class EventController extends Controller
         }
         
         $data = $request->all();
+        $data['created_by'] = auth()->user()->id;
         $event = Event::create($data);
         if($event->exists())
         {

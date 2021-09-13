@@ -32,15 +32,17 @@ class DateController extends Controller
        $validator = Validator::make($request->all(),[
             'event_id' => 'required',
             'date' => 'required|date',
-            'created_by' => 'required|string'
         ]);
 
         if ($validator->fails()) 
         {
             return $this->getErrorResponse('not all fields were entered');
         }
+        
+        $data = $request->all();
+        $data['created_by'] = auth()->user()->id;
+        $date = Date::create($data);
 
-        $date = Date::create($request->all());
         if($date->exists())
         {
             return $this->getSuccessResponse('created date successfully',$date);

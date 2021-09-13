@@ -48,7 +48,10 @@ class TicketController extends Controller
 
         try
         {
-            $ticket = Ticket::create($request->all());
+            $data = $request->all();
+            $data['created_by'] = auth()->user()->id;
+            
+            $ticket = Ticket::create($data);
             if($ticket->exists())
             {
                 return $this->getSuccessResponse('created ticket successfully' ,$ticket);
