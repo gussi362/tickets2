@@ -45,6 +45,8 @@ Route::group(['prefix' => 'admin','middleware'=>['checkStatus','auth:api'], 'nam
     Route::apiResource('date','DateController');
 
     Route::apiResource('sponser','SponserController');
+
+    Route::apiResource('user','UserController');
     
 
     Route::group(['prefix' => 'dashboard'], function(){
@@ -69,6 +71,8 @@ Route::group(['prefix' => 'user','middleware'=>['checkStatusUser','auth:api'],'n
 
     Route::apiResource('sponser','SponserController');
 
+    Route::apiResource('user','UserController');
+    
     Route::group(['prefix' => 'dashboard'], function(){
 
         Route::get('/','DashboardController@getOverview');

@@ -105,7 +105,7 @@ class DateController extends Controller
         $date = Date::findorFail($id);
         if($date->delete())
         {
-            return $this->getErrorResposne('failed to delete date with id '.$id);
+            return $this->getSuccessResponse('deleted date with id '.$id);
         }else
         {
             return $this->getErrorResposne('failed to delete date with id '.$id);
