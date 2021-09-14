@@ -18,6 +18,9 @@ use App\Models\Event;
 
 Route::post('register', 'passportController@register');
 
+//doesn't need to be authintcated to rest the password
+Route::post('resetPassword', 'passportController@resetPassword');
+Route::post('reset', 'passportController@resetPasswordWithToken');
 //login since we using multiple guards
 Route::group(['guard' => 'customer'], function () {
     // ...
@@ -47,7 +50,8 @@ Route::group(['prefix' => 'admin','middleware'=>['checkStatus','auth:api'], 'nam
     Route::apiResource('sponser','SponserController');
 
     Route::apiResource('user','UserController');
-    
+
+    Route::post('changePassword', 'passportController@changePassword');
 
     Route::group(['prefix' => 'dashboard'], function(){
 
@@ -72,6 +76,8 @@ Route::group(['prefix' => 'user','middleware'=>['checkStatusUser','auth:api'],'n
     Route::apiResource('sponser','SponserController');
 
     Route::apiResource('user','UserController');
+
+    Route::post('changePassword', 'passportController@changePassword');
     
     Route::group(['prefix' => 'dashboard'], function(){
 

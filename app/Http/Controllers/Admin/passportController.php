@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
-use App\Models\User;
-
 use Validator;
+use Hash;
+
 use App\Http\Controllers\Controller;
+use App\Models\User;
 class passportController extends Controller
 {
     
@@ -69,4 +70,47 @@ class passportController extends Controller
             return $this->getErrorResponse('invalid username or password.');
         }
     }
+
+    public function changePassword(Request $request)
+    {
+        $validator =  Validator::make($request->all(),[
+            'old_password' => 'required|string',
+            'new_password' => 'required|string',
+            'new_password_confirmation' => 'required|string'
+        ]);
+
+        if ($validator->fails()) 
+        {
+            return $this->getErrorResponse('not all fields were entered');
+        }
+
+        $user = User::where('id',auth()->user()->id)->first();
+
+        //if(bcrypt($request->old_password == bcrypt($request->new_password)) it's impossible to compared hashed password ,cause the salt everytime a password is hashed is different
+        if ( !Hash::check($request->old_password ,$user->password) ) 
+        {
+            return $this->getErrorResponse('wrong old password');
+        }
+
+        if( Hash::check($request->new_password ,$user->password) )
+        {
+            return $this->getErrorResponse('can\'t use the same password');
+        }
+
+        if( $request->new_password != $request->new_password_confirmation )
+        {
+            return $this->getErrorResponse('new password and new password confirmation doesn\'t match');
+        }
+
+        $user->password = bcrypt($request->new_password);
+
+        if($user->update())
+        {
+            return $this->getSuccessResponse('changed password successfully' ,$user);
+        }else
+        {
+            return $this->getErrorResponse('failed to change password');
+        }
+    }
+
 }
