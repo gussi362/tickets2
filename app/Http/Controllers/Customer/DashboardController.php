@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Ticket;
 use App\Models\Order;
-
+use App\Models\OrderDetails;
 
 class DashboardController extends Controller
 {
-    //TODO: add charts  events:total ,events:tickets
+    // added charts  events:total ,events:tickets ,tickets:checkedIn
     public function getOverview()
     {
         
@@ -21,7 +21,12 @@ class DashboardController extends Controller
                                         'totalTickets'=>$this->getEventsTotalTickets(),
                                         'totalReservedTickets'=>$this->getEventsTotalReservedTickets(),
                                         'eventsTotal'=>$this->getEventsTotal(),
-                                        'lastFiveOrders'=>$this->getLastFiveOrders()
+                                        'lastFiveOrders'=>$this->getLastFiveOrders(),
+                                        
+                                        'charts'               => ['events' => $this->getEventsCount(),
+                                                                    'reservedTickets' => $this->getEventsTotalReservedTickets(),
+                                                                    'ticketsCheckedIn' => $this->getCheckedInCount()
+                                                                ]
                                         ]);
 
     } 
@@ -47,22 +52,10 @@ class DashboardController extends Controller
         return Event::where('company_id',auth()->user()->company_id)->get()->Sum('ticket_count');
     }
 
-
     private function getEventsTotalReservedTickets()
     {
-        $companyId = auth()->user()->company_id;
-        $eventsId = Event::where('company_id',$companyId )->pluck('id');
+        $eventsId = Event::where('company_id',auth()->user()->company_id )->pluck('id');
         return Ticket::whereIn('event_id',$eventsId)->get()->Sum('ordered');
-    }
-
-
-    private function getEventsTotalReservedTickets2()
-    {//TODO:fix this ,it returns the total of all tickets,tried to do that based on company.event 
-        //still it returned event then the tickets total of the event it should be the hole tickets for company.events
-        return Event::where('company_id',auth()->user()->company_id)
-                            ->with('reservedTickets')
-                            ->select('id')
-                            ->get();
     }
 
     private function getLastFiveOrders()
@@ -78,4 +71,21 @@ class DashboardController extends Controller
                     // ->select('id','name','count','amount')
                     ->get();
     }
+
+    //charts info
+    private function getCheckedInCount()
+        {        
+            //this user company ,this user eevents ,this user orders ,this users checkedIn tickets
+            $companyId = auth()->user()->company_id;
+            $events = Event::where('company_id',$companyId)->pluck('id');
+            $orders = Order::whereIn('event_id',$events)->pluck('code');
+            return $orderDetails = OrderDetails::where(function ($query) use ($orders)
+                                                        {
+                                                            foreach($orders as $code)
+                                                            {
+                                                                $query->orWhere('serial','like','%'.$code.'%');
+                                                            }
+                                                        })->count();
+            
+        }
 }
