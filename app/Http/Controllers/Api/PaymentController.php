@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Http\Controllers\Controller;
 use App\Models\ttype;
+use App\Events\OrderAdded;
 
 use QrCode;
 class PaymentController extends Controller
@@ -32,10 +33,12 @@ class PaymentController extends Controller
             {
                     $order = $this->getOrder($order_id);
                     $order_details = OrderDetails::where('serial','like',$serial.'%')->get();
+                    broadcast(new OrderAdded($order,true));
                     $data = ['responseCode'=>102,
                              'responseMessage'=>'successful payment',
                              'data' => ['order'=>$order,'orderDetails'=>$order_details]
                     ];
+
                     return $data;
                 
               

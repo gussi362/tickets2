@@ -191,7 +191,7 @@ class OrderController extends Controller
      */
     public function destroyOrderDetails($code)
     {
-        OrderDetails::where('serial','like',$serial.'%')->delete();
+        OrderDetails::where('serial','like',$code.'%')->delete();
     }
 
     /**
