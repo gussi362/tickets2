@@ -25,21 +25,7 @@ class EventController extends Controller
     public function index()
     {
         $event = Event::orderBy('name_en','asc')->get();
-        $data = [
-            'responseCode'=>100,
-            'responseMessage'=>'retrieved event successful',
-            'data'=>['event'=>$event]];
-        return response()->json($data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-       
+        return $this->getSuccessResponse('retrieved events successfully',$event);
     }
 
     /**
@@ -65,10 +51,9 @@ class EventController extends Controller
             'coordinates' => 'required|string'
         ]);
 
-        if ($validator->fails()) {
-            $data = ['responseCode'=>102,
-                     'responseMessage'=>'not all fields were entered'];
-            return response()->json($data);
+        if ($validator->fails()) 
+        {
+            $this->getErrorResponse('not all fields were entered');
         }
         
         $data = $request->all();
@@ -76,22 +61,13 @@ class EventController extends Controller
         $event = Event::create($data);
         if($event->exists())
         {
-            $data = [
-                'responseCode'=>100,
-                'responseMessage'=>'created event successfully',
-                'data'=>['event'=>$event]];
-                broadcast(new EventAdded($event));
-                broadcast(new overviewChanged($event));
+            broadcast(new EventAdded($event));
+            broadcast(new overviewChanged($event));
 
-            return response()->json($data);
+            return $this->getSuccessResponse('created event successfully',$event);
         }else
         {
-            $data = [
-                'responseCode'=>102,
-                'responseMessage'=>'failed to create event',
-                    ];
-                    
-            return response()->json($data);
+            return $this->getErrorResponse('failed to create event');
         }
     }
 
@@ -104,22 +80,7 @@ class EventController extends Controller
     public function show($id)
     {
         $event = Event::findorfail($id);
-        $data = ['responseCode'=>100,
-        'responseMessage'=>'event found',
-        'data'=>['event'=>$event]];
-        
-        return response()->json($data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->getSuccessResponse('event found',$event);
     }
 
     /**
@@ -131,23 +92,14 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $event= Event::find($id);
+        $event= Event::findorfail($id);
         
         if($event->update($request->all()))
         {
-            $data = ['responseCode'=>100,
-                     'responseMessage'=>'updated event successfully',
-                     'data'=>['event'=>$event]];
-                     
-            return response()->json($data);
+            return $this->getSuccessResponse('updated event successfully',$event);
         }else
         {
-
-            $data = ['responseCode'=>102,
-                     'responseMessage'=>'failed to update event with id '.$id,
-                     'data'=>['event'=>$event]];
-                     
-            return response()->json($data);
+            return $this->getErrorResponse('failed to update event with id '.$id,$event);
         }
     }
 
@@ -162,17 +114,11 @@ class EventController extends Controller
         $task = Event::findorFail($id);
         if($task->delete())
         {
-            $data = ['responseCode'=>100,
-                     'responseMessage'=>'deleted Event',
-                      'data'=>['event'=>$task]];
-                      broadcast(new EventDeleted());
-            return response()->json($data);
+            broadcast(new EventDeleted());
+            return $this->getSuccessResponse('deleted Event successfully',$task);
         }else
         {
-            
-            $data = ['responseCode'=>102,
-                     'responseMessage'=>'failed to delete Event with id '.$id,
-                      'data'=>['event'=>$task]];
+            return $this->getErrorResponse('failed to delete event with id '.$id ,$task);
         }
     }
 
@@ -347,11 +293,7 @@ class EventController extends Controller
                         ->select('id','name_ar','name_en','details_ar','details_en','first_date','last_date','coordinates','image')
                         ->get();
                         
-         $data = ['responseCode'=>100,
-          'responseMessage'=>'retrieved current events',
-          'data'=>['event'=>$event]];
-        
-         return response()->json($data);         
+         return $this->getSuccessResponse('retrieved current events',$event);
      }
 
     /**
@@ -371,29 +313,21 @@ class EventController extends Controller
                     ->with('companyName','ticketCount','date','ticket','sponser')
                     ->select('id','name_ar','name_en','details_ar','details_en','first_date','last_date','coordinates','image')
                     ->get();
-        
-        $data = ['responseCode'=>100,
-                 'responseMessage'=>'retrieved current events',
-                 'data'=>['event'=>$events]];
        
-        return response()->json($data);         
+        return $this->getSuccessResponse('retrieved current events',$events);
     }
 
     //all events of company since registering
     public function getCompanyEvents($company_id)
-    {//TODO::ADD ATTENDANT TICKETS
+    {//TODO ::ADD ATTENDANT TICKETS ,moved to dashboard controller ,saved for legacy reasons
         //eventid ,name ,ticketSold ,totalAmount
         $todayDate = date('Y-m-d');
         $events = Event::where('company_id',$company_id)
                     ->with('companyName','ticketCount','date','ticket','sponser')
                     ->select('id','name_ar','name_en','details_ar','details_en','first_date','last_date','coordinates','image')
                     ->get();
-        
-        $data = ['responseCode'=>100,
-                 'responseMessage'=>'retrieved current events',
-                 'data'=>['event'=>$events]];
        
-        return response()->json($data);         
+        return $this->getSuccessResponse('retrieved current events',$events);    
     }
 
 }

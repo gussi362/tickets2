@@ -4,15 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
-use App\Models\Ticket;
-use App\Models\Order;
-use Illuminate\Support\Facades\DB;
-
 use App\Http\Controllers\Controller;
-use Validator;
-//events 
-use App\Events\EventAdded;
-use App\Events\EventDeleted;
+
 
 class EventController extends Controller
 {
@@ -24,14 +17,8 @@ class EventController extends Controller
     public function index()
     {
         $event = Event::orderBy('name_en','asc')->get();
-        $data = [
-            'responseCode'=>100,
-            'responseMessage'=>'retrieved event successful',
-            'data'=>['event'=>$event]];
-        return response()->json($data);
+        return $this->getSuccessResponse('retrieved events successfully',$event);
     }
-
-//DashboardAdmin
 
     /**
      *  return a list of all the current active events
@@ -49,11 +36,7 @@ class EventController extends Controller
                         ->select('id','name_ar','name_en','details_ar','details_en','first_date','last_date','coordinates','image')
                         ->get();
                         
-         $data = ['responseCode'=>100,
-          'responseMessage'=>'retrieved current events',
-          'data'=>['event'=>$event]];
-        
-         return response()->json($data);         
+         return $this->getSuccessResponse('retrieved current events',$event);
      }
 
     /**
@@ -73,29 +56,21 @@ class EventController extends Controller
                     ->with('companyName','ticketCount','date','ticket','sponser')
                     ->select('id','name_ar','name_en','details_ar','details_en','first_date','last_date','coordinates','image')
                     ->get();
-        
-        $data = ['responseCode'=>100,
-                 'responseMessage'=>'retrieved current events',
-                 'data'=>['event'=>$events]];
        
-        return response()->json($data);         
+        return $this->getSuccessResponse('retrieved current events',$events);
     }
 
     //all events of company since registering
     public function getCompanyEvents($company_id)
-    {//TODO::ADD ATTENDANT TICKETS
+    {//TODO ::ADD ATTENDANT TICKETS ,moved to dashboard controller ,saved for legacy reasons
         //eventid ,name ,ticketSold ,totalAmount
         $todayDate = date('Y-m-d');
         $events = Event::where('company_id',$company_id)
                     ->with('companyName','ticketCount','date','ticket','sponser')
                     ->select('id','name_ar','name_en','details_ar','details_en','first_date','last_date','coordinates','image')
                     ->get();
-        
-        $data = ['responseCode'=>100,
-                 'responseMessage'=>'retrieved current events',
-                 'data'=>['event'=>$events]];
        
-        return response()->json($data);         
+        return $this->getSuccessResponse('retrieved current events',$events);    
     }
 
 }

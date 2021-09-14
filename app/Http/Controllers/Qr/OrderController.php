@@ -27,25 +27,15 @@ class OrderController extends Controller
           if(OrderDetails::where('serial','like',$serial.'%')->update(['status'=>'true']))
           {
             $order = OrderDetails::where('serial',$serial)->get();
-            $data = ['responseCode'=>100,
-            'responseMessage'=>'checked in',
-            'data'=>['orderDetails'=>$order]];
-            return $data;
+            return $this->getSuccessResponse('checked in ',$order);
           }else
           {
-            $data = ['responseCode'=>102,
-            'responseMessage'=>'unable to check in',
-            ];
-            return $data;
+            return $this->getErrorResponse('unable to check in');
           }
           
         }else
         {
-          
-          $data = ['responseCode'=>102,
-          'responseMessage'=>'tickets not paid'
-        ];
-          return $data;
+          return $this->getErrorResponse('tickets are not paid for ');
         }
         
        //return $this->getOrderStatus($order);

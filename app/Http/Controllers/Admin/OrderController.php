@@ -201,11 +201,7 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::findorfail($id);
-        $data = ['responseCode'=>100,
-        'responseMessage'=>'order found',
-        'data'=>['order'=>$order]];
-        
-        return response()->json($data);
+        return $this->getSuccessResponse('order found',$order);
     }
 
     /**
@@ -232,7 +228,7 @@ class OrderController extends Controller
             return $this->getSuccessResponse('updated order successfully' ,$order);
         }else
         {
-            return response()->json($order);
+            $this->getErrorResponse('failed to update order with id '.$id,$order);
         }
     }
 
