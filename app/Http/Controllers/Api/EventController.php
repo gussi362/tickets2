@@ -17,7 +17,7 @@ class EventController extends Controller
     public function index()
     {
         $event = Event::orderBy('name_en','asc')->get();
-        return $this->getSuccessResponse('retrieved events successfully',$event);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$event);
     }
 
     /**
@@ -36,7 +36,7 @@ class EventController extends Controller
                         ->select('id','name_ar','name_en','details_ar','details_en','first_date','last_date','coordinates','image')
                         ->get();
                         
-         return $this->getSuccessResponse('retrieved current events',$event);
+                        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$event);
      }
 
     /**
@@ -57,7 +57,7 @@ class EventController extends Controller
                     ->select('id','name_ar','name_en','details_ar','details_en','first_date','last_date','coordinates','image')
                     ->get();
        
-        return $this->getSuccessResponse('retrieved current events',$events);
+                    return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$event);
     }
 
     //all events of company since registering
@@ -70,7 +70,7 @@ class EventController extends Controller
                     ->select('id','name_ar','name_en','details_ar','details_en','first_date','last_date','coordinates','image')
                     ->get();
        
-        return $this->getSuccessResponse('retrieved current events',$events);    
+                    return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$event);  
     }
 
 }

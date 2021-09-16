@@ -23,8 +23,7 @@ class CompanyController extends Controller
         // $data = ['responseCode'=>100,
         //     'responseMessage'=>'',
         //     'data'=>['company'=>$company]];
-        return $this->getSuccessResponse('retrieved company successful',$company);
-
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.company')]),$company);
     }
 
      
@@ -49,7 +48,7 @@ class CompanyController extends Controller
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse('not all fields were entered');
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
         }
         try{
             $data = $request->all();
@@ -58,14 +57,14 @@ class CompanyController extends Controller
             if($company->exists())
             {
                 broadcast(new overviewChanged($company));
-                return $this->getSuccessResponse('created company successfully',$company);
+                return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.models.company')]),$company);
             }else
             {           
-                return $this->getErrorResponse('failed to create company');
+                return $this->getErrorResponse(trans('messages.error.system_error'));
             }
         }catch(\Exception $e)
         {
-            return $this->getErrorResponse('exception error',$e->getMessage());
+            return $this->getErrorResponse(trans('messages.error.system_error'));
         }
     }
 
@@ -78,7 +77,7 @@ class CompanyController extends Controller
     public function show($id)
     {
         $company = Company::findorfail($id);
-        return $this->getSuccessResponse('company found',$company);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.models.company')]),$company);
     }
 
     
@@ -105,10 +104,10 @@ class CompanyController extends Controller
 
         if($company->update())
         {
-            return $this->getSuccessResponse('updated company successfully',$company);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.company')]),$company);
         }else
         {
-            return $this->getErrorResponse('failed to update company with id '.$id);
+            return $this->getErrorResponse(trans('messages.errors.system_error').$id);
         }                
     }
 
@@ -123,10 +122,10 @@ class CompanyController extends Controller
         $company = Company::findorFail($id);
         if($company->delete())
         {
-            return $this->getSuccessResponse('deleted company',$company);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.company')]),$company);
         }else
         {
-            return $this->getErrorResponse('failed to delete Company with id '.$id);
+            return $this->getErrorResponse(trans('messages.error.system_error'));
         }
     }
 
@@ -143,7 +142,7 @@ class CompanyController extends Controller
             $query->where('status','true');
         }])->get();
 
-        return $this->getSuccessResponse('companies with events',$companies);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$companies);
     }
 
     /**
@@ -161,10 +160,10 @@ class CompanyController extends Controller
 
         if($company)
         {
-            return $this->getSuccessResponse('companies with events',$company);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$company);
         }else
         {
-            return $this->getErrorResponse('failed to find company with id '.$id);
+            return $this->getErrorResponse(trans('messages.error.system_error'));
         }
     }
 }

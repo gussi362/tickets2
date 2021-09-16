@@ -18,7 +18,7 @@ class UserController extends Controller
     {
          $users = User::where('company_id',auth()->user()->company_id)
                         ->orderBy('id')->get();
-         return $this->getSuccessResponse('retrieved users successfully' ,$users);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.user')]),$users);
 
     }
 
@@ -40,12 +40,12 @@ class UserController extends Controller
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse('not all fields were entered');
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
         }
         
         if(!in_array($request->type,[2,3]))
         {
-            return $this->getErrorResponse('You aren\'t authorized to do this opreation');
+            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'));
         }
 
         //all user created by customer are automatically under the same company as the account that created them
@@ -61,10 +61,10 @@ class UserController extends Controller
         
         if($user->exists())
         {
-            return $this->getSuccessResponse('created user successfully',$user);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.user')]),$user);
         }else
         {
-            return $this->getErrorResposne('failed to create user');
+            return $this->getErrorResponse(trans('messages.errors.system_error'));
         }
     }
 
@@ -80,10 +80,10 @@ class UserController extends Controller
         
         if($user->company_id != auth()->user()->company_id )
         {
-            return $this->getErrorResponse('You aren\'t authorized to do this opreation');
+            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'));
         }
 
-        return $this->getSuccessResponse('user found',$user);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.user')]),$user);
     }
 
     /**
@@ -104,7 +104,7 @@ class UserController extends Controller
         
         if ( ($user->company_id != auth()->user()->company_id ) || ($user->created_by != auth()->user()->id) ) 
         {
-            return $this->getErrorResponse('You aren\'t authorized to do this opreation');
+            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'));
         }
 
         foreach ($request->all() as $key => $value) {
@@ -118,10 +118,10 @@ class UserController extends Controller
 
         if($user->update())
         {
-            return $this->getSuccessResponse('updated user successfully',$user);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.user')]),$user);
         }else
         {
-            return $this->getErrorResponse('failed to update user with id '.$id);
+            return $this->getErrorResponse(trans('messages.errors.system_error'));
         }     
     }
 
@@ -137,15 +137,15 @@ class UserController extends Controller
         //can't edit or delted the account that created you 
         if ( ($user->company_id != auth()->user()->company_id ) || ($user->created_by != auth()->user()->id) ) 
         {
-            return $this->getErrorResponse('You aren\'t authorized to do this opreation');
+            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'));
         }
 
         if($user->delete())
         {
-            return $this->getSuccessResponse('deleted user with id '.$id,$user);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.user')]),$user);
         }else
         {
-            return $this->getErrorResposne('failed to delete user with id '.$id);
+            return $this->getErrorResponse(trans('messages.errors.system_error'));
         }
     }
 }

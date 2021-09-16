@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Customer;
 
 use Illuminate\Http\Request;
 
-use Auth;
-use App\Models\User;
-
 use Validator;
+use Hash;
+
 use App\Http\Controllers\Controller;
+use App\Models\User;
 class passportController extends Controller
 {
     
@@ -32,7 +32,7 @@ class passportController extends Controller
      
             $token = $user->createToken('userToken')->accessToken;
 
-            return $this->getSuccessResponse('Registered successfully' ,[$user,'token'=>'Bearer '.$token]);
+            return $this->getSuccessResponse(trans('messages.passport.registered') ,[$user,'token'=>'Bearer '.$token]);
     
     }
     
@@ -52,7 +52,7 @@ class passportController extends Controller
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse('not all fields were entered');
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
         }
 
         $data = [
@@ -60,64 +60,53 @@ class passportController extends Controller
             'password' => $request -> password
         ];
         //$user = User::where('email','=',$request->email)->first();
-        //customer guard
-        if(auth()->guard('customer')->attempt($data))
+        if(auth()->attempt($data))
         {
-            $user = auth()->guard('customer')->user();//
-            
-            $token = $user->createToken('userToken')->accessToken;
+            $token = auth()->user()->createToken('userToken')->accessToken;
 
-            return $this->getSuccessResponse('Logged in successfully' ,[auth()->user(),'token'=>'Bearer '.$token]);
+            return $this->getSuccessResponse(trans('messages.passport.loggedin'),['user'=>auth()->user(),'token'=>'Bearer '.$token]);
         }else
         {
-            return $this->getErrorResponse('invalid username or password.');
+            return $this->getErrorResponse(trans('messages.passport.invalid_credintals'));
         }
     }
 
     public function changePassword(Request $request)
     {
+        // return \Lang::get('messages.date.last_week');
         $validator =  Validator::make($request->all(),[
             'old_password' => 'required|string',
             'new_password' => 'required|string',
-            'new_password_confirmation' => 'required|string'
+            'new_password_confirmation' => 'required|string|same:new_password'
         ]);
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse('not all fields were entered');
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
         }
 
         $user = User::where('id',auth()->user()->id)->first();
 
-        //if(bcrypt($request->old_password == bcrypt($request->new_password)) it's impossible to compared hashed password ,cause the salt everytime a password is hashed is different
+        //if(bcrypt($request->old_password == bcrypt($request->new_password)) it's impossible to compare hashed password ,cause the salt everytime a password is hashed is different
         if ( !Hash::check($request->old_password ,$user->password) ) 
         {
-            return $this->getErrorResponse('wrong old password');
+            return $this->getErrorResponse(trans('messages.passport.wrong_old_password'));
         }
 
         if( Hash::check($request->new_password ,$user->password) )
         {
-            return $this->getErrorResponse('can\'t use the same password');
-        }
-
-        if( $request->new_password != $request->new_password_confirmation )
-        {
-            return $this->getErrorResponse('new password and new password confirmation doesn\'t match');
+            return $this->getErrorResponse(trans('messages.passport.passwords_match'));
         }
 
         $user->password = bcrypt($request->new_password);
 
         if($user->update())
         {
-            return $this->getSuccessResponse('changed password successfully' ,$user);
+            return $this->getSuccessResponse(trans('messages.passport.changed_password') ,$user);
         }else
         {
-            return $this->getErrorResponse('failed to change password');
+            return $this->getErrorResponse(trans('messages.passport.failed_change_password'));//send system error
         }
     }
-    
-    public function info()
-    {
-        return auth()->guard('customer')->user();
-    }
+
 }

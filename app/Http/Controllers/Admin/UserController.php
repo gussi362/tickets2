@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
          $users = User::orderBy('id')->get();
-         return $this->getSuccessResponse('retrieved users successfully' ,$users);
+         return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.user')]),$users);
 
     }
 
@@ -34,12 +34,13 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required',
             'password' => 'required',
+            'phone' => 'required',
             'type'  => 'required'
         ]);
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse('not all fields were entered');
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
         }
         
         $data =[];
@@ -50,6 +51,7 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
                 'company_id' => $request->company_id,
+                'phone' => $request->phone,
                 'type' => $request->type,
                 'created_by' => auth()->user()->id
             ];
@@ -59,6 +61,7 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
+                'phone' => $request->phone,
                 'type' => $request->type,
                 'created_by' => auth()->user()->id
             ];
@@ -67,10 +70,10 @@ class UserController extends Controller
         
         if($user->exists())
         {
-            return $this->getSuccessResponse('created user successfully',$user);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.user')]),$user);
         }else
         {
-            return $this->getErrorResposne('failed to create user');
+            return $this->getErrorResponse(trans('messages.errors.system_error'));
         }
     }
 
@@ -84,7 +87,7 @@ class UserController extends Controller
     {
         $user = User::findorfail($id);
         
-        return $this->getSuccessResponse('user found',$user);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.user')]),$user);
     }
 
     /**
@@ -108,10 +111,10 @@ class UserController extends Controller
 
         if($user->update())
         {
-            return $this->getSuccessResponse('updated user successfully',$user);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.user')]),$user);
         }else
         {
-            return $this->getErrorResponse('failed to update user with id '.$id);
+            return $this->getErrorResponse(trans('messages.errors.system_error'));
         }     
     }
 
@@ -126,10 +129,10 @@ class UserController extends Controller
         $user = User::findorFail($id);
         if($user->delete())
         {
-            return $this->getSuccessResponse('deleted user with id '.$id,$user);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.user')]),$user);
         }else
         {
-            return $this->getErrorResposne('failed to delete user with id '.$id);
+            return $this->getErrorResponse(trans('messages.errors.system_error'));
         }
     }
 }

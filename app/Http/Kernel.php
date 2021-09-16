@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
         'checkStatus' => \App\Http\Middleware\CheckStatus::class,
         'checkStatusUser' => \App\Http\Middleware\CheckStatusUser::class,
         'checkStatusScanUser' => \App\Http\Middleware\CheckStatusScanUser::class,
+        'setLocale' => \App\Http\Middleware\setLocale::class,
         'customer' => \App\Http\Middleware\Customer::class
     ];
 }

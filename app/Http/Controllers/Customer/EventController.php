@@ -25,7 +25,7 @@ class EventController extends Controller
     public function index()
     {
         $event = Event::orderBy('name_en','asc')->where('company_id',auth()->user()->company_id)->get();
-        return $this->getSuccessResponse('retrieved events successfully',$event);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$event);
     }
 
     /**
@@ -52,7 +52,7 @@ class EventController extends Controller
 
         if ($validator->fails()) 
         {
-            $this->getErrorResponse('not all fields were entered');
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
         }
         
         $data = $request->all();
@@ -64,10 +64,10 @@ class EventController extends Controller
             broadcast(new EventAdded($event));
             broadcast(new overviewChanged($event));
 
-            return $this->getSuccessResponse('created event successfully',$event);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.event')]),$event);
         }else
         {
-            return $this->getErrorResponse('failed to create event');
+            return $this->getErrorResponse(trans('messages.errors.system_error'));
         }
     }
 
@@ -82,9 +82,10 @@ class EventController extends Controller
         $event = Event::findorfail($id);
         if($event->company_id != auth()->user()->company_id)
         {
-            return $this->getErrorResponse('you aren\'t authorized to do this opreation');
+            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'));
         }
-        return $this->getSuccessResponse('event found',$event);
+        
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$event);
     }
 
     /**
@@ -100,15 +101,15 @@ class EventController extends Controller
         
         if($event->company_id != auth()->user()->company_id)
         {
-            return $this->getErrorResponse('you aren\'t authorized to do this opreation');
+            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'));
         }
 
         if($event->update($request->all()))
         {
-            return $this->getSuccessResponse('updated event successfully',$event);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.event')]),$event);
         }else
         {
-            return $this->getErrorResponse('failed to update event with id '.$id,$event);
+            return $this->getErrorResponse(trans('messages.errors.system_error'));
         }
     }
 
@@ -124,16 +125,16 @@ class EventController extends Controller
         
         if($task->company_id != auth()->user()->company_id)
         {
-            return $this->getErrorResponse('you aren\'t authorized to do this opreation');
+            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'));
         }
 
         if($task->delete())
         {
             broadcast(new EventDeleted());
-            return $this->getSuccessResponse('deleted Event successfully',$task);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.event')]),$task);
         }else
         {
-            return $this->getErrorResponse('failed to delete event with id '.$id ,$task);
+            return $this->getErrorResponse(trans('messages.errors.system_error'));
         }
     }
 
@@ -156,7 +157,7 @@ class EventController extends Controller
                         ->select('id','name_ar','name_en','details_ar','details_en','first_date','last_date','coordinates','image')
                         ->get();
                         
-         return $this->getSuccessResponse('retrieved current events',$event);
+                        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$event);
      }
 
 

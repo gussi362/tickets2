@@ -32,7 +32,7 @@ class passportController extends Controller
      
             $token = $user->createToken('userToken')->accessToken;
 
-            return $this->getSuccessResponse('Registered successfully' ,[$user,'token'=>'Bearer '.$token]);
+            return $this->getSuccessResponse(trans('messages.passport.registered') ,[$user,'token'=>'Bearer '.$token]);
     
     }
     
@@ -52,7 +52,7 @@ class passportController extends Controller
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse('not all fields were entered');
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
         }
 
         $data = [
@@ -64,10 +64,10 @@ class passportController extends Controller
         {
             $token = auth()->user()->createToken('userToken')->accessToken;
 
-            return $this->getSuccessResponse('Logged in successfully' ,[auth()->user(),'token'=>'Bearer '.$token]);
+            return $this->getSuccessResponse(trans('messages.passport.loggedin'),[auth()->user(),'token'=>'Bearer '.$token]);
         }else
         {
-            return $this->getErrorResponse('invalid username or password.');
+            return $this->getErrorResponse(trans('messages.passport.invalid_credintals'));
         }
     }
 
@@ -84,7 +84,7 @@ class passportController extends Controller
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse('not all fields were entered');
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
         }
 
         //check email 
@@ -92,7 +92,7 @@ class passportController extends Controller
 
         if($user->doesntExist())
         {
-            return $this->getErrorResponse('this email doesn\'t exists');
+            return $this->getErrorResponse(trans('messages.passport.email_doesnt_exists'));
         }
 
         $user = $user->first();
@@ -112,10 +112,10 @@ class passportController extends Controller
 
             //send sms here
 
-            return $this->getSuccessResponse('check your phone ...'.substr($user->phone,-4).' for reset code.',$user);
+            return $this->getSuccessResponse(trans('messages.passport.send_sms_rest_code',['phone' =>$user->phone]),$user);
         } catch (\Exception $e) 
         {
-            return $this->getErrorResponse('exception error' ,$e->getMessage());
+            return $this->getErrorResponse(trans('messages.errors.system_error') ,$e->getMessage());
         }
         
         //
@@ -125,14 +125,14 @@ class passportController extends Controller
     public function resetPasswordWithToken(Request $request)
     {
         $validator =  Validator::make($request->all(),[
-            'token'  => 'required',
+            'token'  => 'required',//phone add 
             'password' => 'required|string',
-            'password_confirmation' => 'required|string'
+            'password_confirmation' => 'required|string|same:password'
         ]);
         
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse('not all fields were entered');
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
         }
 
         try 
@@ -140,24 +140,19 @@ class passportController extends Controller
             //check if token exists
             if( !$password_rest = \DB::table('password_resets')->where('token',$request->token)->first() )
             {
-                return $this->getErrorResponse('invalid reset code');
+                return $this->getErrorResponse(trans('messages.passport.invalid_reset_code'));
             }  
 
             //then get user
             if ( !$user = User::where('phone',$password_rest->phone)->first() ) 
             {
-                return $this->getErrorResponse('user doesn\'t exists');
+                return $this->getErrorResponse(trans('messages.passport.email_doesnt_exists'));
             }
 
             //then check if new pass = old pass
             if( Hash::check($request->password ,$user->password) )
             {
-                return $this->getErrorResponse('can\'t use the same password');
-            }
-
-            if( $request->password != $request->password_confirmation )
-            {
-                return $this->getErrorResponse('new password and new password confirmation doesn\'t match');
+                return $this->getErrorResponse(trans('messages.passport.passwords_match'));
             }
             
             $user->password = bcrypt($request->password);
@@ -166,14 +161,14 @@ class passportController extends Controller
             \DB::table('password_resets')->where('phone',$user->phone)->delete();
             if($user->update())
             {
-                return $this->getSuccessResponse('changed password successfully' ,$user);
+                return $this->getSuccessResponse(trans('messages.passport.changed_password') ,$user);
             }else
             {
-                return $this->getErrorResponse('failed to change password');
+                return $this->getErrorResponse(trans('messages.errors.system_error'));
             }
         } catch (\Exception $e) 
         {
-            return $this->getErrorResponse('failed to create order' ,$e->getMessage());
+            return $this->getErrorResponse(trans('messages.errors.system_error') ,$e->getMessage());
         } 
 
 
@@ -186,7 +181,7 @@ class passportController extends Controller
         $a ='';
         for ($i = 0; $i<6; $i++) 
         {
-            $a .= mt_rand(0,9);
+            $a .= rand(0000000,999999);
         }
 
         return $a;

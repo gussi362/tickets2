@@ -20,7 +20,7 @@ class SponserController extends Controller
     {
         $sponsers = Sponser::orderBy('id','asc')->get();
 
-        return $this->getSuccessResponse('retrieved sponsers successfully' ,$sponsers);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.sponser')]),$sponsers);
 
     }
 
@@ -41,12 +41,16 @@ class SponserController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = $request->validate([
+        $validator = Validator::make($request->all(),[
             'name_ar' => 'required|string',
             'name_en' => 'required|string',
             'image' => 'required',
             'event_id' => 'required'
         ]);
+        if( $validator->fails() )
+        {
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
+        }
         try
         {
             $data = $request->all();
@@ -55,12 +59,12 @@ class SponserController extends Controller
 
             $this->changeEventSponserStatus($request->input('event_id'));//update events column
         
-            return $this->getSuccessResponse('sponser created successfully' ,$sponser);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.sponser')]),$sponser);
 
             
         }catch(\Exception $e)
         {
-            return $this->getErrorResponse('exception error' ,$e->getMessage());
+            return $this->getErrorResponse(trans('messages.errors.system_error'),$e->getMessage());
         }
         
     }
@@ -82,7 +86,7 @@ class SponserController extends Controller
     public function show($id)
     {
         $sponser = Sponser::findorfail($id);
-        return $this->getSuccessResponse('found sponser' ,$sponser);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.sponser')]),$sponser);
     }
 
     /**
@@ -94,7 +98,7 @@ class SponserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $company= Sponser::findorfail($id);
+        $sponser= Sponser::findorfail($id);
 
         foreach ($request->all() as $key => $value) {
             //if ($value->$key) {
@@ -106,10 +110,10 @@ class SponserController extends Controller
 
         if($sponser->update())
         {
-            return $this->getSucessResponse('updated sponser successfully',$sponser);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.sponser')]),$sponser);
         }else
         {
-            return $this->getErrorResponse('failed to update sponser with id '.$id);
+            return $this->getErrorResponse(trans('messages.errors.system_error'));
         }
 
     }
@@ -125,10 +129,10 @@ class SponserController extends Controller
         $sponser = Sponser::findorFail($id);
         if($sponser->delete())
         {
-            return $this->getSuccessResponse('deleted sponser successfully' ,$sponser);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.sponser')]),$sponser);
         }else
         {
-            return $this->getErrorResponse('failed to delete sponser with id '.$id);
+            return $this->getErrorResponse(trans('messages.errors.system_error'));
         }
     }
 }

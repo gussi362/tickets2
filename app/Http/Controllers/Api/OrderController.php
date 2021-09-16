@@ -41,7 +41,7 @@ class OrderController extends Controller
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse('not all fields were entered');
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
         }
        
         //when ordering 
@@ -55,7 +55,7 @@ class OrderController extends Controller
             if(!$this->isThereEnoughTickets($tickets[$i]->ticket_id,$tickets[$i]->count))
             {
                 //return [['status'=>'error ,not enough tickets available tickets = '.$this->getTicketsLeft($this->getEventId($request->input('ticket_id')),$request->input('ticket_id'))],422];
-                return $this->getErrorResponse('error ,not enough ticket '.$tickets[$i]->ticket_id.' available tickets = '.$this->getLeftTicketsAmount($tickets[$i]->ticket_id));
+                return $this->getErrorResponse(trans('messages.errors.insufficient_tickets',['ticket' => $this->getLeftTicketsAmount($tickets[$i]->ticket_id)]));
 
             }else
             {
@@ -77,13 +77,13 @@ class OrderController extends Controller
                     broadcast(new overviewChanged($order));
                     DB::commit();
 
-                    return $this->getSuccessResponse('created order successfully' ,$order);
+                    return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.order')]),$order);
                     
                     
                 } catch (\Exception $e) 
                 {
                     DB::rollback();
-                    return $this->getErrorResponse('failed to create order' ,$e->getMessage());
+                    return $this->getErrorResponse(trans('messages.errors.system_error'),$e->getMessage());
 
                 }
             }
