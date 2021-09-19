@@ -32,7 +32,7 @@ class passportController extends Controller
      
             $token = $user->createToken('userToken')->accessToken;
 
-            return $this->getSuccessResponse(trans('messages.passport.registered') ,[$user,'token'=>'Bearer '.$token]);
+            return $this->getSuccessResponse(trans('messages.passport.registered') ,[$user,'token'=>'Bearer '.$token],207);
     
     }
     
@@ -52,7 +52,7 @@ class passportController extends Controller
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors(),'',410);
         }
 
         $data = [
@@ -64,10 +64,10 @@ class passportController extends Controller
         {
             $token = auth()->user()->createToken('userToken')->accessToken;
 
-            return $this->getSuccessResponse(trans('messages.passport.loggedin'),['user'=>auth()->user(),'token'=>'Bearer '.$token]);
+            return $this->getSuccessResponse(trans('messages.passport.loggedin'),['user'=>auth()->user(),'token'=>'Bearer '.$token],204);
         }else
         {
-            return $this->getErrorResponse(trans('messages.passport.invalid_credintals'));
+            return $this->getErrorResponse(trans('messages.passport.invalid_credintals'),'',411);
         }
     }
 
@@ -82,7 +82,7 @@ class passportController extends Controller
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors(),'',410);
         }
 
         $user = User::where('id',auth()->user()->id)->first();
@@ -90,22 +90,22 @@ class passportController extends Controller
         //if(bcrypt($request->old_password == bcrypt($request->new_password)) it's impossible to compare hashed password ,cause the salt everytime a password is hashed is different
         if ( !Hash::check($request->old_password ,$user->password) ) 
         {
-            return $this->getErrorResponse(trans('messages.passport.wrong_old_password'));
+            return $this->getErrorResponse(trans('messages.passport.wrong_old_password'),'',415);
         }
 
         if( Hash::check($request->new_password ,$user->password) )
         {
-            return $this->getErrorResponse(trans('messages.passport.passwords_match'));
+            return $this->getErrorResponse(trans('messages.passport.passwords_match'),'',414);
         }
 
         $user->password = bcrypt($request->new_password);
 
         if($user->update())
         {
-            return $this->getSuccessResponse(trans('messages.passport.changed_password') ,$user);
+            return $this->getSuccessResponse(trans('messages.passport.changed_password') ,$user,205);
         }else
         {
-            return $this->getErrorResponse(trans('messages.passport.failed_change_password'));//send system error
+            return $this->getErrorResponse(trans('messages.passport.failed_change_password'),'',510);//send system error
         }
     }
 

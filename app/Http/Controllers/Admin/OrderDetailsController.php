@@ -15,7 +15,7 @@ class OrderDetailsController extends Controller
     public function index()
     {
         $order = OrderDetails::orderBy('id','asc')->get();
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.order')]),$order);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.order')]),$order,200);
     }
 
     /**
@@ -27,7 +27,7 @@ class OrderDetailsController extends Controller
     public function show($id)
     {
         $order = OrderDetails::findorfail($id);
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.order')]),$order);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.order')]),$order,200);
     }
 
     /**
@@ -50,10 +50,10 @@ class OrderDetailsController extends Controller
         }
         if($order->update())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.order')]),$order);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.order')]),$order,202);
         }else
         {
-            return $this->getErrorResponse(trans('messages.errors.system_error'));
+            return $this->getErrorResponse(trans('messages.errors.system_error'),'',502);
         }
     }
 

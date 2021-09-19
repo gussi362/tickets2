@@ -32,7 +32,7 @@ class passportController extends Controller
      
             $token = $user->createToken('userToken')->accessToken;
 
-            return $this->getSuccessResponse(trans('messages.passport.registered') ,[$user,'token'=>'Bearer '.$token]);
+            return $this->getSuccessResponse(trans('messages.passport.registered') ,[$user,'token'=>'Bearer '.$token],207);
     
     }
     
@@ -52,7 +52,7 @@ class passportController extends Controller
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors(),410);
         }
 
         $data = [
@@ -64,10 +64,10 @@ class passportController extends Controller
         {
             $token = auth()->user()->createToken('userToken')->accessToken;
 
-            return $this->getSuccessResponse(trans('messages.passport.loggedin'),[auth()->user(),'token'=>'Bearer '.$token]);
+            return $this->getSuccessResponse(trans('messages.passport.loggedin'),[auth()->user(),'token'=>'Bearer '.$token],204);
         }else
         {
-            return $this->getErrorResponse(trans('messages.passport.invalid_credintals'));
+            return $this->getErrorResponse(trans('messages.passport.invalid_credintals'),'',411);
         }
     }
 
@@ -84,7 +84,7 @@ class passportController extends Controller
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors(),'',410);
         }
 
         //check email 
@@ -92,7 +92,7 @@ class passportController extends Controller
 
         if($user->doesntExist())
         {
-            return $this->getErrorResponse(trans('messages.passport.email_doesnt_exists'));
+            return $this->getErrorResponse(trans('messages.passport.email_doesnt_exists'),'',412);
         }
 
         $user = $user->first();
@@ -112,10 +112,10 @@ class passportController extends Controller
 
             //send sms here
 
-            return $this->getSuccessResponse(trans('messages.passport.send_sms_rest_code',['phone' =>$user->phone]),$user);
+            return $this->getSuccessResponse(trans('messages.passport.send_sms_rest_code',['phone' =>$user->phone]),$user,220);
         } catch (\Exception $e) 
         {
-            return $this->getErrorResponse(trans('messages.errors.system_error') ,$e->getMessage());
+            return $this->getErrorResponse(trans('messages.errors.system_error') ,$e->getMessage(),510);
         }
         
         //
@@ -132,7 +132,7 @@ class passportController extends Controller
         
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors(),'',410);
         }
 
         try 
@@ -140,19 +140,19 @@ class passportController extends Controller
             //check if token exists
             if( !$password_rest = \DB::table('password_resets')->where('token',$request->token)->first() )
             {
-                return $this->getErrorResponse(trans('messages.passport.invalid_reset_code'));
+                return $this->getErrorResponse(trans('messages.passport.invalid_reset_code'),'',413);
             }  
 
             //then get user
             if ( !$user = User::where('phone',$password_rest->phone)->first() ) 
             {
-                return $this->getErrorResponse(trans('messages.passport.email_doesnt_exists'));
+                return $this->getErrorResponse(trans('messages.passport.email_doesnt_exists'),'',412);
             }
 
             //then check if new pass = old pass
             if( Hash::check($request->password ,$user->password) )
             {
-                return $this->getErrorResponse(trans('messages.passport.passwords_match'));
+                return $this->getErrorResponse(trans('messages.passport.passwords_match'),'',313);
             }
             
             $user->password = bcrypt($request->password);
@@ -161,14 +161,14 @@ class passportController extends Controller
             \DB::table('password_resets')->where('phone',$user->phone)->delete();
             if($user->update())
             {
-                return $this->getSuccessResponse(trans('messages.passport.changed_password') ,$user);
+                return $this->getSuccessResponse(trans('messages.passport.changed_password') ,$user,205);
             }else
             {
-                return $this->getErrorResponse(trans('messages.errors.system_error'));
+                return $this->getErrorResponse(trans('messages.errors.system_error'),'',510);
             }
         } catch (\Exception $e) 
         {
-            return $this->getErrorResponse(trans('messages.errors.system_error') ,$e->getMessage());
+            return $this->getErrorResponse(trans('messages.errors.system_error') ,$e->getMessage(),'',510);
         } 
 
 

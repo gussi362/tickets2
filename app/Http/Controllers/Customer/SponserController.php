@@ -20,7 +20,7 @@ class SponserController extends Controller
     {
         $sponsers = Sponser::orderBy('id','asc')->get();
 
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.sponser')]),$sponsers);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.sponser')]),$sponsers,200);
 
     }
 
@@ -47,9 +47,10 @@ class SponserController extends Controller
             'image' => 'required',
             'event_id' => 'required'
         ]);
+
         if( $validator->fails() )
         {
-            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors(),410);
         }
         try
         {
@@ -59,12 +60,12 @@ class SponserController extends Controller
 
             $this->changeEventSponserStatus($request->input('event_id'));//update events column
         
-            return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.sponser')]),$sponser);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.sponser')]),$sponser,201);
 
             
         }catch(\Exception $e)
         {
-            return $this->getErrorResponse(trans('messages.errors.system_error'),$e->getMessage());
+            return $this->getErrorResponse(trans('messages.errors.system_error'),$e->getMessage(),501);
         }
         
     }
@@ -86,7 +87,7 @@ class SponserController extends Controller
     public function show($id)
     {
         $sponser = Sponser::findorfail($id);
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.sponser')]),$sponser);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.sponser')]),$sponser,200);
     }
 
     /**
@@ -110,10 +111,10 @@ class SponserController extends Controller
 
         if($sponser->update())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.sponser')]),$sponser);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.sponser')]),$sponser,202);
         }else
         {
-            return $this->getErrorResponse(trans('messages.errors.system_error'));
+            return $this->getErrorResponse(trans('messages.errors.system_error'),'',502);
         }
 
     }
@@ -129,10 +130,10 @@ class SponserController extends Controller
         $sponser = Sponser::findorFail($id);
         if($sponser->delete())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.sponser')]),$sponser);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.sponser')]),$sponser,203);
         }else
         {
-            return $this->getErrorResponse(trans('messages.errors.system_error'));
+            return $this->getErrorResponse(trans('messages.errors.system_error'),'',503);
         }
     }
 }

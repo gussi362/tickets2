@@ -16,6 +16,12 @@ return [
     'name' => env('APP_NAME', 'Laravel'),
 
     /*
+    SMS CONFIG
+    */
+    'SMS_API_KEY'              => '',
+    'SMS_FROM'                 => 'tickets_app_name',
+    'SMS_MESSAGING_PROFILE_ID' => 'profile',
+    /*
     |--------------------------------------------------------------------------
     | Application Environment
     |--------------------------------------------------------------------------

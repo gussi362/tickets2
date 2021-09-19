@@ -18,7 +18,7 @@ class UserController extends Controller
     {
          $users = User::where('company_id',auth()->user()->company_id)
                         ->orderBy('id')->get();
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.user')]),$users);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.user')]),$users ,200);
 
     }
 
@@ -40,12 +40,12 @@ class UserController extends Controller
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors() ,410);
         }
         
         if(!in_array($request->type,[2,3]))
         {
-            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'));
+            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'),'',401);
         }
 
         //all user created by customer are automatically under the same company as the account that created them
@@ -61,10 +61,10 @@ class UserController extends Controller
         
         if($user->exists())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.user')]),$user);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.user')]),$user,201);
         }else
         {
-            return $this->getErrorResponse(trans('messages.errors.system_error'));
+            return $this->getErrorResponse(trans('messages.errors.system_error'),'',501);
         }
     }
 
@@ -80,10 +80,10 @@ class UserController extends Controller
         
         if($user->company_id != auth()->user()->company_id )
         {
-            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'));
+            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'),'',401);
         }
 
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.user')]),$user);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.user')]),$user,200);
     }
 
     /**
@@ -104,7 +104,7 @@ class UserController extends Controller
         
         if ( ($user->company_id != auth()->user()->company_id ) || ($user->created_by != auth()->user()->id) ) 
         {
-            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'));
+            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'),'',401);
         }
 
         foreach ($request->all() as $key => $value) {
@@ -118,10 +118,10 @@ class UserController extends Controller
 
         if($user->update())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.user')]),$user);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.user')]),$user,202);
         }else
         {
-            return $this->getErrorResponse(trans('messages.errors.system_error'));
+            return $this->getErrorResponse(trans('messages.errors.system_error'),'',502);
         }     
     }
 
@@ -137,15 +137,15 @@ class UserController extends Controller
         //can't edit or delted the account that created you 
         if ( ($user->company_id != auth()->user()->company_id ) || ($user->created_by != auth()->user()->id) ) 
         {
-            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'));
+            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'),'',401);
         }
 
         if($user->delete())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.user')]),$user);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.user')]),$user,203);
         }else
         {
-            return $this->getErrorResponse(trans('messages.errors.system_error'));
+            return $this->getErrorResponse(trans('messages.errors.system_error'),'',503);
         }
     }
 }

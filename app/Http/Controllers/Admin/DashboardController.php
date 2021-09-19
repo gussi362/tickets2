@@ -28,7 +28,7 @@ class DashboardController extends Controller
                                                                     'reservedTickets' => $this->getEventsTotalReservedTickets(),
                                                                     'ticketsCheckedIn' => $this->getCheckedInCount()
                                                                     ]
-                                        ]);
+                                        ],200);
 
     } 
 

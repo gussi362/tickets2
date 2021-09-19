@@ -25,7 +25,7 @@ class EventController extends Controller
     public function index()
     {
         $event = Event::orderBy('name_en','asc')->where('company_id',auth()->user()->company_id)->get();
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$event);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$event,200);
     }
 
     /**
@@ -52,7 +52,7 @@ class EventController extends Controller
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors(),410);
         }
         
         $data = $request->all();
@@ -64,10 +64,10 @@ class EventController extends Controller
             broadcast(new EventAdded($event));
             broadcast(new overviewChanged($event));
 
-            return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.event')]),$event);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.event')]),$event,201);
         }else
         {
-            return $this->getErrorResponse(trans('messages.errors.system_error'));
+            return $this->getErrorResponse(trans('messages.errors.system_error'),'',501);
         }
     }
 
@@ -82,10 +82,10 @@ class EventController extends Controller
         $event = Event::findorfail($id);
         if($event->company_id != auth()->user()->company_id)
         {
-            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'));
+            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'),'',401);
         }
         
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$event);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$event,200);
     }
 
     /**
@@ -101,15 +101,15 @@ class EventController extends Controller
         
         if($event->company_id != auth()->user()->company_id)
         {
-            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'));
+            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'),'',401);
         }
 
         if($event->update($request->all()))
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.event')]),$event);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.event')]),$event,202);
         }else
         {
-            return $this->getErrorResponse(trans('messages.errors.system_error'));
+            return $this->getErrorResponse(trans('messages.errors.system_error'),'',502);
         }
     }
 
@@ -125,16 +125,16 @@ class EventController extends Controller
         
         if($task->company_id != auth()->user()->company_id)
         {
-            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'));
+            return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'),'',401);
         }
 
         if($task->delete())
         {
             broadcast(new EventDeleted());
-            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.event')]),$task);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.event')]),$task,203);
         }else
         {
-            return $this->getErrorResponse(trans('messages.errors.system_error'));
+            return $this->getErrorResponse(trans('messages.errors.system_error'),'',503);
         }
     }
 
@@ -157,7 +157,7 @@ class EventController extends Controller
                         ->select('id','name_ar','name_en','details_ar','details_en','first_date','last_date','coordinates','image')
                         ->get();
                         
-                        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$event);
+                        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$event,200);
      }
 
 

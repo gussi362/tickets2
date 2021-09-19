@@ -20,7 +20,7 @@ class TicketController extends Controller
     {
         $ticket = Ticket::orderBy('id','asc')->with('event')->get();
 
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.ticket')]),$ticket);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.ticket')]),$ticket,200);
     }
 
     /**
@@ -43,7 +43,7 @@ class TicketController extends Controller
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors(),410);
         }
 
         try
@@ -54,14 +54,14 @@ class TicketController extends Controller
             $ticket = Ticket::create($data);
             if($ticket->exists())
             {
-                return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.ticket')]),$ticket);
+                return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.ticket')]),$ticket,201);
             }else
             {
-                return $this->getErrorResponse(trans('messages.errors.system_error'));
+                return $this->getErrorResponse(trans('messages.errors.system_error'),'',501);
             }
         }catch(\Exception $e)
         {
-            return $this->getErrorResponse(trans('messages.errors.system_error'),$e->getMessage());
+            return $this->getErrorResponse(trans('messages.errors.system_error'),$e->getMessage(),501);
         }
 
     }
@@ -76,7 +76,7 @@ class TicketController extends Controller
     {
         $ticket = Ticket::findorfail($id);
 
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.ticket')]),$ticket);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.ticket')]),$ticket,200);
     }
 
     /**
@@ -99,10 +99,10 @@ class TicketController extends Controller
         }
         if($ticket->update())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.ticket')]),$ticket);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.ticket')]),$ticket,202);
         }else
         {            
-            return $this->getErrorResponse(trans('messages.errors.system_error'));
+            return $this->getErrorResponse(trans('messages.errors.system_error'),'',502);
         }
     }
 
@@ -117,10 +117,10 @@ class TicketController extends Controller
         $ticket = Ticket::findorFail($id);
         if($ticket->delete())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.ticket')]),$ticket);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.ticket')]),$ticket,203);
         }else
         {
-            return $this->getErrorResponse(trans('messages.errors.system_error'));
+            return $this->getErrorResponse(trans('messages.errors.system_error'),'',503);
         }
     }
 
