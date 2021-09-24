@@ -42,12 +42,12 @@ class PaymentController extends Controller
               
             }else
             {
-                return $this->getErrorResponse(trans('messages.errors.system_error'));//should send to api failed
+                return $this->getErrorResponse(trans('messages.errors.system_error'),'',510);//should send to api failed
             }    
 
         }else
         {
-            return $this->getErrorResponse(trans('messages.errors.system_error'));
+            return $this->getErrorResponse(trans('messages.errors.system_error'),'',510);
         }
     }
 

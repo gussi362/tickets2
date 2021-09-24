@@ -53,11 +53,10 @@ class EventController extends Controller
         $events = Event::where('company_id',$id)
                     ->where('status','true')
                     ->where('last_date','>=',$todayDate)
-                    ->with('companyName','ticketCount','date','ticket','sponser')
                     ->select('id','name_ar','name_en','details_ar','details_en','first_date','last_date','coordinates','image')
                     ->get();
        
-                    return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$event);
+                    return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$events);
     }
 
     //all events of company since registering
@@ -70,7 +69,7 @@ class EventController extends Controller
                     ->select('id','name_ar','name_en','details_ar','details_en','first_date','last_date','coordinates','image')
                     ->get();
        
-                    return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$event);  
+                    return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$events);  
     }
 
 }

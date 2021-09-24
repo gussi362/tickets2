@@ -26,10 +26,11 @@ class responseCodesSeeder extends Seeder
     {
 
 
+
         //PASSPORT 
         DB::table('response_codes')->insert([
-            'response_code' => '204',
-            'response_description' => 'user logged in successfully',
+            'response_code' => '200',
+            'response_description' => 'OK',
         ]);
 
         DB::table('response_codes')->insert([
@@ -79,11 +80,6 @@ class responseCodesSeeder extends Seeder
         ]);
 
         //CRUD SUCCESS
-        DB::table('response_codes')->insert([
-            'response_code' => '200',
-            'response_description' => 'resources found successfully',
-        ]);
-
         DB::table('response_codes')->insert([
             'response_code' => '201',
             'response_description' => 'resources created successfully',

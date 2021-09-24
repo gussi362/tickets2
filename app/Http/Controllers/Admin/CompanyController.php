@@ -23,7 +23,7 @@ class CompanyController extends Controller
         // $data = ['responseCode'=>100,
         //     'responseMessage'=>'',
         //     'data'=>['company'=>$company]];
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.company')]),$company,200);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.company')]),$company);
     }
 
      
@@ -57,7 +57,7 @@ class CompanyController extends Controller
             if($company->exists())
             {
                 broadcast(new overviewChanged($company));
-                return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.models.company')]),$company,201);
+                return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.models.company')]),$company);
             }else
             {           
                 return $this->getErrorResponse(trans('messages.error.system_error'),'',501);
@@ -77,7 +77,7 @@ class CompanyController extends Controller
     public function show($id)
     {
         $company = Company::findorfail($id);
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.models.company')]),$company,200);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.models.company')]),$company);
     }
 
     
@@ -104,7 +104,7 @@ class CompanyController extends Controller
 
         if($company->update())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.company')]),$company,202);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.company')]),$company);
         }else
         {
             return $this->getErrorResponse(trans('messages.errors.system_error').$id,'',502);
@@ -122,7 +122,7 @@ class CompanyController extends Controller
         $company = Company::findorFail($id);
         if($company->delete())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.company')]),$company,203);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.company')]),$company);
         }else
         {
             return $this->getErrorResponse(trans('messages.error.system_error'),'',503);
@@ -142,7 +142,7 @@ class CompanyController extends Controller
             $query->where('status','true');
         }])->get();
 
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$companies,200);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$companies);
     }
 
     /**
@@ -160,7 +160,7 @@ class CompanyController extends Controller
 
         if($company)
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$company,200);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.event')]),$company);
         }else
         {
             return $this->getErrorResponse(trans('messages.error.system_error'),'',510);

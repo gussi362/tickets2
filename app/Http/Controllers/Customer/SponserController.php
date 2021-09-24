@@ -20,7 +20,7 @@ class SponserController extends Controller
     {
         $sponsers = Sponser::orderBy('id','asc')->get();
 
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.sponser')]),$sponsers,200);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.sponser')]),$sponsers);
 
     }
 
@@ -60,7 +60,7 @@ class SponserController extends Controller
 
             $this->changeEventSponserStatus($request->input('event_id'));//update events column
         
-            return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.sponser')]),$sponser,201);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.sponser')]),$sponser);
 
             
         }catch(\Exception $e)
@@ -87,7 +87,7 @@ class SponserController extends Controller
     public function show($id)
     {
         $sponser = Sponser::findorfail($id);
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.sponser')]),$sponser,200);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.sponser')]),$sponser);
     }
 
     /**
@@ -111,7 +111,7 @@ class SponserController extends Controller
 
         if($sponser->update())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.sponser')]),$sponser,202);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.sponser')]),$sponser);
         }else
         {
             return $this->getErrorResponse(trans('messages.errors.system_error'),'',502);
@@ -130,7 +130,7 @@ class SponserController extends Controller
         $sponser = Sponser::findorFail($id);
         if($sponser->delete())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.sponser')]),$sponser,203);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.sponser')]),$sponser);
         }else
         {
             return $this->getErrorResponse(trans('messages.errors.system_error'),'',503);

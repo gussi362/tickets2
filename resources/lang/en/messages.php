@@ -41,6 +41,7 @@ return [
         'sponser'        => 'sponser',
         'ticket'         => 'ticket',
         'user'           => 'user',
+        'overview'           => 'overview',
     ],
 
 

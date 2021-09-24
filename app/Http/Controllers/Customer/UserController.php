@@ -18,7 +18,7 @@ class UserController extends Controller
     {
          $users = User::where('company_id',auth()->user()->company_id)
                         ->orderBy('id')->get();
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.user')]),$users ,200);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.user')]),$users );
 
     }
 
@@ -61,7 +61,7 @@ class UserController extends Controller
         
         if($user->exists())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.user')]),$user,201);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.user')]),$user);
         }else
         {
             return $this->getErrorResponse(trans('messages.errors.system_error'),'',501);
@@ -83,7 +83,7 @@ class UserController extends Controller
             return $this->getErrorResponse(trans('messages.errors.unauthorized_opreation'),'',401);
         }
 
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.user')]),$user,200);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.user')]),$user);
     }
 
     /**
@@ -118,7 +118,7 @@ class UserController extends Controller
 
         if($user->update())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.user')]),$user,202);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.user')]),$user);
         }else
         {
             return $this->getErrorResponse(trans('messages.errors.system_error'),'',502);
@@ -142,7 +142,7 @@ class UserController extends Controller
 
         if($user->delete())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.user')]),$user,203);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.user')]),$user);
         }else
         {
             return $this->getErrorResponse(trans('messages.errors.system_error'),'',503);

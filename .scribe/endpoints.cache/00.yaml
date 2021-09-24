@@ -37,7 +37,7 @@ endpoints:
         name: email
         description: ''
         required: true
-        example: sit
+        example: reprehenderit
         type: string
     responses: []
     responseFields: []
@@ -59,47 +59,19 @@ endpoints:
         name: token
         description: ''
         required: true
-        example: saepe
+        example: adipisci
         type: string
       password:
         name: password
         description: 'phone add.'
         required: true
-        example: accusamus
+        example: qui
         type: string
       password_confirmation:
         name: password_confirmation
         description: 'The value and <code>password</code> must match.'
         required: true
-        example: culpa
-        type: string
-    responses: []
-    responseFields: []
-  -
-    httpMethods:
-      - POST
-    uri: api/login
-    metadata:
-      title: Login
-      description: ''
-      authenticated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    queryParameters: []
-    bodyParameters:
-      email:
-        name: email
-        description: ''
-        required: true
-        example: deleniti
-        type: string
-      password:
-        name: password
-        description: ''
-        required: true
-        example: magnam
+        example: ut
         type: string
     responses: []
     responseFields: []
@@ -145,37 +117,37 @@ endpoints:
         name: name_ar
         description: ''
         required: true
-        example: aut
+        example: vero
         type: string
       name_en:
         name: name_en
         description: ''
         required: true
-        example: qui
+        example: veritatis
         type: string
       admin:
         name: admin
         description: ''
         required: true
-        example: quia
+        example: veniam
         type: string
       phone:
         name: phone
         description: ''
         required: true
-        example: sapiente
+        example: laborum
         type: string
       address:
         name: address
         description: ''
         required: true
-        example: aut
+        example: consectetur
         type: string
       status:
         name: status
         description: ''
         required: true
-        example: et
+        example: voluptate
         type: string
     responses: []
     responseFields: []
@@ -185,59 +157,6 @@ endpoints:
     uri: 'api/admin/company/{id}'
     metadata:
       title: 'Display the specified resource.'
-      description: ''
-      authenticated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        name: id
-        description: 'The ID of the company.'
-        required: true
-        example: 7
-        type: integer
-    queryParameters: []
-    bodyParameters: []
-    responses:
-      -
-        status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
-    responseFields: []
-  -
-    httpMethods:
-      - PUT
-      - PATCH
-    uri: 'api/admin/company/{id}'
-    metadata:
-      title: 'Update the specified resource in storage.'
-      description: ''
-      authenticated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        name: id
-        description: 'The ID of the company.'
-        required: true
-        example: 7
-        type: integer
-    queryParameters: []
-    bodyParameters: []
-    responses: []
-    responseFields: []
-  -
-    httpMethods:
-      - DELETE
-    uri: 'api/admin/company/{id}'
-    metadata:
-      title: 'Remove the specified resource from storage.'
       description: ''
       authenticated: false
     headers:
@@ -252,6 +171,59 @@ endpoints:
         type: integer
     queryParameters: []
     bodyParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+  -
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/admin/company/{id}'
+    metadata:
+      title: 'Update the specified resource in storage.'
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the company.'
+        required: true
+        example: 4
+        type: integer
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/admin/company/{id}'
+    metadata:
+      title: 'Remove the specified resource from storage.'
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the company.'
+        required: true
+        example: 14
+        type: integer
+    queryParameters: []
+    bodyParameters: []
     responses: []
     responseFields: []
   -
@@ -296,67 +268,67 @@ endpoints:
         name: name_ar
         description: ''
         required: true
-        example: harum
+        example: voluptatum
         type: string
       name_en:
         name: name_en
         description: ''
         required: true
-        example: in
+        example: dignissimos
         type: string
       details_ar:
         name: details_ar
         description: ''
         required: true
-        example: quo
+        example: doloribus
         type: string
       details_en:
         name: details_en
         description: ''
         required: true
-        example: sunt
+        example: iusto
         type: string
       first_date:
         name: first_date
         description: ''
         required: true
-        example: et
+        example: beatae
         type: string
       last_date:
         name: last_date
         description: ''
         required: true
-        example: dolorum
+        example: ea
         type: string
       ticket_count:
         name: ticket_count
         description: ''
         required: true
-        example: odit
+        example: sapiente
         type: string
       image:
         name: image
         description: ''
         required: true
-        example: ut
+        example: debitis
         type: string
       status:
         name: status
         description: 'Must not be greater than 5 characters.'
         required: true
-        example: olv
+        example: ''
         type: string
       company_id:
         name: company_id
         description: ''
         required: true
-        example: quis
+        example: rem
         type: string
       coordinates:
         name: coordinates
         description: ''
         required: true
-        example: exercitationem
+        example: harum
         type: string
     responses: []
     responseFields: []
@@ -376,7 +348,7 @@ endpoints:
         name: id
         description: 'The ID of the event.'
         required: true
-        example: 20
+        example: 6
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -407,7 +379,7 @@ endpoints:
         name: id
         description: 'The ID of the event.'
         required: true
-        example: 6
+        example: 18
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -429,7 +401,7 @@ endpoints:
         name: id
         description: 'The ID of the event.'
         required: true
-        example: 7
+        example: 19
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -477,31 +449,31 @@ endpoints:
         name: ticket
         description: ''
         required: true
-        example: sint
+        example: voluptatem
         type: string
       date_id:
         name: date_id
         description: ''
         required: true
-        example: omnis
+        example: neque
         type: string
       event_id:
         name: event_id
         description: ''
         required: true
-        example: nesciunt
+        example: ullam
         type: string
       name:
         name: name
         description: ''
         required: true
-        example: nisi
+        example: voluptas
         type: string
       phone:
         name: phone
         description: ''
         required: true
-        example: porro
+        example: distinctio
         type: string
     responses: []
     responseFields: []
@@ -521,7 +493,7 @@ endpoints:
         name: id
         description: 'The ID of the order.'
         required: true
-        example: 17
+        example: 8
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -552,7 +524,7 @@ endpoints:
         name: id
         description: 'The ID of the order.'
         required: true
-        example: 11
+        example: 3
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -574,7 +546,7 @@ endpoints:
         name: id
         description: 'The ID of the order.'
         required: true
-        example: 12
+        example: 4
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -620,7 +592,7 @@ endpoints:
         name: id
         description: 'The ID of the orderDetail.'
         required: true
-        example: voluptatem
+        example: ut
         type: string
     queryParameters: []
     bodyParameters: []
@@ -651,7 +623,7 @@ endpoints:
         name: id
         description: 'The ID of the orderDetail.'
         required: true
-        example: neque
+        example: et
         type: string
     queryParameters: []
     bodyParameters: []
@@ -699,37 +671,37 @@ endpoints:
         name: event_id
         description: ''
         required: true
-        example: consequuntur
+        example: eos
         type: string
       amount:
         name: amount
         description: ''
         required: true
-        example: sunt
+        example: asperiores
         type: string
       name:
         name: name
         description: ''
         required: true
-        example: vitae
+        example: harum
         type: string
       status:
         name: status
         description: ''
         required: true
-        example: est
+        example: facilis
         type: string
       details_ar:
         name: details_ar
         description: ''
         required: true
-        example: suscipit
+        example: aliquam
         type: string
       details_en:
         name: details_en
         description: ''
         required: true
-        example: quisquam
+        example: omnis
         type: string
     responses: []
     responseFields: []
@@ -749,7 +721,7 @@ endpoints:
         name: id
         description: 'The ID of the ticket.'
         required: true
-        example: 13
+        example: 6
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -780,7 +752,7 @@ endpoints:
         name: id
         description: 'The ID of the ticket.'
         required: true
-        example: 14
+        example: 2
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -802,7 +774,7 @@ endpoints:
         name: id
         description: 'The ID of the ticket.'
         required: true
-        example: 14
+        example: 19
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -850,13 +822,13 @@ endpoints:
         name: event_id
         description: ''
         required: true
-        example: ad
+        example: in
         type: string
       date:
         name: date
         description: 'Must be a valid date.'
         required: true
-        example: '2021-09-19T10:49:25'
+        example: '2021-09-20T07:29:57'
         type: string
     responses: []
     responseFields: []
@@ -876,7 +848,7 @@ endpoints:
         name: id
         description: 'The ID of the date.'
         required: true
-        example: 4
+        example: 16
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -907,7 +879,7 @@ endpoints:
         name: id
         description: 'The ID of the date.'
         required: true
-        example: 13
+        example: 3
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -929,7 +901,7 @@ endpoints:
         name: id
         description: 'The ID of the date.'
         required: true
-        example: 6
+        example: 2
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -977,25 +949,25 @@ endpoints:
         name: name_ar
         description: ''
         required: true
-        example: necessitatibus
+        example: eaque
         type: string
       name_en:
         name: name_en
         description: ''
         required: true
-        example: cum
+        example: laudantium
         type: string
       image:
         name: image
         description: ''
         required: true
-        example: velit
+        example: consequatur
         type: string
       event_id:
         name: event_id
         description: ''
         required: true
-        example: necessitatibus
+        example: voluptatem
         type: string
     responses: []
     responseFields: []
@@ -1015,7 +987,7 @@ endpoints:
         name: id
         description: 'The ID of the sponser.'
         required: true
-        example: 1
+        example: 13
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -1046,7 +1018,7 @@ endpoints:
         name: id
         description: 'The ID of the sponser.'
         required: true
-        example: 5
+        example: 11
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -1068,7 +1040,7 @@ endpoints:
         name: id
         description: 'The ID of the sponser.'
         required: true
-        example: 6
+        example: 15
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -1116,31 +1088,31 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: delectus
+        example: nam
         type: string
       email:
         name: email
         description: ''
         required: true
-        example: ab
+        example: esse
         type: string
       password:
         name: password
         description: ''
         required: true
-        example: error
+        example: ullam
         type: string
       phone:
         name: phone
         description: ''
         required: true
-        example: enim
+        example: adipisci
         type: string
       type:
         name: type
         description: ''
         required: true
-        example: ut
+        example: illum
         type: string
     responses: []
     responseFields: []
@@ -1160,7 +1132,7 @@ endpoints:
         name: id
         description: 'The ID of the user.'
         required: true
-        example: 14
+        example: 17
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -1191,7 +1163,7 @@ endpoints:
         name: id
         description: 'The ID of the user.'
         required: true
-        example: 20
+        example: 8
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -1213,7 +1185,7 @@ endpoints:
         name: id
         description: 'The ID of the user.'
         required: true
-        example: 16
+        example: 18
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -1237,19 +1209,19 @@ endpoints:
         name: old_password
         description: ''
         required: true
-        example: nisi
+        example: a
         type: string
       new_password:
         name: new_password
         description: ''
         required: true
-        example: distinctio
+        example: rerum
         type: string
       new_password_confirmation:
         name: new_password_confirmation
         description: 'The value and <code>new_password</code> must match.'
         required: true
-        example: nihil
+        example: consequuntur
         type: string
     responses: []
     responseFields: []
@@ -1319,61 +1291,61 @@ endpoints:
         name: name_ar
         description: ''
         required: true
-        example: voluptas
+        example: maxime
         type: string
       name_en:
         name: name_en
         description: ''
         required: true
-        example: tempore
+        example: suscipit
         type: string
       details_ar:
         name: details_ar
         description: ''
         required: true
-        example: libero
+        example: dolores
         type: string
       details_en:
         name: details_en
         description: ''
         required: true
-        example: cum
+        example: et
         type: string
       first_date:
         name: first_date
         description: ''
         required: true
-        example: accusantium
+        example: perferendis
         type: string
       last_date:
         name: last_date
         description: ''
         required: true
-        example: suscipit
+        example: a
         type: string
       ticket_count:
         name: ticket_count
         description: ''
         required: true
-        example: et
+        example: nihil
         type: string
       image:
         name: image
         description: ''
         required: true
-        example: velit
+        example: voluptatem
         type: string
       status:
         name: status
         description: 'Must not be greater than 5 characters.'
         required: true
-        example: g
+        example: ''
         type: string
       coordinates:
         name: coordinates
         description: ''
         required: true
-        example: sapiente
+        example: quia
         type: string
     responses: []
     responseFields: []
@@ -1393,7 +1365,7 @@ endpoints:
         name: id
         description: 'The ID of the event.'
         required: true
-        example: 17
+        example: 15
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -1424,7 +1396,7 @@ endpoints:
         name: id
         description: 'The ID of the event.'
         required: true
-        example: 18
+        example: 8
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -1446,7 +1418,7 @@ endpoints:
         name: id
         description: 'The ID of the event.'
         required: true
-        example: 5
+        example: 14
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -1494,31 +1466,31 @@ endpoints:
         name: ticket
         description: ''
         required: true
-        example: nostrum
+        example: perspiciatis
         type: string
       date_id:
         name: date_id
         description: ''
         required: true
-        example: necessitatibus
+        example: reiciendis
         type: string
       event_id:
         name: event_id
         description: ''
         required: true
-        example: et
+        example: qui
         type: string
       name:
         name: name
         description: ''
         required: true
-        example: a
+        example: asperiores
         type: string
       phone:
         name: phone
         description: ''
         required: true
-        example: voluptatem
+        example: eum
         type: string
     responses: []
     responseFields: []
@@ -1538,7 +1510,7 @@ endpoints:
         name: id
         description: 'The ID of the order.'
         required: true
-        example: 16
+        example: 8
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -1569,7 +1541,7 @@ endpoints:
         name: id
         description: 'The ID of the order.'
         required: true
-        example: 3
+        example: 2
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -1591,7 +1563,7 @@ endpoints:
         name: id
         description: 'The ID of the order.'
         required: true
-        example: 16
+        example: 9
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -1637,7 +1609,7 @@ endpoints:
         name: id
         description: 'The ID of the orderDetail.'
         required: true
-        example: consequuntur
+        example: molestiae
         type: string
     queryParameters: []
     bodyParameters: []
@@ -1668,7 +1640,7 @@ endpoints:
         name: id
         description: 'The ID of the orderDetail.'
         required: true
-        example: ab
+        example: maxime
         type: string
     queryParameters: []
     bodyParameters: []
@@ -1716,37 +1688,37 @@ endpoints:
         name: event_id
         description: ''
         required: true
-        example: harum
+        example: aut
         type: string
       amount:
         name: amount
         description: ''
         required: true
-        example: ex
+        example: magni
         type: string
       name:
         name: name
         description: ''
         required: true
-        example: atque
+        example: nihil
         type: string
       status:
         name: status
         description: ''
         required: true
-        example: quia
+        example: soluta
         type: string
       details_ar:
         name: details_ar
         description: ''
         required: true
-        example: voluptates
+        example: corrupti
         type: string
       details_en:
         name: details_en
         description: ''
         required: true
-        example: maxime
+        example: est
         type: string
     responses: []
     responseFields: []
@@ -1765,6 +1737,133 @@ endpoints:
       id:
         name: id
         description: 'The ID of the ticket.'
+        required: true
+        example: 13
+        type: integer
+    queryParameters: []
+    bodyParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+  -
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/user/ticket/{id}'
+    metadata:
+      title: 'Update the specified resource in storage.'
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the ticket.'
+        required: true
+        example: 7
+        type: integer
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/user/ticket/{id}'
+    metadata:
+      title: 'Remove the specified resource from storage.'
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the ticket.'
+        required: true
+        example: 7
+        type: integer
+    queryParameters: []
+    bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: api/user/date
+    metadata:
+      title: 'Display a listing of the resource.'
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/user/date
+    metadata:
+      title: 'Store a newly created resource in storage.'
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      event_id:
+        name: event_id
+        description: ''
+        required: true
+        example: nihil
+        type: string
+      date:
+        name: date
+        description: 'Must be a valid date.'
+        required: true
+        example: '2021-09-20T07:29:57'
+        type: string
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/user/date/{id}'
+    metadata:
+      title: 'Display the specified resource.'
+      description: ''
+      authenticated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the date.'
         required: true
         example: 5
         type: integer
@@ -1784,7 +1883,7 @@ endpoints:
     httpMethods:
       - PUT
       - PATCH
-    uri: 'api/user/ticket/{id}'
+    uri: 'api/user/date/{id}'
     metadata:
       title: 'Update the specified resource in storage.'
       description: ''
@@ -1795,7 +1894,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the ticket.'
+        description: 'The ID of the date.'
         required: true
         example: 8
         type: integer
@@ -1806,133 +1905,6 @@ endpoints:
   -
     httpMethods:
       - DELETE
-    uri: 'api/user/ticket/{id}'
-    metadata:
-      title: 'Remove the specified resource from storage.'
-      description: ''
-      authenticated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        name: id
-        description: 'The ID of the ticket.'
-        required: true
-        example: 12
-        type: integer
-    queryParameters: []
-    bodyParameters: []
-    responses: []
-    responseFields: []
-  -
-    httpMethods:
-      - GET
-    uri: api/user/date
-    metadata:
-      title: 'Display a listing of the resource.'
-      description: ''
-      authenticated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    queryParameters: []
-    bodyParameters: []
-    responses:
-      -
-        status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
-    responseFields: []
-  -
-    httpMethods:
-      - POST
-    uri: api/user/date
-    metadata:
-      title: 'Store a newly created resource in storage.'
-      description: ''
-      authenticated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    queryParameters: []
-    bodyParameters:
-      event_id:
-        name: event_id
-        description: ''
-        required: true
-        example: delectus
-        type: string
-      date:
-        name: date
-        description: 'Must be a valid date.'
-        required: true
-        example: '2021-09-19T10:49:25'
-        type: string
-    responses: []
-    responseFields: []
-  -
-    httpMethods:
-      - GET
-    uri: 'api/user/date/{id}'
-    metadata:
-      title: 'Display the specified resource.'
-      description: ''
-      authenticated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        name: id
-        description: 'The ID of the date.'
-        required: true
-        example: 12
-        type: integer
-    queryParameters: []
-    bodyParameters: []
-    responses:
-      -
-        status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
-    responseFields: []
-  -
-    httpMethods:
-      - PUT
-      - PATCH
-    uri: 'api/user/date/{id}'
-    metadata:
-      title: 'Update the specified resource in storage.'
-      description: ''
-      authenticated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        name: id
-        description: 'The ID of the date.'
-        required: true
-        example: 7
-        type: integer
-    queryParameters: []
-    bodyParameters: []
-    responses: []
-    responseFields: []
-  -
-    httpMethods:
-      - DELETE
     uri: 'api/user/date/{id}'
     metadata:
       title: 'Remove the specified resource from storage.'
@@ -1946,7 +1918,7 @@ endpoints:
         name: id
         description: 'The ID of the date.'
         required: true
-        example: 6
+        example: 3
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -1994,25 +1966,25 @@ endpoints:
         name: name_ar
         description: ''
         required: true
-        example: et
+        example: vitae
         type: string
       name_en:
         name: name_en
         description: ''
         required: true
-        example: temporibus
+        example: et
         type: string
       image:
         name: image
         description: ''
         required: true
-        example: nulla
+        example: voluptas
         type: string
       event_id:
         name: event_id
         description: ''
         required: true
-        example: tenetur
+        example: cupiditate
         type: string
     responses: []
     responseFields: []
@@ -2063,7 +2035,7 @@ endpoints:
         name: id
         description: 'The ID of the sponser.'
         required: true
-        example: 16
+        example: 10
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -2085,7 +2057,7 @@ endpoints:
         name: id
         description: 'The ID of the sponser.'
         required: true
-        example: 12
+        example: 14
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -2133,25 +2105,25 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: et
+        example: veritatis
         type: string
       email:
         name: email
         description: ''
         required: true
-        example: dolores
+        example: unde
         type: string
       password:
         name: password
         description: ''
         required: true
-        example: consequatur
+        example: sit
         type: string
       type:
         name: type
         description: ''
         required: true
-        example: laboriosam
+        example: laborum
         type: string
     responses: []
     responseFields: []
@@ -2171,7 +2143,7 @@ endpoints:
         name: id
         description: 'The ID of the user.'
         required: true
-        example: 11
+        example: 19
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -2202,7 +2174,7 @@ endpoints:
         name: id
         description: 'The ID of the user.'
         required: true
-        example: 17
+        example: 2
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -2224,7 +2196,7 @@ endpoints:
         name: id
         description: 'The ID of the user.'
         required: true
-        example: 15
+        example: 17
         type: integer
     queryParameters: []
     bodyParameters: []
@@ -2248,19 +2220,19 @@ endpoints:
         name: old_password
         description: ''
         required: true
-        example: est
+        example: enim
         type: string
       new_password:
         name: new_password
         description: ''
         required: true
-        example: non
+        example: nihil
         type: string
       new_password_confirmation:
         name: new_password_confirmation
         description: 'The value and <code>new_password</code> must match.'
         required: true
-        example: aut
+        example: deleniti
         type: string
     responses: []
     responseFields: []
@@ -2304,13 +2276,13 @@ endpoints:
         name: order_id
         description: 'The ID of the order.'
         required: true
-        example: nesciunt
+        example: nostrum
         type: string
       serial:
         name: serial
         description: ''
         required: true
-        example: libero
+        example: sed
         type: string
     queryParameters: []
     bodyParameters: []
@@ -2349,7 +2321,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '56'
+          x-ratelimit-remaining: '53'
           access-control-allow-origin: '*'
         description: null
     responseFields: []
@@ -2369,7 +2341,7 @@ endpoints:
         name: order_id
         description: 'The ID of the order.'
         required: true
-        example: sunt
+        example: iusto
         type: string
     queryParameters: []
     bodyParameters: []
@@ -2381,7 +2353,7 @@ endpoints:
           content-type: 'text/html; charset=UTF-8'
           cache-control: 'no-cache, private'
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '55'
+          x-ratelimit-remaining: '52'
           access-control-allow-origin: '*'
         description: null
     responseFields: []
@@ -2401,7 +2373,7 @@ endpoints:
         name: order_id
         description: 'The ID of the order.'
         required: true
-        example: et
+        example: aspernatur
         type: string
     queryParameters: []
     bodyParameters: []
@@ -3016,7 +2988,7 @@ endpoints:
           cache-control: 'no-cache, private'
           content-type: application/json
           x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '54'
+          x-ratelimit-remaining: '51'
           access-control-allow-origin: '*'
         description: null
     responseFields: []

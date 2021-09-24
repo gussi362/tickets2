@@ -16,7 +16,7 @@ class DashboardController extends Controller
     public function getOverview()
     {
 
-        return $this->getSuccessResponse('overview',[
+        return $this->getSuccessResponse(trans('messages.models.overview'),[
                                         'companiesCount'       => $this->getCompaniesCount(),
                                         'eventsCount'          => $this->getEventsCount(),
                                         'totalTickets'         => $this->getEventsTotalTickets(),
@@ -28,7 +28,7 @@ class DashboardController extends Controller
                                                                     'reservedTickets' => $this->getEventsTotalReservedTickets(),
                                                                     'ticketsCheckedIn' => $this->getCheckedInCount()
                                                                     ]
-                                        ],200);
+                                        ]);
 
     } 
 

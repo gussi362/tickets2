@@ -27,6 +27,8 @@ Route::group(['middleware' => 'setLocale'],function()
     Route::post('login', 'passportController@login');
 });
 
+Route::get('responseCodes','ResponseController@getResponseCodes');
+
 //login since we using multiple guards
 // Route::group(['guard' => 'customer'], function () {
 //     // ...
@@ -93,11 +95,11 @@ Route::group(['middleware' => ['auth:api' ,'setLocale']] ,function () {
 
 
     //user who scan ids //add middleware later
-    Route::group(['prefix' => 'scan','middleware'=>['checkStatusUser'] ,'namespace' => 'Qr'], function () {
+    Route::group(['prefix' => 'scan','middleware'=>['checkStatusScanUser'] ,'namespace' => 'Qr'], function () {
 
         //Route::get('events','EventController@getCompanyCurrentEventsDetails');
-        Route::get('orderStatus/{order_id}/{serial}','OrderController@checkIn');
-        Route::apiResource('order','OrderController');
+        Route::get('checkIn/{order_id}/{serial}','OrderController@checkIn');
+        //Route::apiResource('order','OrderController');
         });
 
 });
@@ -105,6 +107,7 @@ Route::group(['middleware' => ['auth:api' ,'setLocale']] ,function () {
 Route::group(['prefix' => 'appname' ,'namespace' => 'Api'], function () {
 
     Route::get('events','EventController@getEventsCurrent');
+    Route::get('events/{id}','EventController@getCompanyEvent');
 
     Route::get('/{order_id}','PaymentController@getOrder');
 

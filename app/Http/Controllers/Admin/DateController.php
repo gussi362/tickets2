@@ -18,7 +18,7 @@ class DateController extends Controller
     {
         $date = Date::orderBy('date','desc')->with('event')->get();
         
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.date')]),$date,200);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.date')]),$date);
     }
 
     /**
@@ -44,7 +44,7 @@ class DateController extends Controller
         $date = Date::create($data);
         if($date->exists())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.date')]),$date,201);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.date')]),$date);
         }else
         {
             return $this->getErrorResposne('failed to create date','',501);
@@ -61,7 +61,7 @@ class DateController extends Controller
     {
         $date = Date::findorfail($id);
         
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.date')]),$date,200);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.date')]),$date);
     }
 
     /**
@@ -85,7 +85,7 @@ class DateController extends Controller
 
         if($date->update())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.date')]),$date,202);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.date')]),$date);
         }else
         {
             return $this->getErrorResponse(trans('messages.errors.system_error'),'',502);
@@ -104,7 +104,7 @@ class DateController extends Controller
         $date = Date::findorFail($id);
         if($date->delete())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.date')]),$date,203);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.date')]),$date);
         }else
         {
             return $this->getErrorResponse(trans('messages.errors.system_error'),503);

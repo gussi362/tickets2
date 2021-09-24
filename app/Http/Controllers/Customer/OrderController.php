@@ -50,7 +50,7 @@ class OrderController extends Controller
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors());
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors(),410);
         }
        
         //when ordering 
@@ -88,7 +88,7 @@ class OrderController extends Controller
                     
                     broadcast(new overviewChanged($order));
                     
-                    return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.order')]),$order,201);
+                    return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.order')]),$order);
                     
                     
                 } catch (\Exception $e) 
@@ -203,7 +203,7 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::findorfail($id);
-        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.order')]),$order,200);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.order')]),$order);
     }
 
     /**
@@ -227,7 +227,7 @@ class OrderController extends Controller
 
         if($order->update())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.order')]),$order,202);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.order')]),$order);
         }else
         {
             return $this->getErrorResponse(trans('messages.errors.system_error'),'',502);
@@ -245,7 +245,7 @@ class OrderController extends Controller
         $order = Order::findorFail($id);
         if($this->destroyOrderDetails($order->code) && $order->delete())
         {
-            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.order')]),$order,203);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.order')]),$order);
         }else
         {
             return $this->getErrorResponse(trans('messages.errors.system_error'),'',503);

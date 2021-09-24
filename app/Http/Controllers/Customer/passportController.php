@@ -32,7 +32,7 @@ class passportController extends Controller
      
             $token = $user->createToken('userToken')->accessToken;
 
-            return $this->getSuccessResponse(trans('messages.passport.registered') ,[$user,'token'=>'Bearer '.$token],207);
+            return $this->getSuccessResponse(trans('messages.passport.registered') ,[$user,'token'=>'Bearer '.$token]);
     
     }
     
@@ -64,7 +64,7 @@ class passportController extends Controller
         {
             $token = auth()->user()->createToken('userToken')->accessToken;
 
-            return $this->getSuccessResponse(trans('messages.passport.loggedin'),['user'=>auth()->user(),'token'=>'Bearer '.$token],204);
+            return $this->getSuccessResponse(trans('messages.passport.loggedin'),['user'=>auth()->user(),'token'=>'Bearer '.$token]);
         }else
         {
             return $this->getErrorResponse(trans('messages.passport.invalid_credintals'),'',411);
@@ -102,7 +102,7 @@ class passportController extends Controller
 
         if($user->update())
         {
-            return $this->getSuccessResponse(trans('messages.passport.changed_password') ,$user,205);
+            return $this->getSuccessResponse(trans('messages.passport.changed_password') ,$user);
         }else
         {
             return $this->getErrorResponse(trans('messages.passport.failed_change_password'),'',510);//send system error

@@ -62,7 +62,7 @@ paths:
                 email:
                   type: string
                   description: ''
-                  example: sit
+                  example: reprehenderit
               required:
                 - email
       security: []
@@ -98,60 +98,19 @@ paths:
                 token:
                   type: string
                   description: ''
-                  example: saepe
+                  example: adipisci
                 password:
                   type: string
                   description: 'phone add.'
-                  example: accusamus
+                  example: qui
                 password_confirmation:
                   type: string
                   description: 'The value and <code>password</code> must match.'
-                  example: culpa
+                  example: ut
               required:
                 - token
                 - password
                 - password_confirmation
-      security: []
-  /api/login:
-    post:
-      summary: Login
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        -
-          in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  description: ''
-                  example: deleniti
-                password:
-                  type: string
-                  description: ''
-                  example: magnam
-              required:
-                - email
-                - password
       security: []
   /api/admin/company:
     get:
@@ -219,27 +178,27 @@ paths:
                 name_ar:
                   type: string
                   description: ''
-                  example: aut
+                  example: vero
                 name_en:
                   type: string
                   description: ''
-                  example: qui
+                  example: veritatis
                 admin:
                   type: string
                   description: ''
-                  example: quia
+                  example: veniam
                 phone:
                   type: string
                   description: ''
-                  example: sapiente
+                  example: laborum
                 address:
                   type: string
                   description: ''
-                  example: aut
+                  example: consectetur
                 status:
                   type: string
                   description: ''
-                  example: et
+                  example: voluptate
               required:
                 - name_ar
                 - name_en
@@ -332,7 +291,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the company.'
-        example: 7
+        example: 9
         required: true
         schema:
           type: integer
@@ -402,47 +361,47 @@ paths:
                 name_ar:
                   type: string
                   description: ''
-                  example: harum
+                  example: voluptatum
                 name_en:
                   type: string
                   description: ''
-                  example: in
+                  example: dignissimos
                 details_ar:
                   type: string
                   description: ''
-                  example: quo
+                  example: doloribus
                 details_en:
                   type: string
                   description: ''
-                  example: sunt
+                  example: iusto
                 first_date:
                   type: string
                   description: ''
-                  example: et
+                  example: beatae
                 last_date:
                   type: string
                   description: ''
-                  example: dolorum
+                  example: ea
                 ticket_count:
                   type: string
                   description: ''
-                  example: odit
+                  example: sapiente
                 image:
                   type: string
                   description: ''
-                  example: ut
+                  example: debitis
                 status:
                   type: string
                   description: 'Must not be greater than 5 characters.'
-                  example: olv
+                  example: ''
                 company_id:
                   type: string
                   description: ''
-                  example: quis
+                  example: rem
                 coordinates:
                   type: string
                   description: ''
-                  example: exercitationem
+                  example: harum
               required:
                 - name_ar
                 - name_en
@@ -540,7 +499,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the event.'
-        example: 20
+        example: 6
         required: true
         schema:
           type: integer
@@ -610,23 +569,23 @@ paths:
                 ticket:
                   type: string
                   description: ''
-                  example: sint
+                  example: voluptatem
                 date_id:
                   type: string
                   description: ''
-                  example: omnis
+                  example: neque
                 event_id:
                   type: string
                   description: ''
-                  example: nesciunt
+                  example: ullam
                 name:
                   type: string
                   description: ''
-                  example: nisi
+                  example: voluptas
                 phone:
                   type: string
                   description: ''
-                  example: porro
+                  example: distinctio
               required:
                 - ticket
                 - date_id
@@ -718,7 +677,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the order.'
-        example: 17
+        example: 8
         required: true
         schema:
           type: integer
@@ -819,7 +778,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the orderDetail.'
-        example: voluptatem
+        example: ut
         required: true
         schema:
           type: string
@@ -889,27 +848,27 @@ paths:
                 event_id:
                   type: string
                   description: ''
-                  example: consequuntur
+                  example: eos
                 amount:
                   type: string
                   description: ''
-                  example: sunt
+                  example: asperiores
                 name:
                   type: string
                   description: ''
-                  example: vitae
+                  example: harum
                 status:
                   type: string
                   description: ''
-                  example: est
+                  example: facilis
                 details_ar:
                   type: string
                   description: ''
-                  example: suscipit
+                  example: aliquam
                 details_en:
                   type: string
                   description: ''
-                  example: quisquam
+                  example: omnis
               required:
                 - event_id
                 - amount
@@ -1002,7 +961,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the ticket.'
-        example: 13
+        example: 6
         required: true
         schema:
           type: integer
@@ -1072,11 +1031,11 @@ paths:
                 event_id:
                   type: string
                   description: ''
-                  example: ad
+                  example: in
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2021-09-19T10:49:25'
+                  example: '2021-09-20T07:29:57'
               required:
                 - event_id
                 - date
@@ -1165,7 +1124,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the date.'
-        example: 4
+        example: 16
         required: true
         schema:
           type: integer
@@ -1235,19 +1194,19 @@ paths:
                 name_ar:
                   type: string
                   description: ''
-                  example: necessitatibus
+                  example: eaque
                 name_en:
                   type: string
                   description: ''
-                  example: cum
+                  example: laudantium
                 image:
                   type: string
                   description: ''
-                  example: velit
+                  example: consequatur
                 event_id:
                   type: string
                   description: ''
-                  example: necessitatibus
+                  example: voluptatem
               required:
                 - name_ar
                 - name_en
@@ -1338,7 +1297,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the sponser.'
-        example: 1
+        example: 13
         required: true
         schema:
           type: integer
@@ -1408,23 +1367,23 @@ paths:
                 name:
                   type: string
                   description: ''
-                  example: delectus
+                  example: nam
                 email:
                   type: string
                   description: ''
-                  example: ab
+                  example: esse
                 password:
                   type: string
                   description: ''
-                  example: error
+                  example: ullam
                 phone:
                   type: string
                   description: ''
-                  example: enim
+                  example: adipisci
                 type:
                   type: string
                   description: ''
-                  example: ut
+                  example: illum
               required:
                 - name
                 - email
@@ -1516,7 +1475,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the user.'
-        example: 14
+        example: 17
         required: true
         schema:
           type: integer
@@ -1552,15 +1511,15 @@ paths:
                 old_password:
                   type: string
                   description: ''
-                  example: nisi
+                  example: a
                 new_password:
                   type: string
                   description: ''
-                  example: distinctio
+                  example: rerum
                 new_password_confirmation:
                   type: string
                   description: 'The value and <code>new_password</code> must match.'
-                  example: nihil
+                  example: consequuntur
               required:
                 - old_password
                 - new_password
@@ -1667,43 +1626,43 @@ paths:
                 name_ar:
                   type: string
                   description: ''
-                  example: voluptas
+                  example: maxime
                 name_en:
                   type: string
                   description: ''
-                  example: tempore
+                  example: suscipit
                 details_ar:
                   type: string
                   description: ''
-                  example: libero
+                  example: dolores
                 details_en:
                   type: string
                   description: ''
-                  example: cum
+                  example: et
                 first_date:
                   type: string
                   description: ''
-                  example: accusantium
+                  example: perferendis
                 last_date:
                   type: string
                   description: ''
-                  example: suscipit
+                  example: a
                 ticket_count:
                   type: string
                   description: ''
-                  example: et
+                  example: nihil
                 image:
                   type: string
                   description: ''
-                  example: velit
+                  example: voluptatem
                 status:
                   type: string
                   description: 'Must not be greater than 5 characters.'
-                  example: g
+                  example: ''
                 coordinates:
                   type: string
                   description: ''
-                  example: sapiente
+                  example: quia
               required:
                 - name_ar
                 - name_en
@@ -1800,7 +1759,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the event.'
-        example: 17
+        example: 15
         required: true
         schema:
           type: integer
@@ -1870,23 +1829,23 @@ paths:
                 ticket:
                   type: string
                   description: ''
-                  example: nostrum
+                  example: perspiciatis
                 date_id:
                   type: string
                   description: ''
-                  example: necessitatibus
+                  example: reiciendis
                 event_id:
                   type: string
                   description: ''
-                  example: et
+                  example: qui
                 name:
                   type: string
                   description: ''
-                  example: a
+                  example: asperiores
                 phone:
                   type: string
                   description: ''
-                  example: voluptatem
+                  example: eum
               required:
                 - ticket
                 - date_id
@@ -1978,7 +1937,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the order.'
-        example: 16
+        example: 8
         required: true
         schema:
           type: integer
@@ -2079,7 +2038,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the orderDetail.'
-        example: consequuntur
+        example: molestiae
         required: true
         schema:
           type: string
@@ -2149,27 +2108,27 @@ paths:
                 event_id:
                   type: string
                   description: ''
-                  example: harum
+                  example: aut
                 amount:
                   type: string
                   description: ''
-                  example: ex
+                  example: magni
                 name:
                   type: string
                   description: ''
-                  example: atque
+                  example: nihil
                 status:
                   type: string
                   description: ''
-                  example: quia
+                  example: soluta
                 details_ar:
                   type: string
                   description: ''
-                  example: voluptates
+                  example: corrupti
                 details_en:
                   type: string
                   description: ''
-                  example: maxime
+                  example: est
               required:
                 - event_id
                 - amount
@@ -2262,7 +2221,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the ticket.'
-        example: 5
+        example: 13
         required: true
         schema:
           type: integer
@@ -2332,11 +2291,11 @@ paths:
                 event_id:
                   type: string
                   description: ''
-                  example: delectus
+                  example: nihil
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2021-09-19T10:49:25'
+                  example: '2021-09-20T07:29:57'
               required:
                 - event_id
                 - date
@@ -2425,7 +2384,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the date.'
-        example: 12
+        example: 5
         required: true
         schema:
           type: integer
@@ -2495,19 +2454,19 @@ paths:
                 name_ar:
                   type: string
                   description: ''
-                  example: et
+                  example: vitae
                 name_en:
                   type: string
                   description: ''
-                  example: temporibus
+                  example: et
                 image:
                   type: string
                   description: ''
-                  example: nulla
+                  example: voluptas
                 event_id:
                   type: string
                   description: ''
-                  example: tenetur
+                  example: cupiditate
               required:
                 - name_ar
                 - name_en
@@ -2668,19 +2627,19 @@ paths:
                 name:
                   type: string
                   description: ''
-                  example: et
+                  example: veritatis
                 email:
                   type: string
                   description: ''
-                  example: dolores
+                  example: unde
                 password:
                   type: string
                   description: ''
-                  example: consequatur
+                  example: sit
                 type:
                   type: string
                   description: ''
-                  example: laboriosam
+                  example: laborum
               required:
                 - name
                 - email
@@ -2771,7 +2730,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the user.'
-        example: 11
+        example: 19
         required: true
         schema:
           type: integer
@@ -2807,15 +2766,15 @@ paths:
                 old_password:
                   type: string
                   description: ''
-                  example: est
+                  example: enim
                 new_password:
                   type: string
                   description: ''
-                  example: non
+                  example: nihil
                 new_password_confirmation:
                   type: string
                   description: 'The value and <code>new_password</code> must match.'
-                  example: aut
+                  example: deleniti
               required:
                 - old_password
                 - new_password
@@ -2896,7 +2855,7 @@ paths:
         in: path
         name: order_id
         description: 'The ID of the order.'
-        example: nesciunt
+        example: nostrum
         required: true
         schema:
           type: string
@@ -2904,7 +2863,7 @@ paths:
         in: path
         name: serial
         description: ''
-        example: libero
+        example: sed
         required: true
         schema:
           type: string
@@ -2990,7 +2949,7 @@ paths:
         in: path
         name: order_id
         description: 'The ID of the order.'
-        example: sunt
+        example: iusto
         required: true
         schema:
           type: string
@@ -3022,7 +2981,7 @@ paths:
         in: path
         name: order_id
         description: 'The ID of the order.'
-        example: et
+        example: aspernatur
         required: true
         schema:
           type: string
@@ -4071,7 +4030,51 @@ paths:
       tags:
         - Endpoints
       security: []
+  /api/login:
+    post:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - authpoint
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: ''
+                  example: nihil
+                password:
+                  type: string
+                  description: ''
+                  example: qui
+              required:
+                - email
+                - password
+      security: []
 tags:
   -
     name: Endpoints
+    description: ''
+  -
+    name: authpoint
     description: ''

@@ -40,6 +40,7 @@ return [
         'sponser'        => 'راعي',
         'ticket'         => 'تذكرة',
         'user'           => 'مستخدم',
+        'overview'       => 'نظره عامه',
     ],
 
     'generic' => [

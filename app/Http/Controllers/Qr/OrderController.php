@@ -20,6 +20,7 @@ class OrderController extends Controller
   {
     
         //change in orders
+        // return $this->getSuccessResponse('checkedIn',$order." ssss ".$serial );
         
         
         if($this->isPaid($order))
@@ -27,7 +28,7 @@ class OrderController extends Controller
           if(OrderDetails::where('serial','like',$serial.'%')->update(['status'=>'true']))
           {
             $order = OrderDetails::where('serial',$serial)->get();
-            return $this->getSuccessResponse('checked in ',$order,200);
+            return $this->getSuccessResponse('checked in ',$order);
           }else
           {
             return $this->getErrorResponse('unable to check in','',510);
@@ -42,7 +43,7 @@ class OrderController extends Controller
   }
 
   //check if paid
-  public function getOrder($id)
+  public function getOrder($id )
   {
     $order = Order::find($id);
     return $order;
@@ -51,9 +52,9 @@ class OrderController extends Controller
   public function isPaid($id)
   {
       $sucess_type = ttype::where('name_en','=','success')->first()->id;
-      $order = $this->getOrder($id)->where('type_id',$sucess_type)->get();
+      $order = $this->getOrder($id)->type_id;
       
-      if(!$order->isEmpty())
+      if($order == $sucess_type)
       {
         return true;
       }else
@@ -61,5 +62,14 @@ class OrderController extends Controller
         return false;
       }
       //return $order;
+  }
+
+  /**
+   * get checkedIn list for company id for event.status=true
+   */
+  public function getCheckedIn($company_id)
+  {
+    //events ,orders ,where 
+    return 
   }
 }
