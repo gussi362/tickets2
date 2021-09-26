@@ -27,7 +27,7 @@ class OrderController extends Controller
         //TODO::return with order details
         $order = Order::orderBy('created_at','desc')->with('date')->get();
         
-        return $this->getSuccessResponse('retrieved order successfully' ,$order);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.order')]),$order,200);
     }
 
     /**
@@ -50,7 +50,7 @@ class OrderController extends Controller
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse('not all fields were entered');
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors(),410);
         }
        
         //when ordering 
@@ -65,7 +65,7 @@ class OrderController extends Controller
             if(!$this->isThereEnoughTickets($tickets[$i]->ticket_id,$tickets[$i]->count))
             {
                 //return [['status'=>'error ,not enough tickets available tickets = '.$this->getTicketsLeft($this->getEventId($request->input('ticket_id')),$request->input('ticket_id'))],422];
-                return $this->getErrorResponse('error ,not enough ticket '.$tickets[$i]->ticket_id.' available tickets = '.$this->getLeftTicketsAmount($tickets[$i]->ticket_id));
+                return $this->getErrorResponse(trans('messages.errors.insufficient_tickets',['ticket' => $this->getLeftTicketsAmount($tickets[$i]->ticket_id)]),'',430);
 
             }else
             {
@@ -88,13 +88,13 @@ class OrderController extends Controller
                     
                     broadcast(new overviewChanged($order));
                     
-                    return $this->getSuccessResponse('created order successfully' ,$order);
+                    return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.order')]),$order);
                     
                     
                 } catch (\Exception $e) 
                 {
                     DB::rollback();
-                    return $this->getErrorResponse('failed to create order' ,$e->getMessage());
+                    return $this->getErrorResponse(trans('messages.errors.system_error'),$e->getMessage(),201);
 
                 }
             }
@@ -203,11 +203,7 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::findorfail($id);
-        $data = ['responseCode'=>100,
-        'responseMessage'=>'order found',
-        'data'=>['order'=>$order]];
-        
-        return response()->json($data);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.order')]),$order);
     }
 
     /**
@@ -231,10 +227,10 @@ class OrderController extends Controller
 
         if($order->update())
         {
-            return $this->getSuccessResponse('updated order successfully' ,$order);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.order')]),$order);
         }else
         {
-            return response()->json($order);
+            return $this->getErrorResponse(trans('messages.errors.system_error'),'',502);
         }
     }
 
@@ -249,10 +245,10 @@ class OrderController extends Controller
         $order = Order::findorFail($id);
         if($this->destroyOrderDetails($order->code) && $order->delete())
         {
-            return $this->getSuccessResponse('deleted order successfully' ,$order);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.order')]),$order);
         }else
         {
-            return $this->getErrorResponse('failed to deleted order with '.$id);
+            return $this->getErrorResponse(trans('messages.errors.system_error'),'',503);
         }
     }
 
@@ -263,7 +259,7 @@ class OrderController extends Controller
      */
     public function destroyOrderDetails($code)
     {
-        OrderDetails::where('serial','like',$serial.'%')->delete();
+        OrderDetails::where('serial','like',$code.'%')->delete();
     }
 
     /**

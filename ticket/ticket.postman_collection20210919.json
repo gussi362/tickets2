@@ -1,0 +1,3113 @@
+{
+	"info": {
+		"_postman_id": "b2f44d87-4f51-40d4-a819-91859635ffa0",
+		"name": "ticket",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "payment",
+			"item": [
+				{
+					"name": "Pay order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/appname/pay/1d93def8-ef1a-4917-b681-e50e68293e93",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"appname",
+								"pay",
+								"1d93def8-ef1a-4917-b681-e50e68293e93"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Company",
+					"item": [
+						{
+							"name": "Dashboard",
+							"item": [
+								{
+									"name": "companiesWithEventsCount",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8000/api/admin/dashboard",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"admin",
+												"dashboard"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "companyWithEvents",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": ""
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "list companies",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept-Language",
+										"value": "ar",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:8000/api/admin/company",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"company"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get company with id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept-Language",
+										"value": "ar",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:8000/api/admin/company/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"company",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create company",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept-Language",
+										"value": "ar",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "localhost:8000/api/admin/company?name_ar=company2&name_en=company2&admin=admin2&phone=1234567890&address=kjdalk;djf&status=true",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"company"
+									],
+									"query": [
+										{
+											"key": "name_ar",
+											"value": "company2"
+										},
+										{
+											"key": "name_en",
+											"value": "company2"
+										},
+										{
+											"key": "admin",
+											"value": "admin2"
+										},
+										{
+											"key": "phone",
+											"value": "1234567890"
+										},
+										{
+											"key": "address",
+											"value": "kjdalk;djf"
+										},
+										{
+											"key": "status",
+											"value": "true"
+										},
+										{
+											"key": "created_by",
+											"value": "current_admin",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update company",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/company/1?name_ar=شركه2w&phone=4457985",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"company",
+										"1"
+									],
+									"query": [
+										{
+											"key": "name_ar",
+											"value": "شركه2w"
+										},
+										{
+											"key": "phone",
+											"value": "4457985"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete company",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/company/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"company",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Event",
+					"item": [
+						{
+							"name": "Dashboard",
+							"item": [
+								{
+									"name": "currentEventsOfAllCompanies",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8000/api/admin/dashboard/event/current",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"admin",
+												"dashboard",
+												"event",
+												"current"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "companyWithEvents",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8000/api/admin/dashboard/event/company/1",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"admin",
+												"dashboard",
+												"event",
+												"company",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "company current event",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8000/api/admin/dashboard/event/1",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"admin",
+												"dashboard",
+												"event",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "list events",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/event",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"event"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get event with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/event/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"event",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create event",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/event?name_ar=ssssss&name_en=dddxxx&details_ar=ddd&details_en=dddfv&first_date=2021-08-18&last_date=2021-08-20&ticket_count=100&image=file.png&status=true&company_id=12&coordinates=someplace@maps",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"event"
+									],
+									"query": [
+										{
+											"key": "name_ar",
+											"value": "ssssss"
+										},
+										{
+											"key": "name_en",
+											"value": "dddxxx"
+										},
+										{
+											"key": "details_ar",
+											"value": "ddd"
+										},
+										{
+											"key": "details_en",
+											"value": "dddfv"
+										},
+										{
+											"key": "first_date",
+											"value": "2021-08-18"
+										},
+										{
+											"key": "last_date",
+											"value": "2021-08-20"
+										},
+										{
+											"key": "ticket_count",
+											"value": "100"
+										},
+										{
+											"key": "image",
+											"value": "file.png"
+										},
+										{
+											"key": "status",
+											"value": "true"
+										},
+										{
+											"key": "company_id",
+											"value": "12"
+										},
+										{
+											"key": "coordinates",
+											"value": "someplace@maps"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update event",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/event/21?name_ar=evvvv4",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"event",
+										"21"
+									],
+									"query": [
+										{
+											"key": "name_ar",
+											"value": "evvvv4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete event",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/event/21",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"event",
+										"21"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Ticket",
+					"item": [
+						{
+							"name": "Dashboard",
+							"item": []
+						},
+						{
+							"name": "list tickets",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/ticket",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"ticket"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get ticket with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/ticket/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"ticket",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create ticket",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/ticket/?event_id=1&amount=300&name=vvvv&status=true&details_ar=jjj&details_en=hhh",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"ticket",
+										""
+									],
+									"query": [
+										{
+											"key": "event_id",
+											"value": "1"
+										},
+										{
+											"key": "amount",
+											"value": "300"
+										},
+										{
+											"key": "name",
+											"value": "vvvv"
+										},
+										{
+											"key": "status",
+											"value": "true"
+										},
+										{
+											"key": "details_ar",
+											"value": "jjj"
+										},
+										{
+											"key": "details_en",
+											"value": "hhh"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update ticket",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/ticket/4?name_ar=evvvv4",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"ticket",
+										"4"
+									],
+									"query": [
+										{
+											"key": "name_ar",
+											"value": "evvvv4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete ticket",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/company/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"company",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Date",
+					"item": [
+						{
+							"name": "list dates",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/date",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"date"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get date with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/date/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"date",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create date",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/admin/date?event_id=3&date=2021-09-03",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"date"
+									],
+									"query": [
+										{
+											"key": "event_id",
+											"value": "3"
+										},
+										{
+											"key": "date",
+											"value": "2021-09-03"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update date",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/date/3?created_by=evvvv4",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"date",
+										"3"
+									],
+									"query": [
+										{
+											"key": "created_by",
+											"value": "evvvv4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete date",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/date/3",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"date",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Order",
+					"item": [
+						{
+							"name": "list orders",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/order",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"order"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get order with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/order/65fac128-d43e-484b-abc9-bc72f201417c",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"order",
+										"65fac128-d43e-484b-abc9-bc72f201417c"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create order",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "ticket: [\n    {ticket_id: 1,count: 3\n    },\n    {ticket_id: 2,count: 5\n    }\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/admin/order?event_id=1&date_id=1&name=reserveed&phone=122211&name=someoneName&ticket_id=1&date_id=1&phone=1144758&ticket= [{\"ticket_id\": 1,\"count\": 3}]&count=3",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"order"
+									],
+									"query": [
+										{
+											"key": "event_id",
+											"value": "1"
+										},
+										{
+											"key": "date_id",
+											"value": "1"
+										},
+										{
+											"key": "name",
+											"value": "reserveed"
+										},
+										{
+											"key": "phone",
+											"value": "122211"
+										},
+										{
+											"key": "name",
+											"value": "someoneName"
+										},
+										{
+											"key": "ticket_id",
+											"value": "1"
+										},
+										{
+											"key": "date_id",
+											"value": "1"
+										},
+										{
+											"key": "phone",
+											"value": "1144758"
+										},
+										{
+											"key": "ticket",
+											"value": " [{\"ticket_id\": 1,\"count\": 3}]"
+										},
+										{
+											"key": "count",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update order",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/order/65fac128-d43e-484b-abc9-bc72f201417c?name=evvvv4",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"order",
+										"65fac128-d43e-484b-abc9-bc72f201417c"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "evvvv4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete order",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/order/65fac128-d43e-484b-abc9-bc72f201417c",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"order",
+										"65fac128-d43e-484b-abc9-bc72f201417c"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "storeOrder",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZGQzZDgxMGU3ZGNhOTgyNzc2NTNmNDYzMmY1Y2M2OGEwODc0ODYzN2I2MTg1MTJjN2QzNzczY2NhMjA4NzcxZmNmNWZmZmQ5YzE0YWY5NTMiLCJpYXQiOjE2Mjk4MDMzNDcuNTYyMDAzLCJuYmYiOjE2Mjk4MDMzNDcuNTYyMDA3LCJleHAiOjE2NjEzMzkzNDcuNDUzODE3LCJzdWIiOiI1Iiwic2NvcGVzIjpbXX0.vnoYUiyeZZcYvWa9X44qUgzDFbry6M8-7jm4wrk_j8FDwvrHoWbCgj0KNYVepbosTuWV3OKTtUYMl9rqr06MSXiSZb8mwXJV6DuUFrgM0wiSKPl6UXIFUG66DktTnGzwzJc-pRSvxcsPUISxezAvEt8UEatdLsk6Elvguh3N3BKHlyIB2OP9B-jZzovPVxO-ziU2ovdIugs5qnywSmQDKxZWva7iCSyL6_TtzCARAQJrEmVotpo9UTUHa_D8ZGzBLSGST-umRtL-7CkknlpUZUMxG9gslOhG0Ase0OgRPz6a7CJVgThaCPaRnRzVgcsAqA7mRNX5lRn3n6PrmiZfIfuKGy431IheNXvPH-Gc-ph8Okpo5tKBfHFQTI5bgB52MSUgGu8EU2OmVdg_jVvyedlEJxQRESPrcnV7QEKAnnwnSr2Jx5t3JQtWWX2DuCrUv2a-T9tzRpq0FFGA2ra_7n5SaG2etsHRVUjoaZRAQPc69xiSjz6XTEpRD3qfiAqArnzgvB5I0HTr6Rm_oTKTeYTe7H2oX2eJuV9XomneDFbWV2LOtfRuBcDjq1sfZCkcvpDSaNNd8_MgZw_w-Zayl5U-W_9hTJFS9GpWFhHy6SzvzWAGE8kmDmike7gCi5oHdadOtNfp_IAbg0K7byEhyT2LJNvCmq1Lk2_2UE3Mi9g",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/order?name=someoneName&ticket_id=1&date_id=1&phone=1144758&count=5",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"order"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "someoneName"
+										},
+										{
+											"key": "ticket_id",
+											"value": "1"
+										},
+										{
+											"key": "date_id",
+											"value": "1"
+										},
+										{
+											"key": "phone",
+											"value": "1144758"
+										},
+										{
+											"key": "count",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "orderDetails",
+					"item": [
+						{
+							"name": "list details",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/orderDetails",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"orderDetails"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get detials with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/orderDetails/",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"orderDetails",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update date",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/event/4?name_ar=evvvv4",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"event",
+										"4"
+									],
+									"query": [
+										{
+											"key": "name_ar",
+											"value": "evvvv4"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sponser",
+					"item": [
+						{
+							"name": "list sponsers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/sponser",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"sponser"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get sponser by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/sponser/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"sponser",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create sponser",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/sponser?name_ar=ffff&name_en=jfhj&image=file.png&event_id=1",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"sponser"
+									],
+									"query": [
+										{
+											"key": "name_ar",
+											"value": "ffff"
+										},
+										{
+											"key": "name_en",
+											"value": "jfhj"
+										},
+										{
+											"key": "image",
+											"value": "file.png"
+										},
+										{
+											"key": "event_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update date",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/sponser/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"sponser",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete date",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/sponser/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"sponser",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getSponser",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiM2E5YjIzZmVlMDVlMDJlZmIyOWUzNDlmYWFlNTIwMWRkZTg2NzdkODlmNDUxMDFmMGVhZTJlOTcyMTNjN2VhM2Q3ZWI5NTY0MjkxNmJhZTUiLCJpYXQiOjE2Mjk3OTQ4NTQuNTEzODc3LCJuYmYiOjE2Mjk3OTQ4NTQuNTEzODgxLCJleHAiOjE2NjEzMzA4NTQuNDE5MjA2LCJzdWIiOiI1Iiwic2NvcGVzIjpbXX0.aO8x_bHGbbjr6DaXhgmv08DkNMKBFNGmwnYHKtZCnH_vmEV5q_cAq-LP7kxfjwuazKwXRttYgIe8U9jve8QhStBwZkwlBoYDebnwUyVgustUNi0xfXVOQX28E3r0EciCwM8pAf55OzZ_twCDn9KKfCuAfL0k8spfouuw2Dr5lDys7BvEZzPJVlgsQN-IrjWXmidBpuS1XScC7Ju6SuX8xPUbzZEV2576Ax5ur24-FRBV1b816zdd1A1xhuNBePC63H8jP9b6KMuvyHGFY6XlzvkJlUMj3hZvG5aASCw_jHFjlhbH9wlCSd1s-jFANlaU_0vu39DH0agt8rXg507UTaUTRIl7GbVGZdjAgbmDOAFbRePHueqf68VkKjhNO0qvWdBpfo8hQb_my9ZDeBa81mIhDvCs0qijLSykR4-wzzhXOxY0CNW_DsJipJwIKqCXEdyIpQgNPaKzFDGNEjqmioNqIYjYrludITYmHXjbe0K5TzEn4xytCB3klUF5Y99ADTYB9xI8vIop1ZccpOvMRcuGy-XmHmq6GHFfX2EL92GphM0gGGcYxn6iAgmWqQrBfPKe2fP_2Oa-W7iupjJ1XY3SPJEQ2sTSNFGC-suxfI7Ji_wM15RBhGgJJaK8FnjRlkhrqx3Z2BWzKZHhsOWRBfx18T3rjgWCcuRDv92bbJI",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/sponser/",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"sponser",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "storeSponser",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZGQzZDgxMGU3ZGNhOTgyNzc2NTNmNDYzMmY1Y2M2OGEwODc0ODYzN2I2MTg1MTJjN2QzNzczY2NhMjA4NzcxZmNmNWZmZmQ5YzE0YWY5NTMiLCJpYXQiOjE2Mjk4MDMzNDcuNTYyMDAzLCJuYmYiOjE2Mjk4MDMzNDcuNTYyMDA3LCJleHAiOjE2NjEzMzkzNDcuNDUzODE3LCJzdWIiOiI1Iiwic2NvcGVzIjpbXX0.vnoYUiyeZZcYvWa9X44qUgzDFbry6M8-7jm4wrk_j8FDwvrHoWbCgj0KNYVepbosTuWV3OKTtUYMl9rqr06MSXiSZb8mwXJV6DuUFrgM0wiSKPl6UXIFUG66DktTnGzwzJc-pRSvxcsPUISxezAvEt8UEatdLsk6Elvguh3N3BKHlyIB2OP9B-jZzovPVxO-ziU2ovdIugs5qnywSmQDKxZWva7iCSyL6_TtzCARAQJrEmVotpo9UTUHa_D8ZGzBLSGST-umRtL-7CkknlpUZUMxG9gslOhG0Ase0OgRPz6a7CJVgThaCPaRnRzVgcsAqA7mRNX5lRn3n6PrmiZfIfuKGy431IheNXvPH-Gc-ph8Okpo5tKBfHFQTI5bgB52MSUgGu8EU2OmVdg_jVvyedlEJxQRESPrcnV7QEKAnnwnSr2Jx5t3JQtWWX2DuCrUv2a-T9tzRpq0FFGA2ra_7n5SaG2etsHRVUjoaZRAQPc69xiSjz6XTEpRD3qfiAqArnzgvB5I0HTr6Rm_oTKTeYTe7H2oX2eJuV9XomneDFbWV2LOtfRuBcDjq1sfZCkcvpDSaNNd8_MgZw_w-Zayl5U-W_9hTJFS9GpWFhHy6SzvzWAGE8kmDmike7gCi5oHdadOtNfp_IAbg0K7byEhyT2LJNvCmq1Lk2_2UE3Mi9g",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/sponser?name_ar=راعي1&name_en=sponser1&image=folder/file.png&event_id=1",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"sponser"
+									],
+									"query": [
+										{
+											"key": "name_ar",
+											"value": "راعي1"
+										},
+										{
+											"key": "name_en",
+											"value": "sponser1"
+										},
+										{
+											"key": "image",
+											"value": "folder/file.png"
+										},
+										{
+											"key": "event_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "list users",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/user/10",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"user",
+										"10"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get user with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/user/3",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"user",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/admin/user/?name=admin&email=userad@email.com&password=pass&type=1",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"user",
+										""
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "admin"
+										},
+										{
+											"key": "email",
+											"value": "userad@email.com"
+										},
+										{
+											"key": "password",
+											"value": "pass"
+										},
+										{
+											"key": "company_id",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "type",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create Admin user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/admin/date?event_id=1&date=2021-09-03&created_by=sssasd",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"date"
+									],
+									"query": [
+										{
+											"key": "event_id",
+											"value": "1"
+										},
+										{
+											"key": "date",
+											"value": "2021-09-03"
+										},
+										{
+											"key": "created_by",
+											"value": "sssasd"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update user",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/user/9?company_id=12",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"user",
+										"9"
+									],
+									"query": [
+										{
+											"key": "company_id",
+											"value": "12"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete user",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/user/5",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"user",
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Dashboard",
+					"item": [
+						{
+							"name": "New Request",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/admin/dashboard/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"dashboard",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Passport",
+					"item": [
+						{
+							"name": "loginAdmin",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept-Language",
+										"value": "ar",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/login?email=user2@email.com&password=pass",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"login"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "user2@email.com"
+										},
+										{
+											"key": "password",
+											"value": "pass"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Change Password",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept-Language",
+										"value": "ar",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:8000/api/admin/changePassword?old_password=pass&new_password=pass2&new_password_confirmation=pass2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"changePassword"
+									],
+									"query": [
+										{
+											"key": "old_password",
+											"value": "pass"
+										},
+										{
+											"key": "new_password",
+											"value": "pass2"
+										},
+										{
+											"key": "new_password_confirmation",
+											"value": "pass2"
+										},
+										{
+											"key": "user_id",
+											"value": "3",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset Password[send token]",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/reset?token=423072&password=pass&password_confirmation=pass",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"reset"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "423072"
+										},
+										{
+											"key": "password",
+											"value": "pass"
+										},
+										{
+											"key": "password_confirmation",
+											"value": "pass"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset Password[change password]",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/resetPassword?email=user@email.com",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"resetPassword"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "user@email.com"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Event",
+					"item": [
+						{
+							"name": "Dashboard",
+							"item": [
+								{
+									"name": "currentEventsOfAllCompanies",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8000/api/admin/dashboard/event/current",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"admin",
+												"dashboard",
+												"event",
+												"current"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "companyWithEvents",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8000/api/admin/dashboard/event/company/1",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"admin",
+												"dashboard",
+												"event",
+												"company",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "company current event",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8000/api/admin/dashboard/event/1",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"admin",
+												"dashboard",
+												"event",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "list events",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/event",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"event"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get event with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/event/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"event",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create event",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/event?name_ar=sss&name_en=ddd&details_ar=ddd&details_en=dddfv&first_date=2021-08-18&last_date=2021-08-20&ticket_count=100&image=file.png&status=true&company_id=1&coordinates=someplace@maps",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"event"
+									],
+									"query": [
+										{
+											"key": "name_ar",
+											"value": "sss"
+										},
+										{
+											"key": "name_en",
+											"value": "ddd"
+										},
+										{
+											"key": "details_ar",
+											"value": "ddd"
+										},
+										{
+											"key": "details_en",
+											"value": "dddfv"
+										},
+										{
+											"key": "first_date",
+											"value": "2021-08-18"
+										},
+										{
+											"key": "last_date",
+											"value": "2021-08-20"
+										},
+										{
+											"key": "ticket_count",
+											"value": "100"
+										},
+										{
+											"key": "image",
+											"value": "file.png"
+										},
+										{
+											"key": "status",
+											"value": "true"
+										},
+										{
+											"key": "company_id",
+											"value": "1"
+										},
+										{
+											"key": "coordinates",
+											"value": "someplace@maps"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update event",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/event/4?name_ar=evvvv4",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"event",
+										"4"
+									],
+									"query": [
+										{
+											"key": "name_ar",
+											"value": "evvvv4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete event",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/company/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"company",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Ticket",
+					"item": [
+						{
+							"name": "Dashboard",
+							"item": []
+						},
+						{
+							"name": "list tickets",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/ticket",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"ticket"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get ticket with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/ticket/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"ticket",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create ticket",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/ticket/?event_id=1&amount=300&name=vvvv&status=true&details_ar=jjj&details_en=hhh",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"ticket",
+										""
+									],
+									"query": [
+										{
+											"key": "event_id",
+											"value": "1"
+										},
+										{
+											"key": "amount",
+											"value": "300"
+										},
+										{
+											"key": "name",
+											"value": "vvvv"
+										},
+										{
+											"key": "status",
+											"value": "true"
+										},
+										{
+											"key": "details_ar",
+											"value": "jjj"
+										},
+										{
+											"key": "details_en",
+											"value": "hhh"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update ticket",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/event/4?name_ar=evvvv4",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"event",
+										"4"
+									],
+									"query": [
+										{
+											"key": "name_ar",
+											"value": "evvvv4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete ticket",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/company/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"company",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "date",
+					"item": [
+						{
+							"name": "list dates",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/date",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"date"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get date with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/date/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"date",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create date",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/date?event_id&date",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"date"
+									],
+									"query": [
+										{
+											"key": "event_id",
+											"value": null
+										},
+										{
+											"key": "date",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update date",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/date/4?event_id",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"date",
+										"4"
+									],
+									"query": [
+										{
+											"key": "event_id",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete date",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/date/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"date",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "order",
+					"item": [
+						{
+							"name": "list orders",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/order",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"order"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get order with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/order//65fac128-d43e-484b-abc9-bc72f201417c",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"order",
+										"",
+										"65fac128-d43e-484b-abc9-bc72f201417c"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create order",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "ticket: [\n    {ticket_id: 1,count: 3\n    },\n    {ticket_id: 2,count: 5\n    }\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/user/order?event_id=1&date_id=1&name=reserveed&phone=122211&name=someoneName&ticket_id=1&date_id=1&phone=1144758&ticket= [{\"ticket_id\": 1,\"count\": 3}]&count=3",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"order"
+									],
+									"query": [
+										{
+											"key": "event_id",
+											"value": "1"
+										},
+										{
+											"key": "date_id",
+											"value": "1"
+										},
+										{
+											"key": "name",
+											"value": "reserveed"
+										},
+										{
+											"key": "phone",
+											"value": "122211"
+										},
+										{
+											"key": "name",
+											"value": "someoneName"
+										},
+										{
+											"key": "ticket_id",
+											"value": "1"
+										},
+										{
+											"key": "date_id",
+											"value": "1"
+										},
+										{
+											"key": "phone",
+											"value": "1144758"
+										},
+										{
+											"key": "ticket",
+											"value": " [{\"ticket_id\": 1,\"count\": 3}]"
+										},
+										{
+											"key": "count",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update order",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/order/65fac128-d43e-484b-abc9-bc72f201417c?name=evvvv4",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"order",
+										"65fac128-d43e-484b-abc9-bc72f201417c"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "evvvv4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete order",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/order/65fac128-d43e-484b-abc9-bc72f201417c",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"order",
+										"65fac128-d43e-484b-abc9-bc72f201417c"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "storeOrder",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZGQzZDgxMGU3ZGNhOTgyNzc2NTNmNDYzMmY1Y2M2OGEwODc0ODYzN2I2MTg1MTJjN2QzNzczY2NhMjA4NzcxZmNmNWZmZmQ5YzE0YWY5NTMiLCJpYXQiOjE2Mjk4MDMzNDcuNTYyMDAzLCJuYmYiOjE2Mjk4MDMzNDcuNTYyMDA3LCJleHAiOjE2NjEzMzkzNDcuNDUzODE3LCJzdWIiOiI1Iiwic2NvcGVzIjpbXX0.vnoYUiyeZZcYvWa9X44qUgzDFbry6M8-7jm4wrk_j8FDwvrHoWbCgj0KNYVepbosTuWV3OKTtUYMl9rqr06MSXiSZb8mwXJV6DuUFrgM0wiSKPl6UXIFUG66DktTnGzwzJc-pRSvxcsPUISxezAvEt8UEatdLsk6Elvguh3N3BKHlyIB2OP9B-jZzovPVxO-ziU2ovdIugs5qnywSmQDKxZWva7iCSyL6_TtzCARAQJrEmVotpo9UTUHa_D8ZGzBLSGST-umRtL-7CkknlpUZUMxG9gslOhG0Ase0OgRPz6a7CJVgThaCPaRnRzVgcsAqA7mRNX5lRn3n6PrmiZfIfuKGy431IheNXvPH-Gc-ph8Okpo5tKBfHFQTI5bgB52MSUgGu8EU2OmVdg_jVvyedlEJxQRESPrcnV7QEKAnnwnSr2Jx5t3JQtWWX2DuCrUv2a-T9tzRpq0FFGA2ra_7n5SaG2etsHRVUjoaZRAQPc69xiSjz6XTEpRD3qfiAqArnzgvB5I0HTr6Rm_oTKTeYTe7H2oX2eJuV9XomneDFbWV2LOtfRuBcDjq1sfZCkcvpDSaNNd8_MgZw_w-Zayl5U-W_9hTJFS9GpWFhHy6SzvzWAGE8kmDmike7gCi5oHdadOtNfp_IAbg0K7byEhyT2LJNvCmq1Lk2_2UE3Mi9g",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/order?name=someoneName&ticket_id=1&date_id=1&phone=1144758&count=5",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"order"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "someoneName"
+										},
+										{
+											"key": "ticket_id",
+											"value": "1"
+										},
+										{
+											"key": "date_id",
+											"value": "1"
+										},
+										{
+											"key": "phone",
+											"value": "1144758"
+										},
+										{
+											"key": "count",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "orderDetails",
+					"item": [
+						{
+							"name": "list details",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/orderDetails",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"orderDetails"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get detials with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/orderDetails/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"orderDetails",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update date",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/admin/event/4?name_ar=evvvv4",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"event",
+										"4"
+									],
+									"query": [
+										{
+											"key": "name_ar",
+											"value": "evvvv4"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sponser",
+					"item": [
+						{
+							"name": "New Folder",
+							"item": []
+						},
+						{
+							"name": "list dates",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/sponser",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"sponser"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get date with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/sponser/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"sponser",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create date",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/sponser?name_ar=ffff&name_en=jfhj&image=file.png&event_id=1",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"sponser"
+									],
+									"query": [
+										{
+											"key": "name_ar",
+											"value": "ffff"
+										},
+										{
+											"key": "name_en",
+											"value": "jfhj"
+										},
+										{
+											"key": "image",
+											"value": "file.png"
+										},
+										{
+											"key": "event_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update date",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/sponser/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"sponser",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete date",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/sponser/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"sponser",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getSponser",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiM2E5YjIzZmVlMDVlMDJlZmIyOWUzNDlmYWFlNTIwMWRkZTg2NzdkODlmNDUxMDFmMGVhZTJlOTcyMTNjN2VhM2Q3ZWI5NTY0MjkxNmJhZTUiLCJpYXQiOjE2Mjk3OTQ4NTQuNTEzODc3LCJuYmYiOjE2Mjk3OTQ4NTQuNTEzODgxLCJleHAiOjE2NjEzMzA4NTQuNDE5MjA2LCJzdWIiOiI1Iiwic2NvcGVzIjpbXX0.aO8x_bHGbbjr6DaXhgmv08DkNMKBFNGmwnYHKtZCnH_vmEV5q_cAq-LP7kxfjwuazKwXRttYgIe8U9jve8QhStBwZkwlBoYDebnwUyVgustUNi0xfXVOQX28E3r0EciCwM8pAf55OzZ_twCDn9KKfCuAfL0k8spfouuw2Dr5lDys7BvEZzPJVlgsQN-IrjWXmidBpuS1XScC7Ju6SuX8xPUbzZEV2576Ax5ur24-FRBV1b816zdd1A1xhuNBePC63H8jP9b6KMuvyHGFY6XlzvkJlUMj3hZvG5aASCw_jHFjlhbH9wlCSd1s-jFANlaU_0vu39DH0agt8rXg507UTaUTRIl7GbVGZdjAgbmDOAFbRePHueqf68VkKjhNO0qvWdBpfo8hQb_my9ZDeBa81mIhDvCs0qijLSykR4-wzzhXOxY0CNW_DsJipJwIKqCXEdyIpQgNPaKzFDGNEjqmioNqIYjYrludITYmHXjbe0K5TzEn4xytCB3klUF5Y99ADTYB9xI8vIop1ZccpOvMRcuGy-XmHmq6GHFfX2EL92GphM0gGGcYxn6iAgmWqQrBfPKe2fP_2Oa-W7iupjJ1XY3SPJEQ2sTSNFGC-suxfI7Ji_wM15RBhGgJJaK8FnjRlkhrqx3Z2BWzKZHhsOWRBfx18T3rjgWCcuRDv92bbJI",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/sponser/",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"sponser",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "storeSponser",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZGQzZDgxMGU3ZGNhOTgyNzc2NTNmNDYzMmY1Y2M2OGEwODc0ODYzN2I2MTg1MTJjN2QzNzczY2NhMjA4NzcxZmNmNWZmZmQ5YzE0YWY5NTMiLCJpYXQiOjE2Mjk4MDMzNDcuNTYyMDAzLCJuYmYiOjE2Mjk4MDMzNDcuNTYyMDA3LCJleHAiOjE2NjEzMzkzNDcuNDUzODE3LCJzdWIiOiI1Iiwic2NvcGVzIjpbXX0.vnoYUiyeZZcYvWa9X44qUgzDFbry6M8-7jm4wrk_j8FDwvrHoWbCgj0KNYVepbosTuWV3OKTtUYMl9rqr06MSXiSZb8mwXJV6DuUFrgM0wiSKPl6UXIFUG66DktTnGzwzJc-pRSvxcsPUISxezAvEt8UEatdLsk6Elvguh3N3BKHlyIB2OP9B-jZzovPVxO-ziU2ovdIugs5qnywSmQDKxZWva7iCSyL6_TtzCARAQJrEmVotpo9UTUHa_D8ZGzBLSGST-umRtL-7CkknlpUZUMxG9gslOhG0Ase0OgRPz6a7CJVgThaCPaRnRzVgcsAqA7mRNX5lRn3n6PrmiZfIfuKGy431IheNXvPH-Gc-ph8Okpo5tKBfHFQTI5bgB52MSUgGu8EU2OmVdg_jVvyedlEJxQRESPrcnV7QEKAnnwnSr2Jx5t3JQtWWX2DuCrUv2a-T9tzRpq0FFGA2ra_7n5SaG2etsHRVUjoaZRAQPc69xiSjz6XTEpRD3qfiAqArnzgvB5I0HTr6Rm_oTKTeYTe7H2oX2eJuV9XomneDFbWV2LOtfRuBcDjq1sfZCkcvpDSaNNd8_MgZw_w-Zayl5U-W_9hTJFS9GpWFhHy6SzvzWAGE8kmDmike7gCi5oHdadOtNfp_IAbg0K7byEhyT2LJNvCmq1Lk2_2UE3Mi9g",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/sponser?name_ar=راعي1&name_en=sponser1&image=folder/file.png&event_id=1",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"sponser"
+									],
+									"query": [
+										{
+											"key": "name_ar",
+											"value": "راعي1"
+										},
+										{
+											"key": "name_en",
+											"value": "sponser1"
+										},
+										{
+											"key": "image",
+											"value": "folder/file.png"
+										},
+										{
+											"key": "event_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Dashboard",
+					"item": [
+						{
+							"name": "Overview",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/user/dashboard",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"dashboard"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "list users",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/user",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get user with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/user/7",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"user",
+										"7"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/user/user/?name=admin&email=usertest@email.com&password=pass&type=2",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"user",
+										""
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "admin"
+										},
+										{
+											"key": "email",
+											"value": "usertest@email.com"
+										},
+										{
+											"key": "password",
+											"value": "pass"
+										},
+										{
+											"key": "type",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update user",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/user/11?name=newname",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"user",
+										"11"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "newname"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete user",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/user/user/11",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"user",
+										"11"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "LoginUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/login?email=user2@email.com&password=pass",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "user2@email.com"
+								},
+								{
+									"key": "password",
+									"value": "pass"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZGVhOTIzNzVkOWMwZGNlNjE5ZDkyZjJiY2U1MjY4ZTBjNjY2ZWZlMWYyNmNjYWRiNjE5NmU2Yjg1MGUyOTkzYTNmNjExZmU1ODc4YWQ3MTQiLCJpYXQiOjE2MzE1MzkyMjguNzA2NDYxLCJuYmYiOjE2MzE1MzkyMjguNzA2NDY2LCJleHAiOjE2NjMwNzUyMjguNDkyODIsInN1YiI6IjQiLCJzY29wZXMiOltdfQ.hdumKgQssV7W37B1UaRzLFyqD3tZHwRui2wSOEoubh5KSxkZTBbvK8sH3mXa-v4ltKyhYnEYmX0x7O9TAG87SRSeycOUn2JwHAojzKqZZkcbBftYhDWcXykdbxb3GTnH2RmVBOEabOaFfTvZRIoTdDQfX8GA85_LccCNe2l0crN54PvtqXyi0jdJaOQrLC-an6cWGMTY1ww4alwxs49TyiFZeV8CBlbUQjTKU_gyzH9CVe-annEkjf4JlqxSJSv5CtXhxU2jpFZdFwCZLNHLxBD4m67dnqpg8XhKTbZA8blNhYaARuDFKhRGscd--RDzANAWRFTDkxVbM-XTRwRhfUDfZZpTkrVVXkgg3ffvfCQaJ4_KRrbHPGp38LfvpXdWOkHoOMTpgJ0Vc5w-Bm8pKVcEZ8e41bFYGT7-3Rv4D9eW-m1ugQa49NQ0MQHsj_jrdGJkgsyhW9UVzc-ved2fHPrhaWcWshd0P_UbV7yYtQqVFcGVv-EOq7H8KWzGF3RGixj_gitpxxCcmDoaIkWgWCOuA2RTKgBLpnhA0GGqbibQc-44keAaWh2ibAmkl_PasDPJHoAcrQ80ILh5oh6LrNB_ykbjm8t6s2Usv3oIBzhre6_6Dw8Av4w6u_4ff0Zd04cvCfTUbbNa6q7DQ38Of3w9duh8m2bYT6X-RFhJu0E",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "QR",
+			"item": [
+				{
+					"name": "http://127.0.0.1:8000/api/admin/event?name_ar=jkj&name_en=lkasdjfkl&details_en=k&details_ar=k&first_date=2021-08-15&last_date=2021-08-17&ticket_count=20&image=file.png&status=true&company_id=1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/admin/order?ticket_id=1&date_id=1&phone=12345678&count=3&name=someone51",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"order"
+							],
+							"query": [
+								{
+									"key": "amount",
+									"value": "1500",
+									"disabled": true
+								},
+								{
+									"key": "ticket_id",
+									"value": "1"
+								},
+								{
+									"key": "date_id",
+									"value": "1"
+								},
+								{
+									"key": "phone",
+									"value": "12345678"
+								},
+								{
+									"key": "count",
+									"value": "3"
+								},
+								{
+									"key": "name",
+									"value": "someone51"
+								}
+							]
+						},
+						"description": "insert event\n"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8000/api/admin/order?ticket_id=1&date_id=1&phone=12345678&count=3&name=someone51",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/admin/orderDetails",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"orderDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8000/api/register?name=someone_user&email=email@user.com&password=pass&company_id=1&type=2",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "userstat",
+								"value": "3",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMGZjM2U3MTFkMmI5YzkwZmI4MjdiOTllNDg2MjFmOTZhZjA4YmU0MzA4NTAxNmIzODU3ZTE1MzM1NmI4NDc2NWQ0MjdjNjdiYWM3Zjc5OTQiLCJpYXQiOjE2Mjk1NzgxMDMuODYxODY2LCJuYmYiOjE2Mjk1NzgxMDMuODYxODcxLCJleHAiOjE2NjExMTQxMDMuNzAxODI5LCJzdWIiOiI1Iiwic2NvcGVzIjpbXX0.sexi-eArT9m-hOQ-zRmeTi6jqfUoVQFnV6E2wfNbgV8f8yHSp5WeFzYM3jYYGW6e0n41gPjKITiKXHxb21B1cI3HNYnF4kiq2i5O8Go1RvYs_dtN3XC5hbXfX3CrzLSgonLIv4uMo7lzzVlOJdgHKrqQgaF17cUZ5gm3GKnjilYIvdy-6-NbJLKvcmulOxcU1O4OSOHDMxf4cwx1yv8lQlfv1m9Tv8z6loqYIe0Jb7JboZIH5NC6ryFXDXpOL9PXJiA5f98VR37ynMVz0pP0dpZej_T_rxJUvKgOeBogq_sdQpr7MSilo-qLlcXcaNBKt3RBEtTVTOpqI2fUSbpXTdIoEQgWULY0jyrL_gYU1iyGUkSHxeNCs74hL9sxRqdoj8Q7UusSeCqSdZ2GSmpehRXZG4h1iJvcruhjVn0ymP6bg0JYR9AitBIVjq0JIJ3785cTZRbfBU9pmhWl_C-8hwws1ZZsWr9GciA355O_E1Pwaz4JOFSTNIMOa3VsrXTPc5LcxdW7JsgLEUw9Nc7ikj0tNcd2qDaxwESR8DpeqfamAqPr2-U9XVXiOVBjYq_a3Z0zIB3eXH1ONCNwclet_v38TqpG4MiuGl3DP3R4Cz_PlqPoQ2Vr2fkVo0OCg2sfVllff1PFJEnt77tx6tg0VDRZJqxuuAiS1QhoCYfzwQc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8000/api/admin/dashboard/events/details",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"dashboard",
+								"events",
+								"details"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "someone_user",
+									"disabled": true
+								},
+								{
+									"key": "company_id",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "type",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						},
+						"description": "registered user\n"
+					},
+					"response": []
+				},
+				{
+					"name": "storeEvent",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/user/event?name_ar=kkk&name_en=kkkj&details_ar=juuhu&details_en=asdklfjalskdjf&first_date=202-08-23&last_date=2021-08-28&ticket_count=40&status=true&company_id=1&image=file.png&coordinates=aksldjfklasdjflkasdjfl;aksdjfl;askdjf",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"event"
+							],
+							"query": [
+								{
+									"key": "name_ar",
+									"value": "kkk"
+								},
+								{
+									"key": "name_en",
+									"value": "kkkj"
+								},
+								{
+									"key": "details_ar",
+									"value": "juuhu"
+								},
+								{
+									"key": "details_en",
+									"value": "asdklfjalskdjf"
+								},
+								{
+									"key": "first_date",
+									"value": "202-08-23"
+								},
+								{
+									"key": "last_date",
+									"value": "2021-08-28"
+								},
+								{
+									"key": "ticket_count",
+									"value": "40"
+								},
+								{
+									"key": "status",
+									"value": "true"
+								},
+								{
+									"key": "company_id",
+									"value": "1"
+								},
+								{
+									"key": "image",
+									"value": "file.png"
+								},
+								{
+									"key": "coordinates",
+									"value": "aksldjfklasdjflkasdjfl;aksdjfl;askdjf"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "qr checkIn",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/appname/event",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"appname",
+								"event"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "qr checkIn Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/appname/event",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"appname",
+								"event"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNzZiZWViMDhlYWQxNGMyMTM2YmJjNmQ2MGU4NWUwYWIyOTQ3M2IxYjUzMzIzNzc3Nzc0ZjRiYTA2YWY2OGFiMWIyMmJlNzNjZGRmNTFlZWQiLCJpYXQiOjE2MzA5NjQ0MzcuODQ0MDg2LCJuYmYiOjE2MzA5NjQ0MzcuODQ0MDksImV4cCI6MTY2MjUwMDQzNy42NjEzODMsInN1YiI6IjMiLCJzY29wZXMiOltdfQ.CUsZCvTGOrTL9KkonSn76m2n2GUHdGJMsdXDDEalGvqtRkMUx1USsqu1dEkT2As9-4LwEYw_DIW_3c45ArX0WuQfI_-tQUaF3lSjl5YzJyFK89uuVltoOwoTEfNzRdwz7eBdAaQ-RZT75qqO3NIMHywlcZPnYdR_wnXTJQdmUr5oEQO88poJvOg0asLsDg_ZvAKDnyaGKbBOaRUANfnK9FvQ2iuzPuHFr_3Vo4qy208yJltDcm9eR5PmOr8EmEKIVxf2yMo5JqNgqDVZBU99cRfDQPZqfuTM6l4P_aRuff7o4VNAQDPNF-Nw9y-kXN2BwElg7u0fm0MkGSyB4D_BOiyINLX239z5CNPZi4EQA-NIl-uweV5s_5BGCYu8QWwWrFbMIx7GsPi1IPLhzs6cLuTBuI5dCeumkmjm0C9XdZd6G6CIdpBSZ2uCQyNFhqc3Gkht3ZjxIU8n2hoHsCxCE6NtTrdCxi7bTLLJ7fNl8oA_8zQp_onqZv22kWIJdlm-3EPrNj2wnEn5MlKcXD9YbqAByerCkWeie5dUelvlhNRZ2N51xGgiAI7NTfug5Nnkc3zoX2qETcD1pJx0bvNRN8D0HcxIUApeQHRxa3s1NIIsQwdcuExijhuz5BJSHOzvGmTFOhKii9SVwEumhrnBi1Obi5Plq5gLss08GvqSZ_A",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

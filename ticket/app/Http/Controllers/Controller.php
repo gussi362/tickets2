@@ -18,12 +18,13 @@ class Controller extends BaseController
      * @param message 
      * @param data to return
      */
-    public function getSuccessResponse($message ,$data ,$code = 100 )
+    public function getSuccessResponse($message ,$data ,$code = 200 )
     {
         return response()->json(
             [
                 'responseCode'=>$code,
-                'responseMessage'=>$message,
+                'responseMessage'=>'success',
+                'responseDescription'=>$message,
                 'data'=>$data
             ]);
     }
@@ -39,7 +40,8 @@ class Controller extends BaseController
         return response()->json(
             [
                 'responseCode'=>$code,
-                'responseMessage'=>$message,
+                'responseMessage'=>'fail',
+                'responseDescription'=>$message,
                 'data'=>$data
             ]);
     }

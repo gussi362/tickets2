@@ -2,26 +2,32 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
-use App\Models\Company;
 use App\Models\Event;
-use App\Models\Ticket;
 use App\Models\Order;
+
+use App\Models\Ticket;
+use App\Models\Company;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\OrderDetails;
 
 class DashboardController extends Controller
 {
     public function getOverview()
     {
 
-        return $this->getSuccessResponse('overview',[
-                                        'companiesCount'=>$this->getCompaniesCount(),
-                                        'eventsCount'=>$this->getEventsCount(),
-                                        'totalTickets'=>$this->getEventsTotalTickets(),
-                                        'totalReservedTickets'=>$this->getEventsTotalReservedTickets(),
-                                        'eventsTotal'=>$this->getEventsTotal(),
-                                        'lastFiveEvents'=>$this->getLastFiveEvents()
+        return $this->getSuccessResponse(trans('messages.models.overview'),[
+                                        'companiesCount'       => $this->getCompaniesCount(),
+                                        'eventsCount'          => $this->getEventsCount(),
+                                        'totalTickets'         => $this->getEventsTotalTickets(),
+                                        'totalReservedTickets' => $this->getEventsTotalReservedTickets(),
+                                        'eventsTotal'          => $this->getEventsTotal(),
+                                        'lastFiveEvents'       => $this->getLastFiveEvents(),
+                                        
+                                        'charts'               => ['events' => $this->getEventsCount(),
+                                                                    'reservedTickets' => $this->getEventsTotalReservedTickets(),
+                                                                    'ticketsCheckedIn' => $this->getCheckedInCount()
+                                                                    ]
                                         ]);
 
     } 
@@ -64,18 +70,9 @@ class DashboardController extends Controller
                     ->get();
     }
 
-//for event 
-public static function getOverviewEvent()
-{
-
-    return $this->getSuccessResponse('overview',[
-                                    'companiesCount'=>$this->getCompaniesCount(),
-                                    'eventsCount'=>$this->getEventsCount(),
-                                    'totalTickets'=>$this->getEventsTotalTickets(),
-                                    'totalReservedTickets'=>$this->getEventsTotalReservedTickets(),
-                                    'eventsTotal'=>$this->getEventsTotal(),
-                                    'lastFiveEvents'=>$this->getLastFiveEvents()
-                                    ]);
-
-} 
+//charts info
+    private function getCheckedInCount()
+        {        
+            return OrderDetails::where('status','true')->count();
+        }
 }

@@ -21,7 +21,8 @@ class Event extends Model
         'image',
         'status',
         'company_id',
-        'coordinates'
+        'coordinates',
+        'created_by'
     ];
 
     public static function create(array $attr = [])

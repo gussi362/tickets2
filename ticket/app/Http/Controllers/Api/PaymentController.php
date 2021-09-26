@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Http\Controllers\Controller;
 use App\Models\ttype;
+use App\Events\OrderAdded;
 
 use QrCode;
 class PaymentController extends Controller
@@ -20,6 +21,8 @@ class PaymentController extends Controller
 
     public function pay($order_id)
     {
+
+        $order_id = Order::findorfail($order_id);//if not found send error and no payment would procced ,check payment api
         //make request with order and amount to external api
         if(true)//if payment was successful
         {
@@ -32,27 +35,19 @@ class PaymentController extends Controller
             {
                     $order = $this->getOrder($order_id);
                     $order_details = OrderDetails::where('serial','like',$serial.'%')->get();
-                    $data = ['responseCode'=>102,
-                             'responseMessage'=>'successful payment',
-                             'data' => ['order'=>$order,'orderDetails'=>$order_details]
-                    ];
-                    return $data;
+                    broadcast(new OrderAdded($order,true));
+                    
+                    return $this->getSuccessResponse(trans('messages.generic.payment_successful'),$order);
                 
               
             }else
             {
-              $data = ['responseCode'=>102,
-              'responseMessage'=>'failed to pay order',
-              ];
-              return $data;
+                return $this->getErrorResponse(trans('messages.errors.system_error'),'',510);//should send to api failed
             }    
 
         }else
         {
-            $data = ['responseCode'=>102,
-                    'responseMessage'=>'tickets not paid'
-                    ];
-                    return $data;
+            return $this->getErrorResponse(trans('messages.errors.system_error'),'',510);
         }
     }
 

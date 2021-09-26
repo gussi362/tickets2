@@ -41,7 +41,7 @@ class Order extends Model
 
     public function events()
     {
-        return $this->belongsTo('App\Models\Events');
+        return $this->belongsTo('App\Models\Event');
     }
     
     public function date()

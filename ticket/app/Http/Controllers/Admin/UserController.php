@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use DB;
 
+use Validator;
 use App\Http\Controllers\Controller;
 class UserController extends Controller
 {
@@ -14,22 +14,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $id)
+    public function index()
     {
-        $user = User::find($id)->first();
-        //return $user->company_id;
-       return DB::table('events')->where('company_id','=','1');
-    }
+         $users = User::orderBy('id')->get();
+         return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.user')]),$users);
 
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -40,34 +29,69 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'phone' => 'required',
+            'type'  => 'required'
+        ]);
+
+        if ($validator->fails()) 
+        {
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors(),410);
+        }
+        
+        $data =[];
+        if($request->company_id)
+        {
+            $data = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'company_id' => $request->company_id,
+                'phone' => $request->phone,
+                'type' => $request->type,
+                'created_by' => auth()->user()->id
+            ];
+        }else
+        {
+            $data = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'phone' => $request->phone,
+                'type' => $request->type,
+                'created_by' => auth()->user()->id
+            ];
+        }
+        $user = User::create($data);
+        
+        if($user->exists())
+        {
+            return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.user')]),$user );
+        }else
+        {
+            return $this->getErrorResponse(trans('messages.errors.system_error') ,'',501);
+        }
     }
 
-    /**
+        /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function showEvent($id)
+    public function show($id)
     {
+        $user = User::findorfail($id);
         
-        return EventController::show($id);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.user')]),$user);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Upuser the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -75,7 +99,23 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user= User::findorfail($id);
+        
+        foreach ($request->all() as $key => $value) {
+            //if ($value->$key) {
+            if ($value) {
+                $user->$key = $value;
+            }
+
+        }
+
+        if($user->update())
+        {
+            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.user')]),$user );
+        }else
+        {
+            return $this->getErrorResponse(trans('messages.errors.system_error'), '' ,502);
+        }     
     }
 
     /**
@@ -86,6 +126,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findorFail($id);
+        if($user->delete())
+        {
+            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.user')]),$user );
+        }else
+        {
+            return $this->getErrorResponse(trans('messages.errors.system_error'),'',503);
+        }
     }
 }

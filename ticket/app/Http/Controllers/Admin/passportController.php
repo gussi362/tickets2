@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
-use App\Models\User;
-
 use Validator;
+use Hash;
+
 use App\Http\Controllers\Controller;
+use App\Models\User;
 class passportController extends Controller
 {
     
@@ -31,7 +32,7 @@ class passportController extends Controller
      
             $token = $user->createToken('userToken')->accessToken;
 
-            return $this->getSuccessResponse('Registered successfully' ,[$user,'token'=>'Bearer '.$token]);
+            return $this->getSuccessResponse(trans('messages.passport.registered') ,[$user,'token'=>'Bearer '.$token]);
     
     }
     
@@ -51,7 +52,7 @@ class passportController extends Controller
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse('not all fields were entered');
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors(),'',410);
         }
 
         $data = [
@@ -63,10 +64,49 @@ class passportController extends Controller
         {
             $token = auth()->user()->createToken('userToken')->accessToken;
 
-            return $this->getSuccessResponse('Logged in successfully' ,[auth()->user(),'token'=>'Bearer '.$token]);
+            return $this->getSuccessResponse(trans('messages.passport.loggedin'),['user'=>auth()->user(),'token'=>'Bearer '.$token]);
         }else
         {
-            return $this->getErrorResponse('invalid username or password.');
+            return $this->getErrorResponse(trans('messages.passport.invalid_credintals'),'',411);
         }
     }
+
+    public function changePassword(Request $request)
+    {
+        // return \Lang::get('messages.date.last_week');
+        $validator =  Validator::make($request->all(),[
+            'old_password' => 'required|string',
+            'new_password' => 'required|string',
+            'new_password_confirmation' => 'required|string|same:new_password'
+        ]);
+
+        if ($validator->fails()) 
+        {
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors(),'',410);
+        }
+
+        $user = User::where('id',auth()->user()->id)->first();
+
+        //if(bcrypt($request->old_password == bcrypt($request->new_password)) it's impossible to compare hashed password ,cause the salt everytime a password is hashed is different
+        if ( !Hash::check($request->old_password ,$user->password) ) 
+        {
+            return $this->getErrorResponse(trans('messages.passport.wrong_old_password'),'',415);
+        }
+
+        if( Hash::check($request->new_password ,$user->password) )
+        {
+            return $this->getErrorResponse(trans('messages.passport.passwords_match'),'',414);
+        }
+
+        $user->password = bcrypt($request->new_password);
+
+        if($user->update())
+        {
+            return $this->getSuccessResponse(trans('messages.passport.changed_password') ,$user);
+        }else
+        {
+            return $this->getErrorResponse(trans('messages.passport.failed_change_password'),'',510);//send system error
+        }
+    }
+
 }

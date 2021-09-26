@@ -9,7 +9,15 @@ class ttype extends Model
 {
     use HasFactory;
 
-
+    public $timestamps = false;//this model doesn't have timestamps in db 
+    protected $fillable = 
+    [
+        'id',
+        'name_en',
+        'name_ar',
+        'set'
+    ];
+    
     public function order_status()
     {
         return $this->belongsTo('App\Models\OrderStatus');

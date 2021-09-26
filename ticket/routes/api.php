@@ -16,76 +16,98 @@ use App\Models\Event;
 //Route::get('eventsz','Admin\EventController@getCurrentEvents');
 // passport routes 
 
-Route::post('register', 'passportController@register');
-
-//login since we using multiple guards
-Route::post('user/login', 'Customer\passportController@login')->middleware('auth:api');
-
-//login since we using multiple guards
-Route::post('login', 'passportController@login');
 
 
-Route::group(['prefix' => 'admin','middleware'=>['checkStatus','auth:api'], 'namespace'=>'Admin'], function () {
-
-    
-    Route::apiResource('company','CompanyController');
-    
-    Route::apiResource('event','EventController');
-    
-    Route::apiResource('order','OrderController');
-
-    Route::apiResource('orderDetails','OrderDetailsController');    
-    Route::apiResource('ticket','TicketController');
-    
-    Route::apiResource('date','DateController');
-
-    Route::apiResource('sponser','SponserController');
-    
-
-    Route::group(['prefix' => 'dashboard'], function(){
-
-        Route::get('/','DashboardController@getOverview');
-        
-    });
-    
+//doesn't need to be authintcated to do the following 
+Route::group(['middleware' => 'setLocale'],function()
+{
+    Route::post('register', 'passportController@register');
+    Route::post('resetPassword', 'passportController@resetPassword');
+    Route::post('reset', 'passportController@resetPasswordWithToken');
+    Route::post('login', 'passportController@login');
 });
 
-//user routes
-Route::group(['prefix' => 'user','middleware'=>['checkStatusUser','auth:api'],'namespace' => 'Customer'], function () {
-    Route::apiResource('event','EventController');
-    
-    Route::apiResource('order','OrderController');
+Route::get('responseCodes','ResponseController@getResponseCodes');
 
-    Route::apiResource('orderDetails','OrderDetailsController');
-    
-    Route::apiResource('ticket','TicketController');
-    
-    Route::apiResource('date','DateController');
+//login since we using multiple guards
+// Route::group(['guard' => 'customer'], function () {
+//     // ...
+//     Route::post('user/login', 'Customer\passportController@login')->withoutmiddleware('auth:customer');
+//     Route::post('user/loginInfo', 'Customer\passportController@info')->middleware(['customer']);
 
-    Route::apiResource('sponser','SponserController');
+// });
 
-    Route::group(['prefix' => 'dashboard'], function(){
+Route::group(['middleware' => ['auth:api' ,'setLocale']] ,function () {
 
-        Route::get('/','DashboardController@getOverview');
+    Route::group(['prefix' => 'admin','middleware'=>['checkStatus'], 'namespace'=>'Admin'], function () {
+
+        
+        Route::apiResource('company','CompanyController');
+        
+        Route::apiResource('event','EventController');
+        
+        Route::apiResource('order','OrderController');
+
+        Route::apiResource('orderDetails','OrderDetailsController');    
+        Route::apiResource('ticket','TicketController');
+        
+        Route::apiResource('date','DateController');
+
+        Route::apiResource('sponser','SponserController');
+
+        Route::apiResource('user','UserController');
+
+        Route::post('changePassword', 'passportController@changePassword');
+
+        Route::group(['prefix' => 'dashboard'], function(){
+
+            Route::get('/','DashboardController@getOverview');
+            
+        });
         
     });
-    
-});
 
+    //user routes
+    Route::group(['prefix' => 'user','middleware'=>['checkStatusUser'],'namespace' => 'Customer'], function () {
+        Route::apiResource('event','EventController');
+        
+        Route::apiResource('order','OrderController');
 
-//user who scan ids //add middleware later
-Route::group(['prefix' => 'scan','middleware'=>['checkStatusUser','auth:api'] ,'namespace' => 'Qr'], function () {
+        Route::apiResource('orderDetails','OrderDetailsController');
+        
+        Route::apiResource('ticket','TicketController');
+        
+        Route::apiResource('date','DateController');
 
-    //Route::get('events','EventController@getCompanyCurrentEventsDetails');
-    Route::get('orderStatus/{order_id}/{serial}','OrderController@checkIn');
-    Route::apiResource('order','OrderController');
+        Route::apiResource('sponser','SponserController');
+
+        Route::apiResource('user','UserController');
+
+        Route::post('changePassword', 'passportController@changePassword');
+        
+        Route::group(['prefix' => 'dashboard'], function(){
+
+            Route::get('/','DashboardController@getOverview');
+            
+        });
+        
     });
 
 
+    //user who scan ids //add middleware later
+    Route::group(['prefix' => 'scan','middleware'=>['checkStatusScanUser'] ,'namespace' => 'Qr'], function () {
+
+        //Route::get('events','EventController@getCompanyCurrentEventsDetails');
+        Route::get('checkIn/{order_id}/{serial}','OrderController@checkIn');
+        //Route::apiResource('order','OrderController');
+        });
+
+});
 //payments
 Route::group(['prefix' => 'appname' ,'namespace' => 'Api'], function () {
 
     Route::get('events','EventController@getEventsCurrent');
+    Route::get('events/{id}','EventController@getCompanyEvent');
 
     Route::get('/{order_id}','PaymentController@getOrder');
 

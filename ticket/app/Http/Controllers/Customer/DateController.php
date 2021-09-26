@@ -16,9 +16,12 @@ class DateController extends Controller
      */
     public function index()
     {
-        $date = Date::orderBy('date','desc')->with('event')->get();
+        $date = Date::orderBy('date','desc')->with('event' ,function ($query)
+        {
+            $query->where('company_id',auth()->user()->company_id);
+        })->get();
         
-        return $this->getSuccessResponse('retrieved date successfully',$date);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.date')]),$date);
     }
 
     /**
@@ -32,21 +35,22 @@ class DateController extends Controller
        $validator = Validator::make($request->all(),[
             'event_id' => 'required',
             'date' => 'required|date',
-            'created_by' => 'required|string'
         ]);
 
         if ($validator->fails()) 
         {
-            return $this->getErrorResponse('not all fields were entered');
+            return $this->getErrorResponse(trans('messages.errors.input_data'),$validator->errors(),410);
         }
 
-        $date = Date::create($request->all());
+        $data = $request->all();
+        $data['created_by'] = auth()->user()->id;
+        $date = Date::create($data);
         if($date->exists())
         {
-            return $this->getSuccessResponse('created date successfully',$date);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_added_new' ,['new' => trans('messages.model.date')]),$date);
         }else
         {
-            return $this->getErrorResposne('failed to create date');
+            return $this->getErrorResposne('failed to create date','',510);
         }
     }
 
@@ -60,7 +64,7 @@ class DateController extends Controller
     {
         $date = Date::findorfail($id);
         
-        return $this->getSuccessResponse('date found',$date);
+        return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.date')]),$date);
     }
 
     /**
@@ -84,10 +88,10 @@ class DateController extends Controller
 
         if($date->update())
         {
-            return $this->getSuccessResponse('updated date successfully',$date);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_updated' ,['new' => trans('messages.model.date')]),$date);
         }else
         {
-            return $this->getErrorResponse('failed to update date with id '.$id);
+            return $this->getErrorResponse(trans('messages.errors.system_error'),'',510);
         }                
          
     }
@@ -103,10 +107,10 @@ class DateController extends Controller
         $date = Date::findorFail($id);
         if($date->delete())
         {
-            return $this->getErrorResposne('failed to delete date with id '.$id);
+            return $this->getSuccessResponse(trans('messages.generic.successfully_deleted' ,['new' => trans('messages.model.date')]),$date);
         }else
         {
-            return $this->getErrorResposne('failed to delete date with id '.$id);
+            return $this->getErrorResponse(trans('messages.errors.system_error'),510);
         }
     }
 }

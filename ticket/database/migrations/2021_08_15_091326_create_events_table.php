@@ -28,6 +28,8 @@ class CreateEventsTable extends Migration
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->boolean('sponser')->default(0);
             $table->string('coordinates');// map directions
+            $table->bigInteger('created_by')->unsigned();
+            $table->foreign('created_by')->references('id')->on('users');
             $table->timestamps();
         });
     }

@@ -19,6 +19,7 @@ class Ticket extends Model
         'status',
         'details_ar',
         'details_en',
+        'created_by'
         
     ];
 
