@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events\Dashboard\Admin;
+namespace App\Events\Dashboard\Customer;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;

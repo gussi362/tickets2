@@ -39,7 +39,7 @@ class OrderController extends Controller
         
         $validator = Validator::make($request->all() ,[
         
-            'ticket' => 'required',
+            'ticket' => 'required',//how to check if the form is sent as required {ticket_id ,count}?
             'date_id' => 'required',
             'event_id' => 'required',
             'name' => 'required',
@@ -54,53 +54,64 @@ class OrderController extends Controller
         //when ordering 
         //an order details is added with number of tickets under order
         //an order status is added with pending flag
+
         $tickets = json_decode($request->ticket);
-       // if($request->count > $this->getTicketsLeft($this->getEventId($request->ticket_id),$request->ticket_id))
-        $j=0;
-        
-       for($i=0 ;$i<count($tickets); $i+=1)
-       {
+       
+        $total_count  = 0;
+        $total_amount = 0;
+
+        //first we check if all tickets have have available quantity if one ticket isn't it returns with error
+        for($i=0 ;$i<count($tickets); $i+=1)
+        {
             if(!$this->isThereEnoughTickets($tickets[$i]->ticket_id,$tickets[$i]->count))
             {
                 return $this->getErrorResponse(trans('messages.errors.insufficient_tickets',['ticket' => $this->getLeftTicketsAmount($tickets[$i]->ticket_id)]),'',430);
                 // return $this->getErrorResponse('error ,not enough ticket '.$tickets[$i]->ticket_id.' available tickets = '.$this->getLeftTicketsAmount($tickets[$i]->ticket_id));
 
-            }else
-            {
-                DB::beginTransaction();
-                try
-                {
-                    
-                    $data = $request->all();
-                    $data['code'] = $this->generateRandom();;
-                    $data['id'] =  Str::uuid();
-                    $data['amount'] = $this->getTotal($this->getTicketPrice($tickets[$i]->ticket_id) ,$tickets[$i]->count);
-                    
-                    $order=Order::create($data);
-                    
-                    $this->setOrderedTicketsAmount($tickets[$i]->ticket_id ,($tickets[$i]->count + $this->getOrderedTicketsAmount($tickets[$i]->ticket_id)));
-                    $this->createOrderDetails($tickets[$i]->count ,$order->code ,$tickets[$i]->ticket_id);
-                    
-                    DB::commit();
-                    broadcast(new OrderAdded($order));
-                    
-                    broadcast(new overviewChanged($order));
-                    
-                    return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.order')]),$order);
-
-                    
-                    
-                } catch (\Exception $e) 
-                {
-                    DB::rollback();
-                    return $this->getErrorResponse(trans('messages.errors.system_error'),$e->getMessage(),501);
-                }
             }
-       }
-       
+        }
 
-        
+        //then we calucate the total of amount ,count
+        foreach ($tickets as $ticket)
+        {
+            $total_amount += $this->getTotal($this->getTicketPrice($ticket->ticket_id) ,$ticket->count);
+            $total_count += $ticket->count;
+        }
+
+        //then we create the order
+        DB::beginTransaction();
+        try
+        {
+            
+            $data = $request->all();
+            $data['code'] = $this->generateRandom();;
+            $data['id'] =  Str::uuid();
+            $data['amount'] = $total_amount;
+            $data['count'] = $total_count;
+            $order=Order::create($data);
+            
+            
+            $this->setOrderedTicketsAmount($tickets);
+
+            $this->createOrderDetails($tickets ,$order->code);
+            
+             DB::commit();
+            broadcast(new OrderAdded($order));
+            
+            broadcast(new overviewChanged($order));
+            
+            return $this->getSuccessResponse(trans('messages.generic.successfully_found' ,['new' => trans('messages.model.order')]),$order);
+
+            
+            
+        } catch (\Exception $e) 
+        {
+            DB::rollback();
+            return $this->getErrorResponse(trans('messages.errors.system_error'),$e->getMessage(),501);
+        }
     }
+        
+    
 
 
     /**
@@ -114,15 +125,18 @@ class OrderController extends Controller
 
     /**
      * set tickets ordered when creating an order
-     * @param amount number of new tickets
-     * @param ticket_id 
+     * @param tickets contain the ticket_id ,count sent in request 
      */
-    public function setOrderedTicketsAmount($ticket_id ,$amount)
+    public function setOrderedTicketsAmount($tickets)
     {
-        $ticket= Ticket::where('id',$ticket_id)->first();
-        $ticket->update(['ordered' => $amount]);
-        
-        return $ticket->ordered;
+        foreach ($tickets as $ticket) 
+        {
+            $ticketa= Ticket::where('id',$ticket->ticket_id)->first();
+            $ticketa->ordered = ($ticket->count + $this->getOrderedTicketsAmount($ticket->ticket_id));
+            $ticketa->update();    
+        }
+
+        return $tickets;
     }
 
     /**
@@ -148,17 +162,22 @@ class OrderController extends Controller
         $ticket = Ticket::where('id',$ticket_id)->first();
         return $ticket->amount - $ticket->ordered;
     }
+
     /**
      * creating order details for order
-     * @param count number of seats for this ticket on order with code
+     * @param tickets sent in request containts ticket_id ,count
      * @param code unique random number of order
-     * @param ticket_id 
      */
-    public function createOrderDetails($count ,$code ,$ticket_id)
+    public function createOrderDetails($tickets ,$code )
     {
-        for ($i=1 ;$i<=$count; $i+=1)
+        $ticket_count =1;
+        foreach ($tickets as $ticket ) 
         {
-            $this->createOrderDetail($code."$i" ,$ticket_id);
+            for ($i=0; $i <$ticket->count ; $i+=1) 
+            { 
+                $this->createOrderDetail($code."$ticket_count" ,$ticket->ticket_id);
+                $ticket_count++;
+            }
         }
     }
 

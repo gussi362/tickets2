@@ -94,11 +94,12 @@ Route::group(['middleware' => ['auth:api' ,'setLocale']] ,function () {
     });
 
 
-    //user who scan ids //add middleware later
+    //user who scan ids
     Route::group(['prefix' => 'scan','middleware'=>['checkStatusScanUser'] ,'namespace' => 'Qr'], function () {
 
         //Route::get('events','EventController@getCompanyCurrentEventsDetails');
         Route::get('checkIn/{order_id}/{serial}','OrderController@checkIn');
+        Route::get('checkedIn/{company_id}','OrderController@getCheckedIn');
         //Route::apiResource('order','OrderController');
         });
 

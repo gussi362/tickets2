@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Str;
 use App\Models\OrderDetails;
 use App\Http\Controllers\Controller;
+use App\Models\Event;
+use App\Models\Ticket;
 use App\Models\ttype;
 use Validator;
 class OrderController extends Controller
@@ -65,11 +67,27 @@ class OrderController extends Controller
   }
 
   /**
-   * get checkedIn list for company id for event.status=true
+   * get checkedIn list for the event based on company id
+   * return last checkd in users [serial ,time ,event_name]
    */
   public function getCheckedIn($company_id)
   {
-    //events ,orders ,where 
-    return 
+    //this can be done better by using the serial but the issue is the query of getting it 
+    //and avoiding a for loop in the $checkedIn query seems to be the best option right now
+    $events = Event::where('company_id',$company_id)
+                    ->where('status','true')
+                    ->pluck('id');//get events which belongs to the company 
+
+    $tickets = Ticket::whereIn('event_id',$events)->pluck('id'); //get the tickets for the events
+
+    $checkedIn = OrderDetails::whereIn('ticket_id',$tickets)
+                              ->where('status','true')
+                              ->select('serial','ticket_id','updated_at')
+                              ->latest('updated_at')
+                              ->limit(5)
+                              ->get();//get the latest checkedin from the list based on the ticket id
+
+    return $this->getSuccessResponse(trans('messages.generic.successfully_found'),$checkedIn);//should give :new var an empty string as default in messages
+
   }
 }
